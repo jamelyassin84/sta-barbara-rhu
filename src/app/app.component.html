@@ -1,0 +1,7 @@
+<modals></modals>
+
+<div *ngIf="isInHome" class="w-full">
+    <router-outlet></router-outlet>
+</div>
+
+<router-outlet *ngIf="!isInHome"></router-outlet>

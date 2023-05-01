@@ -1,0 +1,35 @@
+<add-appointment-modal
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="addAppointmentModalOpened$ | async"
+    (click)="addAppointmentModalOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+></add-appointment-modal>
+
+<update-assessment-modal
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="updateAssessmentModalOpened$ | async"
+    (click)="updateAssessmentModalOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+></update-assessment-modal>
+
+<update-diagnosis-modal
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="updateDiagnosisModalOpened$ | async"
+    (click)="updateDiagnosisModalOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+></update-diagnosis-modal>
+
+<view-appointment-modal
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="viewAppointmentModalOpened$ | async"
+    (click)="viewAppointmentModalOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+></view-appointment-modal>

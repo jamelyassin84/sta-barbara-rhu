@@ -1,0 +1,54 @@
+<div class="flex flex-col w-full">
+    <route-header
+        pageTitle="Appointments"
+        subtitle="You can see the list of all appointments here"
+        icon="feather:calendar"
+        class="w-full"
+    ></route-header>
+
+    <div class="flex items-center w-full p-3 bg-white">
+        <button
+            (click)="currentRHU = item"
+            [ngClass]="{
+                'bg-black text-white pointer-events-none': currentRHU === item,
+                'text-gray-500 md:hover:bg-gray-50': currentRHU !== item
+            }"
+            class="px-5 py-2 mr-3 active:opacity-25"
+            *ngFor="let item of RHU"
+        >
+            {{ item }}
+        </button>
+
+        <mat-form-field class="ml-auto min-w-64" appearance="fill">
+            <mat-date-range-input [rangePicker]="picker">
+                <input matStartDate placeholder="Start date" />
+                <input matEndDate placeholder="End date" />
+            </mat-date-range-input>
+
+            <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+    </div>
+
+    <div
+        class="items-center inline-block w-full p-3 bg-white border-gray-100 border-y"
+    >
+        <button
+            (click)="currentService = item"
+            [ngClass]="{
+                'bg-teal-500 text-white pointer-events-none':
+                    currentService === item,
+                'text-gray-500 md:hover:bg-gray-50': currentService !== item
+            }"
+            class="inline-block px-5 py-2 mb-4 mr-3 active:opacity-25 whitespace-nowrap"
+            *ngFor="let item of SERVICES"
+        >
+            {{ item }}
+        </button>
+    </div>
+
+    <appointment-list></appointment-list>
+</div>

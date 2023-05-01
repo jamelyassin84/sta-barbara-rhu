@@ -1,0 +1,42 @@
+<div class="flex flex-col w-full"></div>
+<div class="w-full">
+    <app-navbar></app-navbar>
+
+    <div class="flex flex-col items-center justify-center bg-gray-100 py-50">
+        <div class="text-4xl font-black text-center">Let's talk</div>
+
+        <div class="text-lg font-light text-gray-500">
+            Have an inquiries, suggestion or complaint? Contact us directly in
+            <span class="underline">033 5039042</span>
+        </div>
+    </div>
+
+    <div
+        class="flex flex-col items-center justify-center w-full py-20 text-white bg-black"
+    >
+        <div class="text-4xl font-black text-center">
+            Wan't to have an appointment?
+        </div>
+
+        <div class="text-lg font-light text-gray-500">
+            Choose your Rural Health Unit
+        </div>
+
+        <div class="flex items-center justify-center w-full">
+            <button
+                (click)="setRHU('RHU 1')"
+                class="px-5 mx-2 py-2 relative z-[9999] mt-8 md:mt-16 font-bold rounded-md md:px-10 md:py-3 md:text-4xl bg-brand-yellow drop-shadow-2xl text-black"
+            >
+                RHU 1
+            </button>
+
+            <button
+                (click)="setRHU('RHU 2')"
+                class="px-5 mx-2 py-2 relative z-[9999] mt-8 md:mt-16 font-bold rounded-md md:px-10 md:py-3 md:text-4xl bg-brand-yellow drop-shadow-2xl text-black"
+            >
+                RHU 2
+            </button>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</div>

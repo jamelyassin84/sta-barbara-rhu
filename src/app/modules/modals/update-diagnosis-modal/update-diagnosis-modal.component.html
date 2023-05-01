@@ -1,0 +1,49 @@
+<div
+    @slideInRight
+    stopPropagation
+    *ngIf="opened$ | async"
+    style="min-width: 400px"
+    class="relative z-10 w-full ml-auto bg-white md:w-1/4"
+>
+    <modal-header [modalTitle]="'Diagnosis'" (onClose)="opened$.next(false)">
+    </modal-header>
+
+    <form
+        style="height: 90vh"
+        class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
+    >
+        <mat-form-field appearance="fill">
+            <mat-label>Diagnosis</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Medication or Treatment</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Name of Health Care Provider</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Name of Health Care Provider</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Laboratory Findings or Impression</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Performed Laboratory Test</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+
+        <button class="py-3 mt-4 text-white bg-black rounded-full">
+            Book an Appointment
+        </button>
+    </form>
+</div>

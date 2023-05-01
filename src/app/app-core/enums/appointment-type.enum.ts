@@ -1,0 +1,15 @@
+export enum AppointmentTypeEnum {
+    GENERAL = 'General',
+    PRENATAL = 'Prenatal',
+    DENTAL_CARE = 'Dental Care',
+    CHILD_CARE = 'Child Care',
+    CHILD_NUTRITION = 'Child Nutrition',
+    INJURY = 'Injury',
+    ADULT_IMMUNIZATION = 'Adult Immunization',
+    FAMILY_PLANNING = 'Family Planning',
+    POSTPARTUM = 'Postpartum',
+    TUBERCULOSIS = 'Tuberculosis',
+    CHILD_IMMUNIZATION = 'Child Immunization',
+    SICK_CHILDREN = 'Sick Children',
+    FIRECRACKER_INJURY = 'Firecracker Injury',
+}

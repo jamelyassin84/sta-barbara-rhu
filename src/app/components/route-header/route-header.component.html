@@ -1,0 +1,25 @@
+<div class="w-full border-b bg-card border-b-zinc-200">
+    <div class="flex flex-col w-full px-3 mx-auto">
+        <div class="flex flex-col flex-auto min-w-0 my-2 sm:flex-row">
+            <div class="flex items-center flex-auto">
+                <mat-icon
+                    class="icon-size-14 text-brand-blue"
+                    [svgIcon]="icon"
+                ></mat-icon>
+
+                <div class="flex flex-col ml-4">
+                    <div
+                        class="text-xl font-semibold tracking-tight truncate md:text-3xl"
+                    >
+                        {{ pageTitle }}
+                    </div>
+                    <div class="flex items-center -mt-1">
+                        <div class="text-secondary">
+                            {{ subtitle }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

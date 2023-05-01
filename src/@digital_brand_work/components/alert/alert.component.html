@@ -1,0 +1,31 @@
+<div class="flex justify-center w-screen px-5">
+    <div
+        @slideInBottom
+        @fadeOutRight
+        class="w-full"
+        [ngClass]="{
+            'bg-emerald-500': alert.type === 'success',
+            'bg-sky-600': alert.type === 'info',
+            'bg-rose-600': alert.type === 'error'
+        }"
+        class="alert-wrapper"
+    >
+        <!-- <ion-icon
+            class="text-4xl text-white"
+            [name]="
+                alert.type === 'success'
+                    ? 'checkmark-circle-outline'
+                    : 'information-circle-outline'
+            "
+        ></ion-icon> -->
+
+        <div class="ml-4">
+            <div class="text-lg font-extrabold text-white">
+                {{ alert.title | titlecase }}
+            </div>
+            <div class="description">
+                {{ alert.message }}
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div *ngIf="table" class="max-w-full px-5 py-0 -mt-5 overflow-x-auto">
+    <div class="flex items-center px-10 py-3 bg-white min-w-1/2 drop-shadow-sm">
+        <!-- <button
+            class="mx-0.5"
+            mat-flat-button
+            (click)="onPageChange.emit(link.url)"
+            *ngFor="
+                let i = index;
+                trackBy: trackByFn;
+                let link;
+                of: table | to_node_pagination
+            "
+            [ngClass]="{
+                'pointer-events-none bg-accent-color text-white': link.active,
+                'text-zinc-400': !link.active
+            }"
+        >
+            {{ link.label }}
+        </button> -->
+
+        <div class="mx-5"></div>
+
+        <div class="flex ml-auto font-light text-zinc-400">
+            Showing {{ table.per_page }} items in Page
+            {{ table.current_page }} out of {{ table.last_page }} pages
+        </div>
+    </div>
+</div>

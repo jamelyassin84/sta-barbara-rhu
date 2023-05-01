@@ -1,0 +1,47 @@
+<div
+    @slideInRight
+    stopPropagation
+    *ngIf="opened$ | async"
+    style="min-width: 400px"
+    class="relative z-10 w-full ml-auto bg-white md:w-1/4"
+>
+    <modal-header
+        [modalTitle]="'John`s Assessment'"
+        (onClose)="opened$.next(false)"
+    >
+    </modal-header>
+
+    <form
+        style="height: 90vh"
+        class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
+    >
+        <mat-form-field appearance="fill">
+            <mat-label>Weight</mat-label>
+            <input matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Height</mat-label>
+            <input matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Body Temperature</mat-label>
+            <input matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Blood Pressure</mat-label>
+            <input matInput />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Chief Complaints</mat-label>
+            <textarea matInput></textarea>
+        </mat-form-field>
+
+        <button class="py-3 mt-4 text-white bg-black rounded-full">
+            Update Assessment
+        </button>
+    </form>
+</div>

@@ -1,0 +1,7 @@
+@tailwind components;
+
+@layer components {
+    .card {
+        @apply bg-white drop-shadow rounded p-3 border-gray-50 border;
+    }
+}

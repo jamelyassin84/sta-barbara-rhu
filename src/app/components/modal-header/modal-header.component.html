@@ -1,0 +1,28 @@
+<div class="flex items-center w-full px-5 py-5 bg-black z">
+    <div>
+        <div class="text-xl font-medium text-brand-yellow accent-color">
+            {{ modalTitle }}
+        </div>
+
+        <div
+            @fadeInTop
+            *ngIf="subTitle"
+            class="text-white/80 accent-color max-w-3/4"
+        >
+            {{ subTitle }}
+        </div>
+    </div>
+
+    <div class="flex items-center ml-auto">
+        <div class="mr-2 tracking-wider text-black/70">Close</div>
+
+        <div
+            (click)="onClose.emit()"
+            role="button"
+            style="border-radius: 6px"
+            class="items-center justify-center p-1 bg-white shadow-md selection:flex"
+        >
+            <mat-icon class="p-1" svgIcon="feather:x"></mat-icon>
+        </div>
+    </div>
+</div>

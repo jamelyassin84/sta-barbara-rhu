@@ -1,0 +1,38 @@
+<div class="flex flex-col items-center justify-center py-20">
+    <div class="text-4xl font-black text-center">
+        Dedicated Health Professionals Happy to Serve You
+    </div>
+
+    <div class="text-lg font-light text-gray-500">
+        Putting Your Health and Comfort First with Top-Quality Care and
+        Attention to Detail!
+    </div>
+
+    <div
+        class="grid w-full max-w-screen-lg mx-auto mt-10 font-light md:grid-cols-3 gap-x-15"
+    >
+        <div
+            *ngFor="let item of SERVICES"
+            class="flex flex-col items-center justify-center bg-white rounded-md mb-15 drop-shadow-2xl"
+        >
+            <div class="p-5">
+                <div class="mb-4 text-3xl font-black">
+                    {{ item }}
+                </div>
+
+                <div class="text-lg font-light text-gray-500">
+                    To apply for {{ item }}, click the button bellow.
+                </div>
+
+                <div class="flex mt-4">
+                    <button
+                        (click)="addAppointmentModalOpened$.next(true)"
+                        class="px-5 py-3 ml-auto text-white bg-black drop-shadow-lg"
+                    >
+                        Book an Appointment
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

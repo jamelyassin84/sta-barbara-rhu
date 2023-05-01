@@ -1,0 +1,26 @@
+<form class="w-full" *ngIf="form && name" [formGroup]="form">
+    <mat-form-field class="w-full">
+        <img
+            matPrefix
+            alt="Flag"
+            style="transform: scaleY(1.2)"
+            class="object-contain w-8 pr-2 mr-3 scale-125 border-r rounded-sm"
+            [src]="form.value[name] | to_flag: true"
+        />
+
+        <mat-select
+            [placeholder]="placeholder"
+            placeholder="Select Country"
+            [formControlName]="name"
+        >
+            <mat-option
+                [value]="country.name"
+                *ngFor="let country of COUNTRIES; trackBy: trackByFn"
+            >
+                {{ country.name }}
+            </mat-option>
+        </mat-select>
+
+        <mat-error>Country is required.</mat-error>
+    </mat-form-field>
+</form>
