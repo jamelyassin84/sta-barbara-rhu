@@ -5,6 +5,16 @@
         icon="feather:calendar"
         class="w-full"
     ></route-header>
+    <div class="flex items-center w-full p-3 bg-white">
+        <button
+            (click)="addAppointmentModalOpened$.next(true)"
+            class="flex items-center px-5 py-3 ml-auto text-white rounded-sm bg-emerald-500"
+        >
+            <mat-icon class="mr-3 text-white" svgIcon="feather:plus"></mat-icon>
+
+            Walk-in
+        </button>
+    </div>
 
     <div class="flex items-center w-full p-3 bg-white">
         <button
