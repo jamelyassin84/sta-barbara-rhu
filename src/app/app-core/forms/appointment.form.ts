@@ -66,7 +66,8 @@ export class AppointmentForm extends FormBuilder {
 
         if (appointmentType === AppointmentTypeEnum.MEDICO_LEGAL) {
             const isValidAppointment =
-                this.isValidDate(appointmentDate) && this.isValidDate(dob)
+                this.isValidDate(appointmentDate, true) &&
+                this.isValidDate(dob, true)
             const isValidIncident =
                 this.isValidDate(dateOfIncident) &&
                 this.isValidTime(dateOfIncident, timeOfIncident)
@@ -84,8 +85,7 @@ export class AppointmentForm extends FormBuilder {
             }
         } else {
             const isValidAppointment =
-                this.isValidDate(appointmentDate, true) &&
-                this.isValidDate(dob, true)
+                this.isValidDate(appointmentDate) && this.isValidDate(dob)
 
             if (!isValidAppointment) {
                 control.get('appointment.date')?.setErrors({invalidDate: true})
@@ -96,15 +96,11 @@ export class AppointmentForm extends FormBuilder {
         return null
     }
 
-    private isValidDate(date: string, isGeneral: boolean = false): boolean {
+    private isValidDate(date: string, isPast: boolean = false): boolean {
         const today = dayjs().startOf('day')
         const targetDate = dayjs(date)
-        if (isGeneral) {
-            const tomorrow = dayjs().add(1, 'day').startOf('day')
-            return (
-                targetDate.isAfter(tomorrow) &&
-                targetDate.isBefore(today.add(1, 'year'))
-            )
+        if (isPast) {
+            return targetDate.isBefore(today)
         }
         return targetDate.isAfter(today)
     }
@@ -113,8 +109,9 @@ export class AppointmentForm extends FormBuilder {
         const now = dayjs()
         const targetDateTime = dayjs(`${date} ${time}`)
         const targetDate = targetDateTime.startOf('day')
-        return targetDate.isSame(dayjs().startOf('day'))
-            ? targetDateTime.isBefore(now)
-            : true
+        return (
+            targetDateTime.isBefore(now) &&
+            targetDate.isSame(dayjs().startOf('day'))
+        )
     }
 }

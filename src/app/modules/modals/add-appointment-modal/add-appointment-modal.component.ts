@@ -7,6 +7,7 @@ import {RHUEnum} from 'app/app-core/enums/rhu.enum'
 import {SexEnum} from 'app/app-core/enums/sex.enum'
 import {EmailService} from 'app/app-core/services/mail.service'
 import {AppointmentForm} from 'app/app-core/forms/appointment.form'
+import {take} from 'rxjs'
 
 @Component({
     selector: 'add-appointment-modal',
@@ -29,7 +30,27 @@ export class AddAppointmentModalComponent {
 
     form = this._appointmentForm.get()
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this._addAppointmentModal.appointmentType$
+            .pipe(take(4))
+            .subscribe((service) => {
+                if (service) {
+                    this.form
+                        .get(['appointment', 'appointment_type'])
+                        .setValue(service)
+                }
+            })
+
+        this._addAppointmentModal.rhu$.pipe(take(4)).subscribe((rhu) => {
+            if (rhu) {
+                this.form.get(['appointment', 'rhu']).setValue(rhu)
+            }
+        })
+    }
+
+    ngOnDestroy(): void {
+        this._addAppointmentModal.appointmentType$.next(undefined)
+    }
 
     checkIfGeneral(): void {}
 

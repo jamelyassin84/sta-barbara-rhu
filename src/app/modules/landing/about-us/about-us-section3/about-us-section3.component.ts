@@ -12,5 +12,8 @@ export class AboutUsSection3Component {
 
     readonly SERVICES = Object.values(AppointmentTypeEnum)
 
-    addAppointmentModalOpened$ = this._addAppointmentModal.opened$
+    bookAppointment(service: AppointmentTypeEnum) {
+        this._addAppointmentModal.appointmentType$.next(service)
+        this._addAppointmentModal.opened$.next(true)
+    }
 }

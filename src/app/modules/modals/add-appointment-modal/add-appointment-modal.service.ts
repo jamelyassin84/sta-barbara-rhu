@@ -3,12 +3,18 @@ import {AngularFirestore} from '@angular/fire/compat/firestore'
 import {FormGroup} from '@angular/forms'
 import {timeStamps} from '@digital_brand_work/models/core.model'
 import {Modal} from '@digital_brand_work/services/modal.service'
+import {AppointmentTypeEnum} from 'app/app-core/enums/appointment-type.enum'
+import {RHUEnum} from 'app/app-core/enums/rhu.enum'
+import {BehaviorSubject} from 'rxjs'
 
 @Injectable({providedIn: 'root'})
 export class AddAppointmentModal extends Modal {
     constructor(private firestore: AngularFirestore) {
         super()
     }
+
+    appointmentType$ = new BehaviorSubject<AppointmentTypeEnum>(undefined)
+    rhu$ = new BehaviorSubject<RHUEnum>(undefined)
 
     async save(form: FormGroup) {
         const formValue = form.value
@@ -29,7 +35,7 @@ export class AddAppointmentModal extends Modal {
         }
     }
 
-    addNewPatientAndAppointment(formValue: any): void {
+    private addNewPatientAndAppointment(formValue: any): void {
         const patientId = `patientId${new Date().getTime()}`
 
         this.firestore
@@ -55,7 +61,10 @@ export class AddAppointmentModal extends Modal {
             })
     }
 
-    addAppointmentToExistingPatient(patient: any, formValue: any): void {
+    private addAppointmentToExistingPatient(
+        patient: any,
+        formValue: any,
+    ): void {
         const patientId = patient.id
         const appointmentId = `appointmentId${new Date().getTime()}`
 

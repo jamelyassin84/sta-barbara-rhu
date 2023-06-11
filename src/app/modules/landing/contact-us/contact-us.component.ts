@@ -10,9 +10,10 @@ import {AddAppointmentModal} from 'app/modules/modals/add-appointment-modal/add-
 export class ContactUsComponent {
     constructor(private _addAppointmentModal: AddAppointmentModal) {}
 
-    addAppointmentModalOpened$ = this._addAppointmentModal.opened$
-
     setRHU(rhu: string) {
+        this._addAppointmentModal.rhu$.next(
+            rhu === 'RHU 1' ? RHUEnum.RHU_1 : RHUEnum.RHU_2,
+        )
         this._addAppointmentModal.opened$.next(true)
     }
 }
