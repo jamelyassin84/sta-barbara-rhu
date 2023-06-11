@@ -23,6 +23,8 @@
                     item
                 }}</mat-option>
             </mat-select>
+
+            <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -35,6 +37,8 @@
                     >{{ item }}</mat-option
                 >
             </mat-select>
+
+            <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -47,6 +51,8 @@
                     >{{ item }}</mat-option
                 >
             </mat-select>
+
+            <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -55,7 +61,13 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-            <mat-label>Email</mat-label>
+            <mat-label
+                >Email
+                <span class="text-xs"
+                    >(Don't use another person email as it will be linked to
+                    their identity)</span
+                ></mat-label
+            >
             <input matInput />
         </mat-form-field>
 
@@ -84,9 +96,20 @@
             <input matInput />
         </mat-form-field>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field>
             <mat-label>Date of Birth</mat-label>
-            <input matInput type="date" />
+            <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="Choose a date"
+                [(ngModel)]="selectedDate"
+                name="selectedDate"
+            />
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -100,11 +123,27 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill">
-            <mat-label>Preferred Appointment Date</mat-label>
-            <input matInput type="date" />
+            <mat-label>Residential Address</mat-label>
+            <textarea matInput></textarea>
         </mat-form-field>
 
-        <button class="py-3 mt-4 text-white bg-black rounded-full">
+        <mat-form-field>
+            <mat-label>Preferred Appointment Date</mat-label>
+            <input
+                matInput
+                [matDatepicker]="picker"
+                placeholder="Choose a date"
+                [(ngModel)]="selectedDate"
+                name="selectedDate"
+            />
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <button class="py-4 mt-4 text-white bg-black rounded-full">
             Book an Appointment
         </button>
     </form>

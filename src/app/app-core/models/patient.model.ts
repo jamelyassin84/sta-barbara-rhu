@@ -10,6 +10,6 @@ export interface Patient {
     address: string
     email: string
     phone: string
-    appointments: Appointment
+    appointments: Appointment[]
     diagnosis: Diagnosis[]
 }

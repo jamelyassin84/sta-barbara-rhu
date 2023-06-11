@@ -15,11 +15,9 @@ import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http'
 import {sharedEffects} from './states/shared-effects-module'
 import {sharedStateModules} from './states/shared-state-modules'
 import {angularMaterialModules} from './angular-material/angular-material-modules'
-import {ErrorInterceptor} from './interceptor/error.interceptor'
-// import {AngularFireModule} from '@angular/fire/compat'
-// import {environment} from 'environments/environment'
-// import {AngularFirestoreModule} from '@angular/fire/compat/firestore'
-// import {NgxQRCodeModule} from '@techiediaries/ngx-qrcode'
+import {AngularFireModule} from '@angular/fire/compat'
+import {environment} from 'environments/environment'
+import {AngularFirestoreModule} from '@angular/fire/compat/firestore'
 
 const pipes = [...globalPipes, ...sharedPipes]
 
@@ -39,9 +37,8 @@ const modules = [
     CommonModule,
     HttpClientModule,
     ReactiveFormsModule,
-    // NgxQRCodeModule,
-    // AngularFireModule.initializeApp(environment.firebase),
-    // AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     ...sharedEffects,
     ...sharedStateModules,
     ...angularMaterialModules,

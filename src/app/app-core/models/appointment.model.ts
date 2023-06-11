@@ -5,10 +5,11 @@ import {Diagnosis} from './diagnosis.model'
 import {Patient} from './patient.model'
 
 export interface Appointment {
+    date: string
     rhu: RHUEnum
+    patient: Patient
+    patientId: string
+    diagnosis: Diagnosis
     appointment_type: AppointmentTypeEnum
     appointment_nature: AppointmentNatureEnum
-    patient: Patient
-    diagnosis: Diagnosis
-    date: string
 }

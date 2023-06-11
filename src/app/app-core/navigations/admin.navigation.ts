@@ -24,4 +24,12 @@ export const ADMIN_NAVIGATION: FuseNavigationItem[] = [
         icon: 'heroicons_outline:user-group',
         link: '/admin/patients',
     },
+
+    {
+        id: '3',
+        title: 'Reports',
+        type: 'basic',
+        icon: 'feather:activity',
+        link: '/admin/reports',
+    },
 ]

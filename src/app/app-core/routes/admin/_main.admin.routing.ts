@@ -33,6 +33,14 @@ export const MAIN_ADMIN_ROUTING: Route[] = [
                         (module) => module.DashboardModule,
                     ),
             },
+
+            {
+                path: 'reports',
+                loadChildren: () =>
+                    import('app/modules/admin/reports/reports.module').then(
+                        (module) => module.ReportsModule,
+                    ),
+            },
         ],
     },
 ]

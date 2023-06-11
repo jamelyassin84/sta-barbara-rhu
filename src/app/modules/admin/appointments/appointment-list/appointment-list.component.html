@@ -9,6 +9,7 @@
                     <th class="text-left text-gray-700">Patient</th>
                     <th class="text-left text-gray-700">Appointment Type</th>
                     <th class="text-left text-gray-700">Nature of Visit</th>
+                    <th class="text-left text-gray-700">When</th>
                     <th class="text-left text-gray-700">Symptoms</th>
                     <th class="text-left text-gray-700">Diagnosis</th>
                     <th class="text-left text-gray-700">
@@ -29,6 +30,7 @@
                     <td>John Doe</td>
                     <td>General</td>
                     <td>New Admission</td>
+                    <td>Today</td>
                     <td>Dry and Blood in Cough</td>
                     <td>Tuberculosis</td>
                     <td>Anti-biotic</td>
@@ -46,6 +48,13 @@
                             </button>
 
                             <mat-menu #menu="matMenu">
+                                <button
+                                    mat-menu-item
+                                    class="hover:bg-brand-color hover:text-white"
+                                >
+                                    Reschedule
+                                </button>
+
                                 <button
                                     mat-menu-item
                                     routerLink="/admin/patients/sadads"
@@ -68,6 +77,13 @@
                                     class="hover:bg-brand-color hover:text-white"
                                 >
                                     Diagnosis
+                                </button>
+
+                                <button
+                                    mat-menu-item
+                                    class="hover:bg-brand-color hover:text-white"
+                                >
+                                    Print Medications
                                 </button>
 
                                 <button

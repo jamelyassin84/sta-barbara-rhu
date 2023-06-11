@@ -1,11 +1,10 @@
 <div class="flex flex-col w-full">
     <route-header
-        pageTitle="Appointments"
-        subtitle="You can see the list of all appointments here"
-        icon="feather:calendar"
+        pageTitle="Reports"
+        subtitle="You can filter and generate reports here"
+        icon="feather:activity"
         class="w-full"
     ></route-header>
-    <div class="flex items-center w-full p-3 bg-white"></div>
 
     <div class="flex items-center w-full p-3 bg-white">
         <button
@@ -39,7 +38,7 @@
             appearance="fill"
         >
             <mat-date-range-input [rangePicker]="picker">
-                <input matStartDate placeholder="Start date" />
+                <input matStartDate placeholder="Diagnosis Start date" />
                 <input matEndDate placeholder="End date" />
             </mat-date-range-input>
 
@@ -50,15 +49,30 @@
             <mat-date-range-picker #picker></mat-date-range-picker>
         </mat-form-field>
 
+        <mat-form-field class="mx-3 mb-0 mr-6 translate-y-2 min-w-64">
+            <mat-icon class="mr-3" svgIcon="feather:search"></mat-icon>
+
+            <input matInput placeholder="Diagnosis" [(ngModel)]="diagnosis" />
+
+            <button
+                matSuffix
+                mat-icon-button
+                *ngIf="diagnosis"
+                (click)="diagnosis = ''"
+            >
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+
         <button
-            (click)="addAppointmentModalOpened$.next(true)"
-            class="flex items-center px-5 py-3 mx-3 text-white rounded-sm bg-emerald-500"
+            (click)="generateExcel()"
+            class="flex items-center px-5 py-3 text-white bg-black rounded-sm"
         >
             <mat-icon class="mr-3 text-white" svgIcon="feather:plus"></mat-icon>
 
-            Walk-in
+            Generate Report
         </button>
     </div>
 
-    <appointment-list></appointment-list>
+    <patient-list></patient-list>
 </div>

@@ -18,6 +18,23 @@
         >
             {{ item }}
         </button>
+
+        <div class="ml-auto">
+            <mat-form-field class="w-[320px] mr-5">
+                <mat-icon class="mr-3" svgIcon="feather:search"></mat-icon>
+
+                <input matInput placeholder="Search" [(ngModel)]="keyword" />
+
+                <button
+                    matSuffix
+                    mat-icon-button
+                    *ngIf="keyword"
+                    (click)="keyword = ''"
+                >
+                    <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
     </div>
 
     <patient-list></patient-list>

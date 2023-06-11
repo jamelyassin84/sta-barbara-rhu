@@ -9,7 +9,6 @@ import {SexEnum} from 'app/app-core/enums/sex.enum'
 @Component({
     selector: 'add-appointment-modal',
     templateUrl: './add-appointment-modal.component.html',
-    styleUrls: ['./add-appointment-modal.component.scss'],
     animations: [...dbwAnimations],
 })
 export class AddAppointmentModalComponent {
@@ -21,4 +20,10 @@ export class AddAppointmentModalComponent {
     readonly APPOINTMENT_NATURES = Object.values(AppointmentNatureEnum)
     readonly APPOINTMENT_TYPES = Object.values(AppointmentTypeEnum)
     readonly RHU = Object.values(RHUEnum)
+
+    ngOnInit(): void {}
+
+    checkIfGeneral(): void {}
+
+    checkIfAnimalBite(): void {}
 }

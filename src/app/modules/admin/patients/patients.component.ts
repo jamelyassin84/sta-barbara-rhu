@@ -10,4 +10,6 @@ export class PatientsComponent {
     RHU = Object.values(RHUEnum)
 
     currentRHU = this.RHU[0]
+
+    keyword: string
 }
