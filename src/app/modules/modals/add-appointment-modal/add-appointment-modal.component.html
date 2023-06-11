@@ -100,16 +100,16 @@
             <mat-label>Date of Birth</mat-label>
             <input
                 matInput
-                [matDatepicker]="picker"
+                [matDatepicker]="dobPicker"
                 placeholder="Choose a date"
                 [(ngModel)]="selectedDate"
                 name="selectedDate"
             />
             <mat-datepicker-toggle
                 matSuffix
-                [for]="picker"
+                [for]="dobPicker"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #dobPicker></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
@@ -127,20 +127,53 @@
             <textarea matInput></textarea>
         </mat-form-field>
 
+        <ng-container>
+            <mat-form-field appearance="fill">
+                <mat-label>Incident</mat-label>
+                <input matInput />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Time of Incident</mat-label>
+                <input matInput type="time" />
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Date of Incident</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="incidencePicker"
+                    placeholder="Choose a date"
+                    [(ngModel)]="selectedDate"
+                    name="selectedDate"
+                />
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="incidencePicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #incidencePicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>Place of Incident</mat-label>
+                <textarea matInput></textarea>
+            </mat-form-field>
+        </ng-container>
+
         <mat-form-field>
             <mat-label>Preferred Appointment Date</mat-label>
             <input
                 matInput
-                [matDatepicker]="picker"
+                [matDatepicker]="preferredAppointmentDatePicker"
                 placeholder="Choose a date"
                 [(ngModel)]="selectedDate"
                 name="selectedDate"
             />
             <mat-datepicker-toggle
                 matSuffix
-                [for]="picker"
+                [for]="preferredAppointmentDatePicker"
             ></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
+            <mat-datepicker #preferredAppointmentDatePicker></mat-datepicker>
         </mat-form-field>
 
         <button class="py-4 mt-4 text-white bg-black rounded-full">
