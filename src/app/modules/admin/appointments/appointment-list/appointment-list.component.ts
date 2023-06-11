@@ -1,4 +1,5 @@
-import {Component} from '@angular/core'
+import {Component, Input} from '@angular/core'
+import {Appointment} from 'app/app-core/models/appointment.model'
 import {UpdateAssessmentModal} from 'app/modules/modals/update-assessment-modal/update-assessment-modal.service'
 import {UpdateDiagnosisModal} from 'app/modules/modals/update-diagnosis-modal/update-diagnosis-modal.service'
 
@@ -12,6 +13,9 @@ export class AppointmentListComponent {
         private _updateDiagnosisModal: UpdateDiagnosisModal,
         private _updateAssessmentModal: UpdateAssessmentModal,
     ) {}
+
+    @Input()
+    appointments: Appointment[] = []
 
     updateAssessmentModalOpened$ = this._updateAssessmentModal.opened$
     updateDiagnosisModalOpened$ = this._updateDiagnosisModal.opened$

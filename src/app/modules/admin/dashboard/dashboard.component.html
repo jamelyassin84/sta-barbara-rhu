@@ -7,11 +7,14 @@
     ></route-header>
 
     <div
+        *ngIf="totalPatientsCount$ | async"
         class="grid w-full min-w-0 grid-cols-1 gap-6 px-5 py-5 sm:grid-cols-2 md:grid-cols-4"
     >
         <div class="card">
             <div class="card-wrapper">
-                <div class="card-value text-sky-500">150</div>
+                <div class="card-value text-sky-500">
+                    {{ totalPatientsCount$ | async }}
+                </div>
 
                 <div class="card-title">Total patients</div>
             </div>
@@ -19,7 +22,9 @@
 
         <div class="card">
             <div class="card-wrapper">
-                <div class="card-value text-sky-500">150</div>
+                <div class="card-value text-sky-500">
+                    {{ totalAppointmentsCount$ | async }}
+                </div>
 
                 <div class="card-title">Total Appointments</div>
             </div>
@@ -27,7 +32,9 @@
 
         <div class="card">
             <div class="card-wrapper">
-                <div class="card-value text-sky-500">150</div>
+                <div class="card-value text-sky-500">
+                    {{ totalAppointmentsTodayCount$ | async }}
+                </div>
 
                 <div class="card-title">Appointment's today</div>
             </div>
@@ -35,12 +42,16 @@
 
         <div class="card">
             <div class="card-wrapper">
-                <div class="card-value text-sky-500">15</div>
+                <div class="card-value text-sky-500">
+                    {{ diagnosisTodayCount$ | async }}
+                </div>
 
                 <div class="card-title">Diagnosis today</div>
             </div>
         </div>
     </div>
 
-    <appointment-list></appointment-list>
+    <appointment-list
+        [appointments]="todayAppointments$ | async"
+    ></appointment-list>
 </div>

@@ -23,20 +23,40 @@
             </thead>
             <tbody>
                 <tr
-                    *ngFor="let meal of [1, 2, 3, 4, 5]; let i = index"
+                    *ngFor="let appointment of appointments; let i = index"
                     class="border-t border-gray-100 hover:bg-slate-100"
                 >
-                    <td>JD34MN4BHGDKH</td>
-                    <td>John Doe</td>
-                    <td>General</td>
-                    <td>New Admission</td>
-                    <td>Today</td>
-                    <td>Dry and Blood in Cough</td>
-                    <td>Tuberculosis</td>
-                    <td>Anti-biotic</td>
-                    <td>Mary Jane</td>
-                    <td>Phlegm in upper chest</td>
-                    <td>X-ray</td>
+                    <td>{{ appointment.appointmentId }}</td>
+                    <td>{{ appointment.patientId }}</td>
+                    <td>{{ appointment.appointment_type }}</td>
+                    <td>{{ appointment.appointment_nature }}</td>
+                    <td>{{ appointment.date }}</td>
+                    <td>{{ appointment.symptoms }}</td>
+                    <td>{{ appointment?.diagnosis?.diagnosis ?? 'N/A' }}</td>
+                    <td>
+                        {{
+                            appointment?.diagnosis?.medication_or_treatment ??
+                                'N/A'
+                        }}
+                    </td>
+                    <td>
+                        {{
+                            appointment?.diagnosis
+                                ?.name_of_health_care_provider ?? 'N/A'
+                        }}
+                    </td>
+                    <td>
+                        {{
+                            appointment?.diagnosis
+                                ?.laboratory_findings_or_impression ?? 'N/A'
+                        }}
+                    </td>
+                    <td>
+                        {{
+                            appointment?.diagnosis?.performed_laboratory_test ??
+                                'N/A'
+                        }}
+                    </td>
 
                     <td>
                         <div class="flex justify-center">
@@ -57,7 +77,9 @@
 
                                 <button
                                     mat-menu-item
-                                    routerLink="/admin/patients/sadads"
+                                    routerLink="/admin/patients/{{
+                                        appointment.patientId
+                                    }}"
                                     class="hover:bg-brand-color hover:text-white"
                                 >
                                     View Patient

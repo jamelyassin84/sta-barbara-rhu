@@ -5,6 +5,7 @@ import {timeStamps} from '@digital_brand_work/models/core.model'
 import {Modal} from '@digital_brand_work/services/modal.service'
 import {AppointmentTypeEnum} from 'app/app-core/enums/appointment-type.enum'
 import {RHUEnum} from 'app/app-core/enums/rhu.enum'
+import dayjs from 'dayjs'
 import {BehaviorSubject} from 'rxjs'
 
 @Injectable({providedIn: 'root'})
@@ -44,6 +45,7 @@ export class AddAppointmentModal extends Modal {
             .set({
                 id: patientId,
                 ...formValue.patient,
+                dob: dayjs(formValue.dob).toJSON(),
                 appointments: [
                     {
                         appointmentId: `appointmentId${new Date().getTime()}`,
@@ -51,9 +53,20 @@ export class AddAppointmentModal extends Modal {
                         ...timeStamps(),
                         diagnosis: null,
                         assessment: null,
+                        date: dayjs(formValue.date).toJSON(),
                         ...(formValue.appointment.appointment_type ===
                         'Medico Legal'
-                            ? {medicoLegal: formValue.medicoLegal}
+                            ? {
+                                  medicoLegal: {
+                                      ...formValue.medicoLegal,
+                                      timeOfIncident: dayjs(
+                                          formValue.medicoLegal.timeOfIncident,
+                                      ).toJSON(),
+                                      dateOfIncident: dayjs(
+                                          formValue.medicoLegal.dateOfIncident,
+                                      ).toJSON(),
+                                  },
+                              }
                             : {}),
                     },
                 ],
