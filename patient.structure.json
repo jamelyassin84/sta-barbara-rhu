@@ -1,0 +1,106 @@
+{
+    "patients": {
+        "patientId1": {
+            "first_name": "John",
+            "last_name": "Doe",
+            "middle_name": "Smith",
+            "suffix_name": "",
+            "dob": "1990-01-01",
+            "address": "123 Main St",
+            "email": "john.doe@example.com",
+            "phone": "555-1234",
+            "createdAt": "2023-06-11T12:00:00Z",
+            "updatedAt": "2023-06-11T12:30:00Z",
+            "appointments": [
+                {
+                    "appointmentId": "appointmentId1",
+                    "date": "2023-06-13",
+                    "rhu": "RHU_1",
+                    "patientId": "patientId1",
+                    "diagnosis": {
+                        "diagnosisId": "diagnosisId1",
+                        "diagnosis": "Some diagnosis",
+                        "medication_or_treatment": "Some medication or treatment",
+                        "name_of_health_care_provider": "Dr. Smith",
+                        "laboratory_findings_or_impression": "Some findings",
+                        "performed_laboratory_test": "Some tests",
+                        "createdAt": "2023-06-11T13:00:00Z",
+                        "updatedAt": "2023-06-11T13:15:00Z"
+                    },
+                    "appointment_type": "GENERAL",
+                    "appointment_nature": "NEW_ADMISSION",
+                    "medicoLegal": {
+                        "incident": "Some incident",
+                        "timeOfIncident": "10:00 AM",
+                        "dateOfIncident": "2023-06-12",
+                        "placeOfIncident": "Some place",
+                        "dateOfArrival": "2023-06-12",
+                        "bloodPressure": "120/80",
+                        "injuries": ["Injury 1", "Injury 2"],
+                        "medications": ["Medication 1", "Medication 2"],
+                        "medicalAttendanceDays": 3,
+                        "createdAt": "2023-06-11T14:00:00Z",
+                        "updatedAt": "2023-06-11T14:30:00Z"
+                    },
+                    "assessment": {
+                        "weight": "70 kg",
+                        "height": "175 cm",
+                        "sex": "Male",
+                        "assessment_date": "2023-06-13",
+                        "body_temperature": "37.2°C",
+                        "blood_pressure": "120/80",
+                        "chief_complaints": "Some chief complaints",
+                        "createdAt": "2023-06-11T15:00:00Z",
+                        "updatedAt": "2023-06-11T15:15:00Z"
+                    },
+                    "createdAt": "2023-06-11T16:00:00Z",
+                    "updatedAt": "2023-06-11T16:30:00Z"
+                },
+                {
+                    "appointmentId": "appointmentId2",
+                    "date": "2023-06-15",
+                    "rhu": "RHU_2",
+                    "patientId": "patientId1",
+                    "diagnosis": {
+                        "diagnosisId": "diagnosisId2",
+                        "diagnosis": "Another diagnosis",
+                        "medication_or_treatment": "Another medication or treatment",
+                        "name_of_health_care_provider": "Dr. Johnson",
+                        "laboratory_findings_or_impression": "Another findings",
+                        "performed_laboratory_test": "Another tests",
+                        "createdAt": "2023-06-11T17:00:00Z",
+                        "updatedAt": "2023-06-11T17:15:00Z"
+                    },
+                    "appointment_type": "SPECIALIST",
+                    "appointment_nature": "FOLLOW_UP",
+                    "medicoLegal": {
+                        "incident": "Another incident",
+                        "timeOfIncident": "11:00 AM",
+                        "dateOfIncident": "2023-06-14",
+                        "placeOfIncident": "Another place",
+                        "dateOfArrival": "2023-06-14",
+                        "bloodPressure": "130/90",
+                        "injuries": ["Injury 3", "Injury 4"],
+                        "medications": ["Medication 3", "Medication 4"],
+                        "medicalAttendanceDays": 2,
+                        "createdAt": "2023-06-11T18:00:00Z",
+                        "updatedAt": "2023-06-11T18:30:00Z"
+                    },
+                    "assessment": {
+                        "weight": "75 kg",
+                        "height": "180 cm",
+                        "sex": "Male",
+                        "assessment_date": "2023-06-15",
+                        "body_temperature": "37.5°C",
+                        "blood_pressure": "130/90",
+                        "chief_complaints": "Another chief complaints",
+                        "createdAt": "2023-06-11T19:00:00Z",
+                        "updatedAt": "2023-06-11T19:15:00Z"
+                    },
+                    "createdAt": "2023-06-11T20:00:00Z",
+                    "updatedAt": "2023-06-11T20:30:00Z"
+                }
+            ]
+        }
+    }
+}

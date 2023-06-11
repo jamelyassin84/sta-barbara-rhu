@@ -8,175 +8,200 @@
     <modal-header
         [modalTitle]="'Book an Appointment'"
         (onClose)="opened$.next(false)"
-    >
-    </modal-header>
+    ></modal-header>
 
     <form
         style="height: 90vh"
+        [formGroup]="form"
         class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
+        (ngSubmit)="save()"
     >
-        <mat-form-field appearance="fill">
-            <mat-label> Select Rural Health Unit </mat-label>
+        <ng-container formGroupName="appointment" class="w-full">
+            <mat-form-field appearance="fill">
+                <mat-label>Select Rural Health Unit</mat-label>
+                <mat-select formControlName="rhu">
+                    <mat-option [value]="item" *ngFor="let item of RHU">{{
+                        item
+                    }}</mat-option>
+                </mat-select>
+                <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
+                <mat-error>RHU is required</mat-error>
+            </mat-form-field>
 
-            <mat-select>
-                <mat-option [value]="item" *ngFor="let item of RHU">{{
-                    item
-                }}</mat-option>
-            </mat-select>
+            <mat-form-field appearance="fill">
+                <mat-label>Select Appointment Type</mat-label>
+                <mat-select formControlName="appointment_type">
+                    <mat-option
+                        [value]="item"
+                        *ngFor="let item of APPOINTMENT_TYPES"
+                        >{{ item }}</mat-option
+                    >
+                </mat-select>
+                <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
+                <mat-error>Appointment type is required</mat-error>
+            </mat-form-field>
 
-            <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Nature of Visit</mat-label>
+                <mat-select formControlName="appointment_nature">
+                    <mat-option
+                        [value]="item"
+                        *ngFor="let item of APPOINTMENT_NATURES"
+                        >{{ item }}</mat-option
+                    >
+                </mat-select>
+                <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
+                <mat-error>Nature of visit is required</mat-error>
+            </mat-form-field>
+        </ng-container>
 
-        <mat-form-field appearance="fill">
-            <mat-label> Select Appointment Type </mat-label>
+        <ng-container formGroupName="patient">
+            <mat-form-field appearance="fill">
+                <mat-label>Symptoms</mat-label>
+                <textarea matInput formControlName="symptoms"></textarea>
+                <mat-error>Symptoms are required</mat-error>
+            </mat-form-field>
 
-            <mat-select>
-                <mat-option
-                    [value]="item"
-                    *ngFor="let item of APPOINTMENT_TYPES"
-                    >{{ item }}</mat-option
+            <mat-form-field appearance="fill">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" />
+                <mat-error
+                    >Email is required and should be a valid email
+                    format</mat-error
                 >
-            </mat-select>
+            </mat-form-field>
 
-            <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Phone</mat-label>
+                <input matInput formControlName="phone" />
+                <mat-error>Phone is required</mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Nature of Visit </mat-label>
+            <mat-form-field appearance="fill">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="first_name" />
+                <mat-error>First name is required</mat-error>
+            </mat-form-field>
 
-            <mat-select>
-                <mat-option
-                    [value]="item"
-                    *ngFor="let item of APPOINTMENT_NATURES"
-                    >{{ item }}</mat-option
-                >
-            </mat-select>
+            <mat-form-field appearance="fill">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="last_name" />
+                <mat-error>Last name is required</mat-error>
+            </mat-form-field>
 
-            <mat-icon matSuffix svgIcon="feather:chevron-down"></mat-icon>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Middle Name</mat-label>
+                <input matInput formControlName="middle_name" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Symptoms</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Suffix</mat-label>
+                <input matInput formControlName="suffix_name" />
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label
-                >Email
-                <span class="text-xs"
-                    >(Don't use another person email as it will be linked to
-                    their identity)</span
-                ></mat-label
-            >
-            <input matInput />
-        </mat-form-field>
+            <mat-form-field>
+                <mat-label>Date of Birth</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="dobPicker"
+                    placeholder="Choose a date"
+                    formControlName="dob"
+                />
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="dobPicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #dobPicker></mat-datepicker>
+                <mat-error>
+                    Date of Birth is required, cannot be today or in the future
+                </mat-error>
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Phone</mat-label>
-            <input matInput />
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Sex</mat-label>
+                <mat-select formControlName="sex">
+                    <mat-option [value]="item" *ngFor="let item of SEX">{{
+                        item
+                    }}</mat-option>
+                </mat-select>
+            </mat-form-field>
 
-        <mat-form-field appearance="fill">
-            <mat-label>First Name</mat-label>
-            <input matInput />
-        </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Residential Address</mat-label>
+                <textarea matInput formControlName="address"></textarea>
+                <mat-error>Residential Address is required</mat-error>
+            </mat-form-field>
+        </ng-container>
 
-        <mat-form-field appearance="fill">
-            <mat-label>Last Name</mat-label>
-            <input matInput />
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Middle Name</mat-label>
-            <input matInput />
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Suffix</mat-label>
-            <input matInput />
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Date of Birth</mat-label>
-            <input
-                matInput
-                [matDatepicker]="dobPicker"
-                placeholder="Choose a date"
-                [(ngModel)]="selectedDate"
-                name="selectedDate"
-            />
-            <mat-datepicker-toggle
-                matSuffix
-                [for]="dobPicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #dobPicker></mat-datepicker>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Sex </mat-label>
-
-            <mat-select>
-                <mat-option [value]="item" *ngFor="let item of SEX">{{
-                    item
-                }}</mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-            <mat-label>Residential Address</mat-label>
-            <textarea matInput></textarea>
-        </mat-form-field>
-
-        <ng-container>
+        <ng-container
+            *ngIf="form.value.appointment.appointment_type === 'Medico Legal'"
+            formGroupName="medicoLegal"
+        >
             <mat-form-field appearance="fill">
                 <mat-label>Incident</mat-label>
-                <input matInput />
+                <input matInput formControlName="incident" />
+                <mat-error>Incident is required</mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>Time of Incident</mat-label>
-                <input matInput type="time" />
+                <input matInput type="time" formControlName="timeOfIncident" />
+                <mat-error>
+                    Time of Incident is required & cannot be in the future
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>Date of Incident</mat-label>
                 <input
                     matInput
-                    [matDatepicker]="incidencePicker"
+                    [matDatepicker]="incidentDatePicker"
                     placeholder="Choose a date"
-                    [(ngModel)]="selectedDate"
-                    name="selectedDate"
+                    formControlName="dateOfIncident"
                 />
                 <mat-datepicker-toggle
                     matSuffix
-                    [for]="incidencePicker"
+                    [for]="incidentDatePicker"
                 ></mat-datepicker-toggle>
-                <mat-datepicker #incidencePicker></mat-datepicker>
+                <mat-datepicker #incidentDatePicker></mat-datepicker>
+                <mat-error>
+                    Date of Incident is required and cannot be in the future
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="fill">
                 <mat-label>Place of Incident</mat-label>
-                <textarea matInput></textarea>
+                <textarea matInput formControlName="placeOfIncident"></textarea>
+                <mat-error>Place of Incident is required</mat-error>
             </mat-form-field>
         </ng-container>
 
-        <mat-form-field>
-            <mat-label>Preferred Appointment Date</mat-label>
-            <input
-                matInput
-                [matDatepicker]="preferredAppointmentDatePicker"
-                placeholder="Choose a date"
-                [(ngModel)]="selectedDate"
-                name="selectedDate"
-            />
-            <mat-datepicker-toggle
-                matSuffix
-                [for]="preferredAppointmentDatePicker"
-            ></mat-datepicker-toggle>
-            <mat-datepicker #preferredAppointmentDatePicker></mat-datepicker>
-        </mat-form-field>
+        <ng-container formGroupName="appointment" class="w-full">
+            <mat-form-field>
+                <mat-label>Preferred Appointment Date</mat-label>
+                <input
+                    matInput
+                    [matDatepicker]="preferredAppointmentDatePicker"
+                    placeholder="Choose a date"
+                    formControlName="date"
+                />
+                <mat-datepicker-toggle
+                    matSuffix
+                    [for]="preferredAppointmentDatePicker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker
+                    #preferredAppointmentDatePicker
+                ></mat-datepicker>
+                <mat-error *ngIf="form.get('appointment.date').invalid">
+                    Appointment date is required and cannot be in the past
+                </mat-error>
+            </mat-form-field>
+        </ng-container>
 
-        <button class="py-4 mt-4 text-white bg-black rounded-full">
+        <button
+            (click)="save()"
+            class="py-4 mt-4 text-white bg-black rounded-full"
+        >
             Book an Appointment
         </button>
     </form>

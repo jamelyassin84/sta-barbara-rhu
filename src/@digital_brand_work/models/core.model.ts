@@ -101,10 +101,13 @@ export interface Alert {
     type: 'success' | 'info' | 'error'
 }
 
-export function timeStamps(date: Date, type: 'update' | 'create' = 'create') {
+export function timeStamps(
+    date: Date = undefined,
+    type: 'update' | 'create' = 'create',
+) {
     const data = {createdAt: dayjs().add(1, 'day').toJSON()}
 
-    if (type === 'update') {
+    if (type === 'update' && date) {
         data['updatedAt'] = dayjs().add(1, 'day').toJSON()
         data['createdAt'] = dayjs(date).toJSON()
     }
