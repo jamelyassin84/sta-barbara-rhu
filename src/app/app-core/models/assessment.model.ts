@@ -1,4 +1,6 @@
-export interface Assessment {
+import {NodeBaseModel} from '@digital_brand_work/models/core.model'
+
+export interface Assessment extends NodeBaseModel {
     weight: string
     height: string
     sex: string

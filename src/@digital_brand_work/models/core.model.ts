@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export interface PHPBaseModel {
     id?: string
     created_at?: string
@@ -97,4 +99,15 @@ export interface Alert {
     title: string
     message: string
     type: 'success' | 'info' | 'error'
+}
+
+export function timeStamps(date: Date, type: 'update' | 'create' = 'create') {
+    const data = {createdAt: dayjs().add(1, 'day').toJSON()}
+
+    if (type === 'update') {
+        data['updatedAt'] = dayjs().add(1, 'day').toJSON()
+        data['createdAt'] = dayjs(date).toJSON()
+    }
+
+    return data
 }

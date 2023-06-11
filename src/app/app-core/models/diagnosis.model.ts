@@ -1,6 +1,7 @@
+import {NodeBaseModel} from '@digital_brand_work/models/core.model'
 import {Patient} from './patient.model'
 
-export interface Diagnosis {
+export interface Diagnosis extends NodeBaseModel {
     diagnosis: string
     medication_or_treatment: string
     name_of_health_care_provider: string
