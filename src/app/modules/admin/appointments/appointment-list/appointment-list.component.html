@@ -27,7 +27,7 @@
                     class="border-t border-gray-100 hover:bg-slate-100"
                 >
                     <td>{{ appointment.appointmentId }}</td>
-                    <td>{{ appointment.patientId }}</td>
+                    <td>{{ appointment?.patient?.first_name }}</td>
                     <td>{{ appointment.appointment_type }}</td>
                     <td>{{ appointment.appointment_nature }}</td>
                     <td>{{ appointment.date }}</td>
