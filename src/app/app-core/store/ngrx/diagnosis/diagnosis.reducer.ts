@@ -5,14 +5,14 @@ import {createReducer, on} from '@ngrx/store'
 import {Diagnosis} from 'app/app-core/models/diagnosis.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 
-export const adapter: EntityAdapter<Diagnosis> =
+export const diagnosisAdapter: EntityAdapter<Diagnosis> =
     createEntityAdapter<Diagnosis>()
 
 export interface DiagnosisState extends EntityState<Diagnosis>, StoreLoaders {
     error: any
 }
 
-export const initialState: DiagnosisState = adapter.getInitialState({
+export const initialState: DiagnosisState = diagnosisAdapter.getInitialState({
     ...STORE_LOADERS,
     error: null,
 })
@@ -35,10 +35,10 @@ export const diagnosisReducer = createReducer(
     }),
 
     on(StoreAction.DIAGNOSIS.load.onSuccess, (state, action) =>
-        adapter.setAll(action.diagnosis, state),
+        diagnosisAdapter.setAll(action.diagnosis, state),
     ),
 
     on(StoreAction.DIAGNOSIS.upsert.onSuccess, (state, action) =>
-        adapter.upsertOne(action.diagnosis, state),
+        diagnosisAdapter.upsertOne(action.diagnosis, state),
     ),
 )

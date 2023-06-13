@@ -5,14 +5,14 @@ import {createReducer, on} from '@ngrx/store'
 import {Analytics} from 'app/app-core/models/analytics.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 
-export const adapter: EntityAdapter<Analytics> =
+export const analyticsAdapter: EntityAdapter<Analytics> =
     createEntityAdapter<Analytics>()
 
 export interface AnalyticsState extends EntityState<Analytics>, StoreLoaders {
     error: any
 }
 
-export const initialState: AnalyticsState = adapter.getInitialState({
+export const initialState: AnalyticsState = analyticsAdapter.getInitialState({
     ...STORE_LOADERS,
     error: null,
 })
@@ -35,6 +35,6 @@ export const analyticsReducer = createReducer(
     }),
 
     on(StoreAction.ANALYTICS.load.onSuccess, (state, action) =>
-        adapter.setAll(action.analytics, state),
+        analyticsAdapter.setAll(action.analytics, state),
     ),
 )

@@ -5,7 +5,7 @@ import {createReducer, on} from '@ngrx/store'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 
-export const adapter: EntityAdapter<Appointment> =
+export const appointmentAdapter: EntityAdapter<Appointment> =
     createEntityAdapter<Appointment>()
 
 export interface AppointmentState
@@ -14,10 +14,11 @@ export interface AppointmentState
     error: any
 }
 
-export const initialState: AppointmentState = adapter.getInitialState({
-    ...STORE_LOADERS,
-    error: null,
-})
+export const initialState: AppointmentState =
+    appointmentAdapter.getInitialState({
+        ...STORE_LOADERS,
+        error: null,
+    })
 
 export const appointmentsReducer = createReducer(
     initialState,
@@ -37,14 +38,14 @@ export const appointmentsReducer = createReducer(
     }),
 
     on(StoreAction.APPOINTMENTS.load.onSuccess, (state, action) =>
-        adapter.setAll(action.appointments, state),
+        appointmentAdapter.setAll(action.appointments, state),
     ),
 
     on(StoreAction.APPOINTMENTS.upsert.onSuccess, (state, action) =>
-        adapter.upsertOne(action.appointment, state),
+        appointmentAdapter.upsertOne(action.appointment, state),
     ),
 
     on(StoreAction.APPOINTMENTS.remove.request, (state, action) =>
-        adapter.removeOne(action.id, state),
+        appointmentAdapter.removeOne(action.id, state),
     ),
 )

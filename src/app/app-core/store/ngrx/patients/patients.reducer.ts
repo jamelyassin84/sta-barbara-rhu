@@ -5,13 +5,14 @@ import {createReducer, on} from '@ngrx/store'
 import {Patient} from 'app/app-core/models/patient.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 
-export const adapter: EntityAdapter<Patient> = createEntityAdapter<Patient>()
+export const patientAdapter: EntityAdapter<Patient> =
+    createEntityAdapter<Patient>()
 
 export interface PatientState extends EntityState<Patient>, StoreLoaders {
     error: any
 }
 
-export const initialState: PatientState = adapter.getInitialState({
+export const initialState: PatientState = patientAdapter.getInitialState({
     ...STORE_LOADERS,
     error: null,
 })
@@ -34,14 +35,14 @@ export const patientsReducer = createReducer(
     }),
 
     on(StoreAction.PATIENTS.load.onSuccess, (state, action) =>
-        adapter.setAll(action.patients, state),
+        patientAdapter.setAll(action.patients, state),
     ),
 
     on(StoreAction.PATIENTS.upsert.onSuccess, (state, action) =>
-        adapter.upsertOne(action.patient, state),
+        patientAdapter.upsertOne(action.patient, state),
     ),
 
     on(StoreAction.PATIENTS.remove.request, (state, action) =>
-        adapter.removeOne(action.id, state),
+        patientAdapter.removeOne(action.id, state),
     ),
 )

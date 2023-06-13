@@ -1,7 +1,7 @@
 import {createReducer, on} from '@ngrx/store'
-import {EntityState, EntityAdapter, createEntityAdapter} from '@ngrx/entity'
 import * as AlertActions from './alert.actions'
 import {Alert} from '@digital_brand_work/models/core.model'
+import {EntityAdapter, EntityState, createEntityAdapter} from '@ngrx/entity'
 
 export const alertsFeatureKey = 'alerts'
 
