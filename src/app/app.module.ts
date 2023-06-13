@@ -15,7 +15,8 @@ import {SharedModule} from './shared/shared.module';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore'
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { StoreModule } from '@ngrx/store'
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -38,7 +39,7 @@ const modules = [
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [...modules, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore())],
+    imports: [...modules, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), StoreModule.forRoot({}, {})],
     bootstrap: [AppComponent],
 })
 export class AppModule {}
