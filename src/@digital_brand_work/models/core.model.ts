@@ -1,3 +1,5 @@
+import {LoadingStateEnum} from '@digital_brand_work/states/store/enums/loading-state.enum'
+import {LoadingTypeEnum} from '@digital_brand_work/states/store/enums/loading-type.enum'
 import dayjs from 'dayjs'
 
 export interface PHPBaseModel {
@@ -93,6 +95,11 @@ export type NodeFile =
     | {
           url: string
       }
+
+export interface LoadingState {
+    state: LoadingStateEnum
+    type: LoadingTypeEnum
+}
 
 export interface Alert {
     id?: string
