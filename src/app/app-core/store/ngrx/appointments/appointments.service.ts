@@ -32,22 +32,17 @@ export class AssessmentService {
                     this._store.dispatch(StoreAction.PATIENTS.load.request())
                 }
             }),
-            map((patients) => {
-                const appointments: Appointment[] = patients.reduce(
-                    (accumulatedAppointments, patient) => {
-                        const patientAppointments = patient.appointments.filter(
+            map((patients) =>
+                patients.reduce((acc, p) => {
+                    return acc.concat(
+                        p.appointments.filter(
                             (appointment) =>
                                 dayjs(appointment.date).format('MM-DD-YY') ===
                                     today.format('MM-DD-YY') && isToday,
-                        )
-                        return accumulatedAppointments.concat(
-                            patientAppointments,
-                        )
-                    },
-                    [],
-                )
-                return appointments
-            }),
+                        ),
+                    )
+                }, []),
+            ),
         )
     }
 }
