@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core'
 import {FormBuilder, Validators, AbstractControl} from '@angular/forms'
-import {RHUEnum} from '../enums/rhu.enum'
-import {AppointmentTypeEnum} from '../enums/appointment-type.enum'
-import {AppointmentNatureEnum} from '../enums/appointment-nature.enum'
-import {SexEnum} from '../enums/sex.enum'
+import {RHUEnum} from '../../../enums/rhu.enum'
+import {AppointmentTypeEnum} from '../../../enums/appointment-type.enum'
+import {AppointmentNatureEnum} from '../../../enums/appointment-nature.enum'
+import {SexEnum} from '../../../enums/sex.enum'
 import dayjs from 'dayjs'
 
 @Injectable({providedIn: 'root'})

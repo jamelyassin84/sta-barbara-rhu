@@ -6,7 +6,7 @@ import {AppointmentTypeEnum} from 'app/app-core/enums/appointment-type.enum'
 import {RHUEnum} from 'app/app-core/enums/rhu.enum'
 import {SexEnum} from 'app/app-core/enums/sex.enum'
 import {EmailService} from 'app/app-core/services/mail.service'
-import {AppointmentForm} from 'app/app-core/forms/appointment.form'
+import {AppointmentForm} from 'app/app-core/store/ngrx/appointments/appointments.form'
 import {take} from 'rxjs'
 
 @Component({
