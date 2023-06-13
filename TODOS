@@ -1,1 +1,8 @@
 sendgrid: 8Cv$6Yk!pT@2jKw#
+
+
+ng update @angular/cdk --force --allow-dirty
+ng update @angular/cli --force --allow-dirty
+ng update @angular/core --force --allow-dirty
+ng update @angular/material --force --allow-dirty
+ng update @ngrx/store --force --allow-dirty
