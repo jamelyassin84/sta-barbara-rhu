@@ -32,4 +32,17 @@ export class AssessmentService {
             ),
         )
     }
+
+    upsert(
+        appointment: Appointment,
+        assessment: Assessment,
+    ): Observable<Assessment> {
+        return this.appointments$.pipe(
+            map(
+                (appointments) =>
+                    appointments.find((a) => a.id === appointment.id)
+                        .assessment,
+            ),
+        )
+    }
 }

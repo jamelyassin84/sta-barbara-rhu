@@ -1,3 +1,4 @@
+import {Store} from '@ngrx/store'
 import {Component} from '@angular/core'
 import {AddAppointmentModal} from './add-appointment-modal.service'
 import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
@@ -8,6 +9,8 @@ import {SexEnum} from 'app/app-core/enums/sex.enum'
 import {EmailService} from 'app/app-core/services/mail.service'
 import {AppointmentForm} from 'app/app-core/store/ngrx/appointments/appointments.form'
 import {take} from 'rxjs'
+import {AppState} from 'app/app-core/store/core/app.state'
+import {StoreAction} from 'app/app-core/store/core/action.enum'
 
 @Component({
     selector: 'add-appointment-modal',
@@ -16,6 +19,7 @@ import {take} from 'rxjs'
 })
 export class AddAppointmentModalComponent {
     constructor(
+        private _store: Store<AppState>,
         private _emailService: EmailService,
         private _appointmentForm: AppointmentForm,
         private _addAppointmentModal: AddAppointmentModal,
@@ -57,8 +61,12 @@ export class AddAppointmentModalComponent {
     checkIfAnimalBite(): void {}
 
     async save() {
-        await this._addAppointmentModal.save(this.form)
-        alert('Appointment Confirmed')
+        this._store.dispatch(
+            StoreAction.APPOINTMENTS.upsert.request({
+                appointmentForm: this.form,
+            }),
+        )
+
         this.sendEmail()
     }
 

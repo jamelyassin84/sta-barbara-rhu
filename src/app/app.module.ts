@@ -1,3 +1,4 @@
+import {EffectsModule} from '@ngrx/effects'
 import {NgModule, isDevMode} from '@angular/core'
 import {BrowserModule} from '@angular/platform-browser'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
@@ -11,12 +12,12 @@ import {mockApiServices} from 'app/mock-api'
 import {LayoutModule} from 'app/layout/layout.module'
 import {AppComponent} from 'app/app.component'
 import {appRoutes} from 'app/app.routing'
-import {SharedModule} from './shared/shared.module';
-import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-import { environment } from '../environments/environment';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { StoreModule } from '@ngrx/store'
+import {SharedModule} from './shared/shared.module'
+import {initializeApp, provideFirebaseApp} from '@angular/fire/app'
+import {environment} from '../environments/environment'
+import {provideAuth, getAuth} from '@angular/fire/auth'
+import {provideFirestore, getFirestore} from '@angular/fire/firestore'
+import {StoreModule} from '@ngrx/store'
 
 const routerConfig: ExtraOptions = {
     preloadingStrategy: PreloadAllModules,
@@ -31,7 +32,7 @@ const modules = [
     BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
-
+    EffectsModule.forRoot([]),
     FuseConfigModule.forRoot(appConfig),
     FuseMockApiModule.forRoot(mockApiServices),
     RouterModule.forRoot(appRoutes, routerConfig),
@@ -39,7 +40,13 @@ const modules = [
 
 @NgModule({
     declarations: [AppComponent],
-    imports: [...modules, provideFirebaseApp(() => initializeApp(environment.firebase)), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), StoreModule.forRoot({}, {})],
+    imports: [
+        ...modules,
+        provideFirebaseApp(() => initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
+        StoreModule.forRoot({}, {}),
+    ],
     bootstrap: [AppComponent],
 })
 export class AppModule {}

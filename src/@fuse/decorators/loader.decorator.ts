@@ -1,4 +1,4 @@
-import {LoadingTypeEnum} from '@digital_brand_work/enums/loading-type.enum'
+import {LoadingTypeEnum} from '@digital_brand_work/states/store/enums/loading-type.enum'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 import {Observable} from 'rxjs'
 

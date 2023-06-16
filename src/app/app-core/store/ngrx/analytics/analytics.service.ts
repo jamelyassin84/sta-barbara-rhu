@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core'
-import {AngularFirestore} from '@angular/fire/compat/firestore'
 import {Store} from '@ngrx/store'
 import {Observable, combineLatest, map, tap} from 'rxjs'
 import {AppState} from '../../core/app.state'
@@ -43,7 +42,7 @@ export class AnalyticsService {
 
                 if (appointments.length) {
                     this._store.dispatch(
-                        StoreAction.APPOINTMENTS.load.request(),
+                        StoreAction.APPOINTMENTS.load.request({isToday: false}),
                     )
                 }
             }),

@@ -11,7 +11,7 @@ import {StoreLoaderService} from '@digital_brand_work/services/store-loader.serv
 import {Diagnosis} from 'app/app-core/models/diagnosis.model'
 
 @Injectable({providedIn: 'root'})
-export class AssessmentService {
+export class DiagnosisService {
     constructor(
         private _store: Store<AppState>,
         private _storeLoaderService: StoreLoaderService,

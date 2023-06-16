@@ -16,6 +16,7 @@
         "useDefineForClassFields": false,
         "lib": ["ES2022", "dom"]
     },
+    "exclude": ["node_modules/@types/node"],
     "angularCompilerOptions": {
         "enableI18nLegacyMessageIdFormat": false
     }
