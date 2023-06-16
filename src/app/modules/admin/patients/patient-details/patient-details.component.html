@@ -1,58 +1,53 @@
-<div class="flex flex-col w-full">
+<div *ngIf="patient$ | async as patient" class="flex flex-col w-full">
     <route-header
-        pageTitle="John Doe"
-        subtitle="Here is the data of John Doe"
+        [pageTitle]="patient | to_full_name"
+        subtitle="Here is the data of {{ patient.first_name }}"
         icon="heroicons_outline:user-group"
         class="w-full"
     ></route-header>
 
     <div class="grid grid-cols-3 gap-10 p-5 bg-white border-y">
         <div>
-            <div class="text-gray-500">First name</div>
-            <div class="font-bold">John</div>
-        </div>
-
-        <div>
-            <div class="text-gray-500">Last name</div>
-            <div class="font-bold">Garner</div>
-        </div>
-
-        <div>
             <div class="text-gray-500">Middle name</div>
-            <div class="font-bold">John</div>
+            <div class="font-bold">{{ patient.middle_name }}</div>
         </div>
 
         <div>
             <div class="text-gray-500">Suffix</div>
-            <div class="font-bold">Jr</div>
+            <div class="font-bold">{{ patient.suffix_name ?? 'N/A' }}</div>
         </div>
 
         <div>
             <div class="text-gray-500">Sex</div>
-            <div class="font-bold">Male</div>
+            <div class="font-bold">{{ patient.sex }}</div>
         </div>
 
         <div>
             <div class="text-gray-500">DOB</div>
-            <div class="font-bold">11/14/1994</div>
+            <div class="font-bold">
+                {{ patient.dob | date : 'MMMM dd YYYY' }}
+            </div>
         </div>
 
         <div>
             <div class="text-gray-500">Age</div>
-            <div class="font-bold">28</div>
+            <div class="font-bold">{{ patient.dob | age }}</div>
         </div>
 
         <div>
             <div class="text-gray-500">Email</div>
-            <div class="font-bold">john@company.ph</div>
+            <div class="font-bold">{{ patient.email }}</div>
         </div>
 
         <div>
             <div class="text-gray-500">Phone</div>
-            <div class="font-bold">09192334324</div>
+            <div class="font-bold">{{ patient.phone }}</div>
         </div>
     </div>
 
-    <div class="px-5 py-2 text-xl font-bold bg-white">John's Appointments</div>
-    <appointment-list></appointment-list>
+    <div class="px-5 py-2 text-xl font-bold bg-white">
+        {{ patient.first_name }}'s Appointments
+    </div>
+
+    <appointment-list [appointments]="patient.appointments" />
 </div>

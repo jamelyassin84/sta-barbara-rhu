@@ -32,6 +32,38 @@ export class AppointmentEffects {
         ),
     )
 
+    update$ = createEffect(() =>
+        this._actions$.pipe(
+            ofType(StoreAction.APPOINTMENTS.update.request),
+            switchMap((action) =>
+                this._appointmentService
+                    .updateAppointment(action.appointment)
+                    .pipe(
+                        map((response) =>
+                            StoreAction.APPOINTMENTS.update.onSuccess({
+                                appointment: response,
+                            }),
+                        ),
+                    ),
+            ),
+        ),
+    )
+
+    remove$ = createEffect(() =>
+        this._actions$.pipe(
+            ofType(StoreAction.APPOINTMENTS.remove.request),
+            switchMap((action) =>
+                this._appointmentService.remove(action.appointment).pipe(
+                    map((response) =>
+                        StoreAction.APPOINTMENTS.remove.onSuccess({
+                            id: response,
+                        }),
+                    ),
+                ),
+            ),
+        ),
+    )
+
     upsert$ = createEffect(
         () =>
             this._actions$.pipe(
@@ -39,16 +71,23 @@ export class AppointmentEffects {
                 tap((action) =>
                     this._appointmentService
                         .upsert(action.appointmentForm)
-                        .subscribe(() => {
-                            this._alertService.addAlert({
-                                title: 'You have succesffully booked your appointment',
-                                message:
-                                    'We have send an email to you please check your inbox',
-                                type: 'success',
-                            })
+                        .pipe(
+                            tap(() => {
+                                this._alertService.addAlert({
+                                    title: 'You have succesffully booked your appointment',
+                                    message:
+                                        'We have send an email to you please check your inbox',
+                                    type: 'success',
+                                })
 
-                            this._addAppointmentModal.opened$.next(false)
-                        }),
+                                this._addAppointmentModal.opened$.next(false)
+                            }),
+                            map((response) =>
+                                StoreAction.PATIENTS.upsert.onSuccess({
+                                    patient: response,
+                                }),
+                            ),
+                        ),
                 ),
             ),
         {dispatch: false},

@@ -9,4 +9,9 @@ export const patientLoaders = createSelector(feature, (state: PatientState) =>
     getStoreLoaders(state),
 )
 
+export const getPatient = createSelector(
+    feature,
+    (state: PatientState) => state.patient,
+)
+
 export const patientsBaseSelectors = patientAdapter.getSelectors()

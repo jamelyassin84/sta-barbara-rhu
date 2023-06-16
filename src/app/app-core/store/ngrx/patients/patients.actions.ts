@@ -12,6 +12,14 @@ export const load = createActionGroup({
     },
 })
 
+export const show = createActionGroup({
+    source: 'Patient Update',
+    events: {
+        request: props<{id: string}>(),
+        onSuccess: props<{patient: Patient}>(),
+    },
+})
+
 export const upsert = createActionGroup({
     source: 'Patient Update',
     events: {

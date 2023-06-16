@@ -94,6 +94,81 @@ export class AppointmentService {
         )
     }
 
+    @Loader({state: 'APPOINTMENTS', loading: LoadingTypeEnum.UPDATE})
+    updateAppointment(appointment: Appointment): Observable<Appointment> {
+        return this.patients$.pipe(
+            take(1),
+            map((patients) => {
+                let patient = patients.find(
+                    (p) => p.id === appointment.patient.id,
+                )
+
+                let patientAppointments = cloneDeep(patient.appointments)
+
+                if (patient) {
+                    let index = patientAppointments.findIndex(
+                        (a) => a.id === appointment.id,
+                    )
+
+                    if (index >= 0) {
+                        patientAppointments[index] = {
+                            ...appointment,
+                            ...timeStamps(dayjs().toJSON(), 'update'),
+                        } as any
+                    }
+
+                    const payload = {
+                        ...patient,
+                        appointments: patientAppointments,
+                    }
+
+                    this._fireStore
+                        .collection(CollectionEnum.PATIENTS)
+                        .doc(patient.id)
+                        .update(payload)
+                }
+
+                return appointment
+            }),
+        )
+    }
+
+    @Loader({state: 'APPOINTMENTS', loading: LoadingTypeEnum.REMOVE})
+    remove(appointment: Appointment): Observable<string> {
+        return this.patients$.pipe(
+            take(1),
+            map((patients) => {
+                let patient = patients.find(
+                    (p) => p.id === appointment.patient.id,
+                )
+
+                let patientAppointments = cloneDeep(patient.appointments)
+
+                if (patient) {
+                    let index = patientAppointments.findIndex(
+                        (a) => a.id === appointment.id,
+                    )
+
+                    if (index >= 0) {
+                        patientAppointments.splice(index, 1)
+                    }
+
+                    const payload = {
+                        ...patient,
+                        appointments: patientAppointments,
+                    }
+
+                    this._fireStore
+                        .collection(CollectionEnum.PATIENTS)
+                        .doc(patient.id)
+                        .update(payload)
+                }
+
+                return appointment.id
+            }),
+        )
+    }
+
     private add(form: FormGroup): Observable<Patient> {
         const patientId = `P-${uuid.v4()}`
 

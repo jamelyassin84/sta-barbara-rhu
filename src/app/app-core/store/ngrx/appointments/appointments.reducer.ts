@@ -41,11 +41,15 @@ export const appointmentsReducer = createReducer(
         appointmentAdapter.setAll(action.appointments, state),
     ),
 
+    on(StoreAction.APPOINTMENTS.update.onSuccess, (state, action) =>
+        appointmentAdapter.upsertOne(action.appointment, state),
+    ),
+
     on(StoreAction.APPOINTMENTS.upsert.onSuccess, (state, action) =>
         appointmentAdapter.upsertOne(action.appointment, state),
     ),
 
-    on(StoreAction.APPOINTMENTS.remove.request, (state, action) =>
+    on(StoreAction.APPOINTMENTS.remove.onSuccess, (state, action) =>
         appointmentAdapter.removeOne(action.id, state),
     ),
 )

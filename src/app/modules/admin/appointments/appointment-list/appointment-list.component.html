@@ -89,7 +89,7 @@
 
                                 <button
                                     mat-menu-item
-                                    (click)="updateAssessment()"
+                                    (click)="updateAssessment(appointment)"
                                     class="hover:bg-brand-color hover:text-white"
                                 >
                                     Assessment
@@ -97,7 +97,7 @@
 
                                 <button
                                     mat-menu-item
-                                    (click)="updateDiagnosis()"
+                                    (click)="updateDiagnosis(appointment)"
                                     class="hover:bg-brand-color hover:text-white"
                                 >
                                     Diagnosis
@@ -110,15 +110,16 @@
                                     Print Medications
                                 </button>
 
-                                <button
+                                <!-- <button
                                     mat-menu-item
                                     class="hover:bg-brand-color hover:text-white"
                                 >
                                     Print Records
-                                </button>
+                                </button> -->
 
                                 <button
                                     mat-menu-item
+                                    (click)="remove(appointment)"
                                     class="hover:bg-brand-color hover:text-white"
                                 >
                                     Remove

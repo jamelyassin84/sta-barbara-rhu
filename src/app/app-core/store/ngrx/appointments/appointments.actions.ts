@@ -14,9 +14,17 @@ export const load = createActionGroup({
 })
 
 export const upsert = createActionGroup({
-    source: 'Appointment Update',
+    source: 'Appointment Upsert',
     events: {
         request: props<{appointmentForm: FormGroup}>(),
+        onSuccess: props<{appointment: Appointment}>(),
+    },
+})
+
+export const update = createActionGroup({
+    source: 'Appointment Update',
+    events: {
+        request: props<{appointment: Appointment}>(),
         onSuccess: props<{appointment: Appointment}>(),
     },
 })
@@ -24,7 +32,7 @@ export const upsert = createActionGroup({
 export const remove = createActionGroup({
     source: 'Appointment Delete',
     events: {
-        request: props<{id: string}>(),
+        request: props<{appointment: Appointment}>(),
         onSuccess: props<{id: string}>(),
     },
 })

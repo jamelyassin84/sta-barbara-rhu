@@ -109,7 +109,7 @@ export interface Alert {
 }
 
 export function timeStamps(
-    date: Date = undefined,
+    date: any = undefined,
     type: 'update' | 'create' = 'create',
 ) {
     const data = {createdAt: dayjs().add(1, 'day').toJSON()}

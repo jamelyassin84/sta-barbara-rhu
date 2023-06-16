@@ -26,4 +26,19 @@ export class PatientEffects {
             ),
         ),
     )
+
+    show$ = createEffect(() =>
+        this._actions$.pipe(
+            ofType(StoreAction.PATIENTS.show.request),
+            switchMap((action) =>
+                this._patientService.show(action.id).pipe(
+                    map((response) =>
+                        StoreAction.PATIENTS.show.onSuccess({
+                            patient: response,
+                        }),
+                    ),
+                ),
+            ),
+        ),
+    )
 }

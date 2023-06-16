@@ -13,7 +13,7 @@
             "updatedAt": "2023-06-11T12:30:00Z",
             "appointments": [
                 {
-                    "appointmentId": "appointmentId1",
+                    "id": "id1",
                     "date": "2023-06-13",
                     "rhu": "RHU_1",
                     "patientId": "patientId1",
@@ -57,7 +57,7 @@
                     "updatedAt": "2023-06-11T16:30:00Z"
                 },
                 {
-                    "appointmentId": "appointmentId2",
+                    "id": "id2",
                     "date": "2023-06-15",
                     "rhu": "RHU_2",
                     "patientId": "patientId1",

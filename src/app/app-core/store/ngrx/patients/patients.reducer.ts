@@ -10,29 +10,32 @@ export const patientAdapter: EntityAdapter<Patient> =
 
 export interface PatientState extends EntityState<Patient>, StoreLoaders {
     error: any
+    patient: Patient
 }
 
 export const initialState: PatientState = patientAdapter.getInitialState({
     ...STORE_LOADERS,
     error: null,
+    patient: undefined,
 })
 
 export const patientsReducer = createReducer(
     initialState,
 
-    on(StoreAction.PATIENTS.SYSTEM.setLoader, (state, action) => {
-        return {
-            ...state,
-            [`${action.loading.type}Loader`]: action.loading.state,
-        }
-    }),
+    on(StoreAction.PATIENTS.SYSTEM.setLoader, (state, action) => ({
+        ...state,
+        [`${action.loading.type}Loader`]: action.loading.state,
+    })),
 
-    on(StoreAction.PATIENTS.SYSTEM.onError, (state, action) => {
-        return {
-            ...state,
-            error: action.error,
-        }
-    }),
+    on(StoreAction.PATIENTS.SYSTEM.onError, (state, action) => ({
+        ...state,
+        error: action.error,
+    })),
+
+    on(StoreAction.PATIENTS.show.onSuccess, (state, action) => ({
+        ...state,
+        patient: action.patient,
+    })),
 
     on(StoreAction.PATIENTS.load.onSuccess, (state, action) =>
         patientAdapter.setAll(action.patients, state),

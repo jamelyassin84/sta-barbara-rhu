@@ -28,4 +28,12 @@ export class PatientService {
             .valueChanges({idField: 'id'})
             .pipe(take(1), distinctUntilChanged())
     }
+
+    show(id: string): Observable<Patient> {
+        return this._fireStore
+            .collection<Patient>(CollectionEnum.PATIENTS)
+            .doc(id)
+            .valueChanges({idField: 'id'})
+            .pipe(take(1), distinctUntilChanged())
+    }
 }
