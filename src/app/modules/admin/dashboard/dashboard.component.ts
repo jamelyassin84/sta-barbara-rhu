@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core'
-import {AngularFirestore} from '@angular/fire/compat/firestore'
-import {Observable} from 'rxjs'
-import {map} from 'rxjs/operators'
-import dayjs from 'dayjs'
-import {Patient} from 'app/app-core/models/patient.model'
+import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
+import {Store} from '@ngrx/store'
+import {Analytics} from 'app/app-core/models/analytics.model'
 import {Appointment} from 'app/app-core/models/appointment.model'
+import {StoreAction} from 'app/app-core/store/core/action.enum'
+import {AppState} from 'app/app-core/store/core/app.state'
+import {StateEnum} from 'app/app-core/store/core/state.enum'
+import {Observable} from 'rxjs'
 
 @Component({
     selector: 'dashboard',
@@ -12,92 +14,21 @@ import {Appointment} from 'app/app-core/models/appointment.model'
     styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-    totalPatientsCount$: Observable<number>
-    totalAppointmentsCount$: Observable<number>
-    totalAppointmentsTodayCount$: Observable<number>
-    diagnosisTodayCount$: Observable<number>
+    constructor(private _store: Store<AppState>) {}
 
-    todayAppointments$: Observable<Appointment[]>
+    @State({selector: StateEnum.ANALYTICS, type: 'object'})
+    readonly analytics$: Observable<Analytics>
 
-    constructor(private firestore: AngularFirestore) {}
+    @State({selector: StateEnum.APPOINTMENTS, type: 'array'})
+    readonly appointments$: Observable<Appointment[]>
 
     ngOnInit() {
-        this.totalPatientsCount$ = this.getTotalPatientsCount()
-        this.totalAppointmentsCount$ = this.getTotalAppointmentsCount()
-        this.totalAppointmentsTodayCount$ =
-            this.getTotalAppointmentsTodayCount()
-        this.diagnosisTodayCount$ = this.getDiagnosisTodayCount()
-        this.todayAppointments$ = this.fetchAppointmentsToday()
-    }
+        setTimeout(() => {
+            this._store.dispatch(StoreAction.ANALYTICS.load.request())
 
-    fetchAppointmentsToday(): Observable<Appointment[]> {
-        const today = dayjs().startOf('day')
-
-        return this.firestore
-            .collection<Patient>('patients')
-            .valueChanges()
-            .pipe(
-                map((patients) => {
-                    const appointmentsToday: Appointment[] = []
-                    patients.forEach((patient) => {
-                        if (patient.appointments) {
-                            patient.appointments.forEach((appointment) => {
-                                if (
-                                    dayjs(appointment.date).format(
-                                        'MM-DD-YY',
-                                    ) === today.format('MM-DD-YY')
-                                ) {
-                                    appointmentsToday.push(appointment)
-                                }
-                            })
-                        }
-                    })
-                    return appointmentsToday
-                }),
+            this._store.dispatch(
+                StoreAction.APPOINTMENTS.load.request({isToday: true}),
             )
-    }
-
-    getTotalPatientsCount(): Observable<number> {
-        return this.firestore
-            .collection<Patient>('patients')
-            .valueChanges()
-            .pipe(map((patients) => patients.length))
-    }
-
-    getTotalAppointmentsCount(): Observable<number> {
-        return this.firestore
-            .collection<Patient>('patients')
-            .valueChanges()
-            .pipe(
-                map((patients) => {
-                    let appointmentsCount = 0
-                    patients.forEach((patient) => {
-                        if (patient.appointments) {
-                            appointmentsCount += patient.appointments.length
-                        }
-                    })
-                    return appointmentsCount
-                }),
-            )
-    }
-
-    getTotalAppointmentsTodayCount(): Observable<number> {
-        return this.fetchAppointmentsToday().pipe(
-            map((appointmentsToday) => appointmentsToday.length),
-        )
-    }
-
-    getDiagnosisTodayCount(): Observable<number> {
-        return this.fetchAppointmentsToday().pipe(
-            map((appointmentsToday) => {
-                let diagnosisCount = 0
-                appointmentsToday.forEach((appointment) => {
-                    if (appointment.diagnosis) {
-                        diagnosisCount++
-                    }
-                })
-                return diagnosisCount
-            }),
-        )
+        }, 1500)
     }
 }

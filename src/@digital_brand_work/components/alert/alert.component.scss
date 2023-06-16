@@ -2,10 +2,10 @@
 
 @layer components {
     .alert-wrapper {
-        @apply shadow-xl   w-full my-2 p-5 py-2  flex items-center   mx-auto rounded-md;
+        @apply drop-shadow-xl w-full my-2 p-5  flex items-center mx-auto  md:ml-auto bg-gray-900 backdrop-blur-md rounded-lg mr-5;
     }
 
     .description {
-        @apply text-white text-sm;
+        @apply text-white/70 text-md;
     }
 }

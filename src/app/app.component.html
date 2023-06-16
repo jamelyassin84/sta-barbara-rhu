@@ -1,5 +1,17 @@
 <modals></modals>
 
+<div
+    class="fixed left-0 bottom-5 md:left-10"
+    style="z-index: 9999999999999999999"
+>
+    <alert-component
+        role="button"
+        [alert]="alert"
+        (click)="removeAlert(alert.id)"
+        *ngFor="let alert of alerts$ | async; trackBy: trackByFn"
+    ></alert-component>
+</div>
+
 <div *ngIf="isInHome" class="w-full">
     <router-outlet></router-outlet>
 </div>

@@ -14,8 +14,8 @@ export class AppointmentListComponent {
         private _updateAssessmentModal: UpdateAssessmentModal,
     ) {}
 
-    @Input()
-    appointments: Appointment[] = []
+    @Input({required: true})
+    appointments: Appointment[]
 
     updateAssessmentModalOpened$ = this._updateAssessmentModal.opened$
     updateDiagnosisModalOpened$ = this._updateDiagnosisModal.opened$

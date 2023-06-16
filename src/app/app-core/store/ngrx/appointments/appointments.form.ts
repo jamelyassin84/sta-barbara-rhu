@@ -21,6 +21,7 @@ export class AppointmentForm extends FormBuilder {
                     AppointmentNatureEnum.NEW_ADMISSION,
                     Validators.required,
                 ],
+                symptoms: ['', Validators.required],
             }),
             patient: this.group({
                 first_name: ['', Validators.required],
@@ -33,7 +34,6 @@ export class AppointmentForm extends FormBuilder {
                 phone: ['', Validators.required],
                 appointments: [[]],
                 diagnosis: [[]],
-                symptoms: ['', Validators.required],
                 sex: [SexEnum.MALE, Validators.required],
             }),
             medicoLegal: this.group({

@@ -1,19 +1,27 @@
 import {Injectable} from '@angular/core'
 import {Store} from '@ngrx/store'
-import {Observable, combineLatest, map, tap} from 'rxjs'
+import {
+    Observable,
+    combineLatest,
+    distinctUntilChanged,
+    map,
+    skip,
+    take,
+    tap,
+} from 'rxjs'
 import {AppState} from '../../core/app.state'
 import {Analytics} from 'app/app-core/models/analytics.model'
-import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
-import {patientsBaseSelectors} from '../patients/patients.selectors'
 import {Patient} from 'app/app-core/models/patient.model'
 import {StoreAction} from '../../core/action.enum'
-import {appointmentBaseSelectors} from '../appointments/appointments.selectors'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {LoadingTypeEnum} from '@digital_brand_work/states/store/enums/loading-type.enum'
 import {Loader} from '@fuse/decorators/loader.decorator'
 import {StoreLoaderService} from '@digital_brand_work/services/store-loader.service'
 import {empty} from '@digital_brand_work/pipes/is-empty.pipe'
 import dayjs from 'dayjs'
+import {StateEnum} from '../../core/state.enum'
+import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
+import * as uuid from 'uuid'
 
 @Injectable({providedIn: 'root'})
 export class AnalyticsService {
@@ -22,10 +30,10 @@ export class AnalyticsService {
         private _storeLoaderService: StoreLoaderService,
     ) {}
 
-    @StoreSelect(patientsBaseSelectors.selectAll)
+    @State({selector: StateEnum.PATIENTS, type: 'array'})
     patients$: Observable<Patient[]>
 
-    @StoreSelect(appointmentBaseSelectors.selectAll)
+    @State({selector: StateEnum.APPOINTMENTS, type: 'array'})
     appointments$: Observable<Appointment[]>
 
     @Loader({state: 'ANALYTICS', loading: LoadingTypeEnum.GET})
@@ -33,6 +41,9 @@ export class AnalyticsService {
         const today = dayjs().startOf('day')
 
         return combineLatest([this.patients$, this.appointments$]).pipe(
+            take(4),
+            skip(3),
+            distinctUntilChanged(),
             tap((results) => {
                 const [patients, appointments] = results
 
@@ -50,7 +61,8 @@ export class AnalyticsService {
             map((results) => {
                 const [patients, appointments] = results
 
-                return {
+                const analytics = {
+                    id: uuid.v4(),
                     totalPatients: patients.length,
                     totalAppointments: appointments.length,
                     totalDiagnosis: appointments.reduce(
@@ -73,6 +85,8 @@ export class AnalyticsService {
                             0,
                         ),
                 }
+
+                return analytics
             }),
         )
     }

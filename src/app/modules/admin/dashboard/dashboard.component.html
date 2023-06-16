@@ -7,23 +7,23 @@
     ></route-header>
 
     <div
-        *ngIf="totalPatientsCount$ | async"
-        class="grid w-full min-w-0 grid-cols-1 gap-6 px-5 py-5 sm:grid-cols-2 md:grid-cols-4"
+        *ngIf="analytics$ | async as analytics"
+        class="grid w-full min-w-0 grid-cols-1 gap-6 px-5 py-5 sm:grid-cols-2 md:grid-cols-3"
     >
         <div class="card">
             <div class="card-wrapper">
                 <div class="card-value text-sky-500">
-                    {{ totalPatientsCount$ | async }}
+                    {{ analytics.totalPatients ?? 0 | number }}
                 </div>
 
-                <div class="card-title">Total patients</div>
+                <div class="card-title">Total Patients</div>
             </div>
         </div>
 
         <div class="card">
             <div class="card-wrapper">
                 <div class="card-value text-sky-500">
-                    {{ totalAppointmentsCount$ | async }}
+                    {{ analytics.totalAppointments ?? 0 | number }}
                 </div>
 
                 <div class="card-title">Total Appointments</div>
@@ -33,7 +33,7 @@
         <div class="card">
             <div class="card-wrapper">
                 <div class="card-value text-sky-500">
-                    {{ totalAppointmentsTodayCount$ | async }}
+                    {{ analytics.appointmentsToday ?? 0 | number }}
                 </div>
 
                 <div class="card-title">Appointment's today</div>
@@ -43,15 +43,23 @@
         <div class="card">
             <div class="card-wrapper">
                 <div class="card-value text-sky-500">
-                    {{ diagnosisTodayCount$ | async }}
+                    {{ analytics.diagnosisToday ?? 0 | number }}
                 </div>
 
                 <div class="card-title">Diagnosis today</div>
             </div>
         </div>
+
+        <div class="card">
+            <div class="card-wrapper">
+                <div class="card-value text-sky-500">
+                    {{ analytics.totalDiagnosis ?? 0 | number }}
+                </div>
+
+                <div class="card-title">Total Diagnosis</div>
+            </div>
+        </div>
     </div>
 
-    <appointment-list
-        [appointments]="todayAppointments$ | async"
-    ></appointment-list>
+    <appointment-list [appointments]="appointments$ | async" />
 </div>

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core'
 import {AngularFirestore} from '@angular/fire/compat/firestore'
-import {Observable} from 'rxjs'
+import {Observable, distinctUntilChanged, take, tap} from 'rxjs'
 import {Patient} from 'app/app-core/models/patient.model'
 import {Loader} from '@fuse/decorators/loader.decorator'
 import {LoadingTypeEnum} from '@digital_brand_work/states/store/enums/loading-type.enum'
@@ -10,6 +10,9 @@ import {Store} from '@ngrx/store'
 import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
 import {patientsBaseSelectors} from './patients.selectors'
 import {CollectionEnum} from 'app/app-core/enums/collection.enum'
+import {StateEnum} from '../../core/state.enum'
+import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
+import {StoreAction} from '../../core/action.enum'
 
 @Injectable({providedIn: 'root'})
 export class PatientService {
@@ -19,13 +22,10 @@ export class PatientService {
         private _storeLoaderService: StoreLoaderService,
     ) {}
 
-    @StoreSelect(patientsBaseSelectors.selectAll)
-    patients$: Observable<Patient[]>
-
-    @Loader({state: 'PATIENTS', loading: LoadingTypeEnum.GET})
     get(): Observable<Patient[]> {
         return this._fireStore
             .collection<Patient>(CollectionEnum.PATIENTS)
-            .valueChanges()
+            .valueChanges({idField: 'id'})
+            .pipe(take(1), distinctUntilChanged())
     }
 }

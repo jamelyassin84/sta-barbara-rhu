@@ -3,12 +3,23 @@ import {AppointmentTypeEnum} from 'app/app-core/enums/appointment-type.enum'
 import {RHUEnum} from 'app/app-core/enums/rhu.enum'
 import * as XLSX from 'xlsx'
 import * as FileSaver from 'file-saver'
+import {AppState} from 'app/app-core/store/core/app.state'
+import {Store} from '@ngrx/store'
+import {Observable} from 'rxjs'
+import {Patient} from 'app/app-core/models/patient.model'
+import {StateEnum} from 'app/app-core/store/core/state.enum'
+import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
 
 @Component({
     selector: 'reports',
     templateUrl: './reports.component.html',
 })
 export class ReportsComponent {
+    constructor(private _store: Store<AppState>) {}
+
+    @State({selector: StateEnum.PATIENTS, type: 'array'})
+    readonly patients$: Observable<Patient[]>
+
     readonly RHU = Object.values(RHUEnum)
     readonly SERVICES = Object.values(AppointmentTypeEnum)
 

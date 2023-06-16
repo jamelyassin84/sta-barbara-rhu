@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core'
-import {Observable, map, tap} from 'rxjs'
+import {Observable, map} from 'rxjs'
 import {Loader} from '@fuse/decorators/loader.decorator'
 import {LoadingTypeEnum} from '@digital_brand_work/states/store/enums/loading-type.enum'
 import {Appointment} from 'app/app-core/models/appointment.model'
-import {appointmentBaseSelectors} from '../appointments/appointments.selectors'
-import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
 import {Store} from '@ngrx/store'
 import {AppState} from '../../core/app.state'
 import {StoreLoaderService} from '@digital_brand_work/services/store-loader.service'
 import {Diagnosis} from 'app/app-core/models/diagnosis.model'
+import {StateEnum} from '../../core/state.enum'
+import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
 
 @Injectable({providedIn: 'root'})
 export class DiagnosisService {
@@ -17,7 +17,7 @@ export class DiagnosisService {
         private _storeLoaderService: StoreLoaderService,
     ) {}
 
-    @StoreSelect(appointmentBaseSelectors.selectAll)
+    @State({selector: StateEnum.APPOINTMENTS, type: 'array'})
     appointments$: Observable<Appointment[]>
 
     @Loader({state: 'ASSESSMENTS', loading: LoadingTypeEnum.GET})

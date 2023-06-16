@@ -11,7 +11,8 @@ import {Alert} from '@digital_brand_work/models/core.model'
 export class AlertComponent implements OnInit {
     constructor() {}
 
-    @Input() alert!: Alert
+    @Input({required: true})
+    alert!: Alert
 
     ngOnInit(): void {}
 }

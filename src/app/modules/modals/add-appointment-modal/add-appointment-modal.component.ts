@@ -8,9 +8,16 @@ import {RHUEnum} from 'app/app-core/enums/rhu.enum'
 import {SexEnum} from 'app/app-core/enums/sex.enum'
 import {EmailService} from 'app/app-core/services/mail.service'
 import {AppointmentForm} from 'app/app-core/store/ngrx/appointments/appointments.form'
-import {take} from 'rxjs'
+import {Observable, of, take, tap} from 'rxjs'
 import {AppState} from 'app/app-core/store/core/app.state'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
+import {AngularFirestore} from '@angular/fire/compat/firestore'
+import {CollectionEnum} from 'app/app-core/enums/collection.enum'
+import {Patient} from 'app/app-core/models/patient.model'
+import {appointmentLoaders} from 'app/app-core/store/ngrx/appointments/appointments.selectors'
+import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
+import {StoreLoaders} from '@digital_brand_work/states/store/models/loader.model'
+import {LoadingStateEnum} from '@digital_brand_work/states/store/enums/loading-state.enum'
 
 @Component({
     selector: 'add-appointment-modal',
@@ -21,17 +28,22 @@ export class AddAppointmentModalComponent {
     constructor(
         private _store: Store<AppState>,
         private _emailService: EmailService,
+        private _fireStore: AngularFirestore,
         private _appointmentForm: AppointmentForm,
         private _addAppointmentModal: AddAppointmentModal,
     ) {}
 
-    opened$ = this._addAppointmentModal.opened$
+    @StoreSelect(appointmentLoaders)
+    readonly loader$: Observable<StoreLoaders>
+
+    readonly opened$ = this._addAppointmentModal.opened$
 
     readonly SEX = Object.values(SexEnum)
     readonly APPOINTMENT_NATURES = Object.values(AppointmentNatureEnum)
     readonly APPOINTMENT_TYPES = Object.values(AppointmentTypeEnum)
     readonly RHU = Object.values(RHUEnum)
 
+    showPersonalDetails: boolean = true
     form = this._appointmentForm.get()
 
     ngOnInit(): void {
@@ -54,13 +66,14 @@ export class AddAppointmentModalComponent {
 
     ngOnDestroy(): void {
         this._addAppointmentModal.appointmentType$.next(undefined)
+        this._addAppointmentModal.rhu$.next(undefined)
     }
 
     checkIfGeneral(): void {}
 
     checkIfAnimalBite(): void {}
 
-    async save() {
+    save() {
         this._store.dispatch(
             StoreAction.APPOINTMENTS.upsert.request({
                 appointmentForm: this.form,
@@ -68,6 +81,29 @@ export class AddAppointmentModalComponent {
         )
 
         this.sendEmail()
+    }
+
+    onChangeHandler() {
+        const email = this.form.get(['patient', 'email'])?.value
+
+        this._fireStore
+            .collection(CollectionEnum.PATIENTS)
+            .snapshotChanges()
+            .subscribe((patients) => {
+                const foundPatient = patients.find((patient) => {
+                    const patientData = patient.payload.doc.data() as Patient
+                    return (
+                        patientData.email &&
+                        patientData.email.toLowerCase() === email.toLowerCase()
+                    )
+                })
+
+                if (foundPatient) {
+                    this.showPersonalDetails = false
+                    return
+                }
+                this.showPersonalDetails = true
+            })
     }
 
     sendEmail() {

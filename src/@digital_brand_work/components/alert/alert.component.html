@@ -1,27 +1,40 @@
-<div class="flex justify-center w-screen px-5">
+<div class="w-full">
     <div
-        @slideInBottom
-        @fadeOutRight
-        class="w-full"
+        *ngIf="['success', 'info', 'error'].includes(alert.type)"
+        style="width: 350px"
         [ngClass]="{
-            'bg-emerald-500': alert.type === 'success',
-            'bg-sky-600': alert.type === 'info',
-            'bg-rose-600': alert.type === 'error'
+            'alert-wrapper': true,
+            'text-emerald-400': alert.type === 'success',
+            'text-sky-400': alert.type === 'info',
+            'text-red-400': alert.type === 'error'
         }"
-        class="alert-wrapper"
+        [@slideInBottom]
+        [@slideOutRight]
     >
-        <!-- <ion-icon
-            class="text-4xl text-white"
-            [name]="
-                alert.type === 'success'
-                    ? 'checkmark-circle-outline'
-                    : 'information-circle-outline'
-            "
-        ></ion-icon> -->
+        <mat-icon
+            [ngClass]="{
+                'text-emerald-400': alert.type === 'success',
+                'text-sky-400': alert.type === 'info',
+                'text-red-400': alert.type === 'error'
+            }"
+            svgIcon="error"
+        ></mat-icon>
 
-        <div class="ml-4">
-            <div class="text-lg font-extrabold text-white">
+        <div class="w-full ml-4">
+            <div
+                class="flex items-center mb-1 text-lg font-extrabold"
+                [ngClass]="{
+                    'text-emerald-400': alert.type === 'success',
+                    'text-sky-400': alert.type === 'info',
+                    'text-red-400': alert.type === 'error'
+                }"
+            >
                 {{ alert.title | titlecase }}
+
+                <mat-icon
+                    class="ml-auto text-white icon-size-4"
+                    svgIcon="feather:x"
+                ></mat-icon>
             </div>
             <div class="description">
                 {{ alert.message }}

@@ -16,15 +16,16 @@
             </thead>
             <tbody>
                 <tr
-                    *ngFor="let meal of [1, 2, 3, 4, 5]; let i = index"
+                    *ngFor="let patient of patients; let i = index"
                     class="border-t border-gray-100 hover:bg-slate-100"
                 >
-                    <td>JD34MN4BHGDKH</td>
-                    <td>John Doe Jr.</td>
-                    <td>09193642359</td>
-                    <td>john@company.ph</td>
-                    <td>18</td>
-                    <td>Sitio A, Tabucan Sta Barabara</td>
+                    <td>{{ patient.id | uppercase }}</td>
+                    <td>{{ patient | to_full_name }}</td>
+                    <td>{{ patient.phone }}</td>
+                    <td>{{ patient.email }}</td>
+                    <td>{{ patient.dob | age }}</td>
+                    <td>{{ patient.address }}</td>
+
                     <td>
                         <div class="flex justify-center">
                             <button mat-icon-button [matMenuTriggerFor]="menu">
