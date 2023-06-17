@@ -5,7 +5,9 @@ import {
     combineLatest,
     distinctUntilChanged,
     map,
+    of,
     skip,
+    switchMap,
     take,
     tap,
 } from 'rxjs'
@@ -33,14 +35,11 @@ export class AnalyticsService {
     @State({selector: StateEnum.PATIENTS, type: 'array'})
     patients$: Observable<Patient[]>
 
-    @State({selector: StateEnum.APPOINTMENTS, type: 'array'})
-    appointments$: Observable<Appointment[]>
-
     @Loader({state: 'ANALYTICS', loading: LoadingTypeEnum.GET})
     get(): Observable<Analytics> {
         const today = dayjs().startOf('day')
 
-        return combineLatest([this.patients$, this.appointments$]).pipe(
+        return combineLatest([this.patients$, this.getAppointments()]).pipe(
             take(4),
             skip(3),
             distinctUntilChanged(),
@@ -87,6 +86,26 @@ export class AnalyticsService {
                 }
 
                 return analytics
+            }),
+        )
+    }
+
+    private getAppointments(): Observable<Appointment[]> {
+        return this.patients$.pipe(
+            take(1),
+            map((patients: Patient[]) => {
+                const filteredAppointments = patients.reduce(
+                    (acc: Appointment[], patient: Patient) => {
+                        return acc.concat(
+                            ...patient.appointments.map((a) => ({
+                                ...a,
+                                patient: patient,
+                            })),
+                        )
+                    },
+                    [],
+                )
+                return filteredAppointments
             }),
         )
     }
