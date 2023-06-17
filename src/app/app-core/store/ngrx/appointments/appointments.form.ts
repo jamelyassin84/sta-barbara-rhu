@@ -66,4 +66,14 @@ export class AppointmentForm extends FormBuilder {
             chief_complaints: [''],
         })
     }
+
+    diagnosis() {
+        return this.group({
+            diagnosis: [''],
+            medication_or_treatment: [''],
+            name_of_health_care_provider: [''],
+            laboratory_findings_or_impression: [''],
+            performed_laboratory_test: [''],
+        })
+    }
 }

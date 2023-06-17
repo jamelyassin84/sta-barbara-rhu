@@ -34,7 +34,7 @@ export class AppointmentListComponent {
     }
 
     updateDiagnosis(appointment: Appointment) {
-        this._rescheduleAppointmentModal.appointment$.next(appointment)
+        this._updateDiagnosisModal.appointment$.next(appointment)
         this._updateDiagnosisModal.opened$.next(true)
     }
 
