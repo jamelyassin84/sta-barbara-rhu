@@ -62,6 +62,8 @@ export class RescheduleAppointmentModalComponent {
                         message:
                             'You have successfully rescheduled the appointment',
                     })
+
+                    this._rescheduleAppointmentModal.opened$.next(false)
                 }
             })
     }

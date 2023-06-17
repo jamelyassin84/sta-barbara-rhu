@@ -12,36 +12,54 @@
     </modal-header>
 
     <form
+        [formGroup]="form"
         style="height: 90vh"
         class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
     >
         <mat-form-field appearance="fill">
             <mat-label>Weight</mat-label>
-            <input matInput />
+            <input formControlName="weight" matInput />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Height</mat-label>
-            <input matInput />
+            <input matInput formControlName="weight" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Body Temperature</mat-label>
-            <input matInput />
+            <input matInput formControlName="body_temperature" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Blood Pressure</mat-label>
-            <input matInput />
+            <input matInput formControlName="blood_pressure" />
         </mat-form-field>
 
         <mat-form-field appearance="fill">
             <mat-label>Chief Complaints</mat-label>
-            <textarea matInput></textarea>
+            <textarea matInput formControlName="chief_complaints"></textarea>
         </mat-form-field>
 
-        <button class="py-3 mt-4 text-white bg-black rounded-full">
-            Update Assessment
+        <button
+            matRipple
+            primaryButton
+            (click)="save()"
+            type="button"
+            [loader]="loader.createLoader"
+            *ngIf="loader$ | async as loader"
+            matRippleColor="rgba(250, 250, 250,.3)"
+            class="py-4 mt-4 bg-black rounded-full"
+        >
+            <button-title
+                [loader]="loader.createLoader"
+                [buttons]="[
+                    'Update Assessment',
+                    'processing...',
+                    'processing failed',
+                    'Success'
+                ]"
+            />
         </button>
     </form>
 </div>

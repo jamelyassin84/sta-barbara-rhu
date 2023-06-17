@@ -56,4 +56,14 @@ export class AppointmentForm extends FormBuilder {
             date: ['', Validators.required],
         })
     }
+
+    assessment() {
+        return this.group({
+            weight: [''],
+            height: [''],
+            body_temperature: [''],
+            blood_pressure: [''],
+            chief_complaints: [''],
+        })
+    }
 }
