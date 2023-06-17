@@ -3,6 +3,7 @@ import {Store} from '@ngrx/store'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 import {AppState} from 'app/app-core/store/core/app.state'
+import {RescheduleAppointmentModal} from 'app/modules/modals/reschedule-appointment-modal/reschedule-appointment-modal.service'
 import {UpdateAssessmentModal} from 'app/modules/modals/update-assessment-modal/update-assessment-modal.service'
 import {UpdateDiagnosisModal} from 'app/modules/modals/update-diagnosis-modal/update-diagnosis-modal.service'
 
@@ -16,22 +17,25 @@ export class AppointmentListComponent {
         private _store: Store<AppState>,
         private _updateDiagnosisModal: UpdateDiagnosisModal,
         private _updateAssessmentModal: UpdateAssessmentModal,
+        private _rescheduleAppointmentModal: RescheduleAppointmentModal,
     ) {}
 
     @Input({required: true})
     appointments: Appointment[]
 
-    updateAssessmentModalOpened$ = this._updateAssessmentModal.opened$
-    updateDiagnosisModalOpened$ = this._updateDiagnosisModal.opened$
-
-    reschedule(appointment: Appointment) {}
+    reschedule(appointment: Appointment) {
+        this._rescheduleAppointmentModal.appointment$.next(appointment)
+        this._rescheduleAppointmentModal.opened$.next(true)
+    }
 
     updateAssessment(appointment: Appointment) {
-        this.updateAssessmentModalOpened$.next(true)
+        this._updateAssessmentModal.appointment$.next(appointment)
+        this._updateAssessmentModal.opened$.next(true)
     }
 
     updateDiagnosis(appointment: Appointment) {
-        this.updateDiagnosisModalOpened$.next(true)
+        this._rescheduleAppointmentModal.appointment$.next(appointment)
+        this._updateDiagnosisModal.opened$.next(true)
     }
 
     remove(appointment: Appointment) {

@@ -18,6 +18,7 @@ import {appointmentLoaders} from 'app/app-core/store/ngrx/appointments/appointme
 import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
 import {StoreLoaders} from '@digital_brand_work/states/store/models/loader.model'
 import {LoadingStateEnum} from '@digital_brand_work/states/store/enums/loading-state.enum'
+import {environment} from 'environments/environment'
 
 @Component({
     selector: 'add-appointment-modal',
@@ -109,7 +110,7 @@ export class AddAppointmentModalComponent {
     sendEmail() {
         this._emailService
             .sendEmail({
-                from: 'jamelyassin84@gmail.com',
+                from: environment.brevo.auth.user,
                 to: this.form.value.patient.email,
                 subject: 'Appointment Confirmed',
                 text: `You have successfully booked your  ${this.form.value.appointment.appointment_type} Appointment on ${this.form.value.appointment.date}`,

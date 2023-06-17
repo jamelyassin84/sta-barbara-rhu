@@ -1,1 +1,52 @@
-<p>reschedule-appointment-modal works!</p>
+<div
+    stopPropagation
+    *ngIf="opened$ | async"
+    style="min-width: 400px"
+    class="relative z-10 w-full h-auto m-auto bg-white md:w-1/4"
+>
+    <modal-header
+        [modalTitle]="'Reschedule Appointment'"
+        (onClose)="opened$.next(false)"
+    ></modal-header>
+
+    <form [formGroup]="form" class="flex flex-col p-5 bg-white">
+        <mat-form-field>
+            <mat-label>Preferred Appointment Date</mat-label>
+            <input
+                matInput
+                formControlName="date"
+                placeholder="Choose a date"
+                [matDatepicker]="preferredAppointmentDatePicker"
+            />
+            <mat-datepicker-toggle
+                matSuffix
+                [for]="preferredAppointmentDatePicker"
+            />
+            <mat-datepicker #preferredAppointmentDatePicker />
+            <mat-error *ngIf="form.get('date').invalid">
+                Appointment date is required and cannot be in the past
+            </mat-error>
+        </mat-form-field>
+
+        <button
+            matRipple
+            primaryButton
+            (click)="save()"
+            type="button"
+            [loader]="loader.createLoader"
+            *ngIf="loader$ | async as loader"
+            matRippleColor="rgba(250, 250, 250,.3)"
+            class="py-4 mt-4 bg-black rounded-full"
+        >
+            <button-title
+                [loader]="loader.createLoader"
+                [buttons]="[
+                    'Reschedule Appointment',
+                    'processing...',
+                    'processing failed',
+                    'Successfully Rescheduled'
+                ]"
+            />
+        </button>
+    </form>
+</div>

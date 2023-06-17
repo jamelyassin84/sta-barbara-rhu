@@ -14,7 +14,6 @@
         style="height: 90vh"
         [formGroup]="form"
         class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
-        (ngSubmit)="save()"
     >
         <ng-container formGroupName="appointment" class="w-full">
             <mat-form-field appearance="fill">
@@ -215,7 +214,7 @@
                     'Book an Appointment',
                     'processing...',
                     'processing failed',
-                    'Successfully Booked and Appointment'
+                    'Successfully Booked an Appointment'
                 ]"
             />
         </button>

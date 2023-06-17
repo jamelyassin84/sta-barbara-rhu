@@ -4,6 +4,7 @@ import {UpdateAssessmentModal} from './update-assessment-modal/update-assessment
 import {AddAppointmentModal} from './add-appointment-modal/add-appointment-modal.service'
 import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import {UpdateDiagnosisModal} from './update-diagnosis-modal/update-diagnosis-modal.service'
+import {RescheduleAppointmentModal} from './reschedule-appointment-modal/reschedule-appointment-modal.service'
 
 @Component({
     selector: 'modals',
@@ -17,10 +18,12 @@ export class ModalsComponent {
         private _viewAppointmentModal: ViewAppointmentModal,
         private _updateDiagnosisModal: UpdateDiagnosisModal,
         private _updateAssessmentModal: UpdateAssessmentModal,
+        private _rescheduleAppointmentModal: RescheduleAppointmentModal,
     ) {}
 
     addAppointmentModalOpened$ = this._addAppointmentModal.opened$
     viewAppointmentModalOpened$ = this._viewAppointmentModal.opened$
     updateDiagnosisModalOpened$ = this._updateDiagnosisModal.opened$
     updateAssessmentModalOpened$ = this._updateAssessmentModal.opened$
+    rescheduleAppointmentModalOpened$ = this._rescheduleAppointmentModal.opened$
 }

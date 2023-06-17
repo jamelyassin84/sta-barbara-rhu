@@ -50,4 +50,10 @@ export class AppointmentForm extends FormBuilder {
             assessment: null,
         })
     }
+
+    reschedule() {
+        return this.group({
+            date: ['', Validators.required],
+        })
+    }
 }
