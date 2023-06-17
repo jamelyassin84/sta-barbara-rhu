@@ -32,4 +32,12 @@ export const ADMIN_NAVIGATION: FuseNavigationItem[] = [
         icon: 'feather:activity',
         link: '/admin/reports',
     },
+
+    {
+        id: '4',
+        title: 'Users',
+        type: 'basic',
+        icon: 'feather:user',
+        link: '/admin/reports',
+    },
 ]
