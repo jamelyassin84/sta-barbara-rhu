@@ -41,6 +41,14 @@ export const MAIN_ADMIN_ROUTING: Route[] = [
                         (module) => module.ReportsModule,
                     ),
             },
+
+            {
+                path: 'users',
+                loadChildren: () =>
+                    import('app/modules/admin/rhu-user/rhu-user.module').then(
+                        (module) => module.RhuUserModule,
+                    ),
+            },
         ],
     },
 ]
