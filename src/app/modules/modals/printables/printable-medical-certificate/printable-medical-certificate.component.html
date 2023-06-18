@@ -1,3 +1,80 @@
 <div class="flex items-center justify-center w-full">
-    <bond-paper class="m-auto" size="short"></bond-paper>
+    <bond-paper
+        [template]="template"
+        class="m-auto mt-8"
+        size="short"
+    ></bond-paper>
 </div>
+
+<ng-template #template>
+    <ng-container *ngIf="appointment$ | async as appointment">
+        <div class="relative flex flex-col items-center h-full p-10">
+            <div class="flex items-center -translate-x-10">
+                <div>
+                    <img
+                        class="h-[100px] w-[100px]"
+                        src="/assets/app/logo-transparent-bg.png"
+                        alt="RHU logo"
+                    />
+                </div>
+
+                <div class="ml-4 font-bold text-center">
+                    <div>Republic of the Philippines</div>
+                    <div>Province of Iloilo</div>
+                    <div>Municipality of Santa Barabara</div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-2xl italic font-bold text-center">
+                MUNICIPAL HEALTH OFFICE
+            </div>
+
+            <div class="mt-8 text-2xl italic font-bold text-center underline">
+                MEDICAL CERTIFICATE
+            </div>
+
+            <div class="mt-8 ml-auto text-2xl">
+                Date :
+                {{ today | date : 'MMMM dd, yyyy' }}
+            </div>
+
+            <div class="my-10">
+                <div>To whom it may concern,</div>
+
+                <div class="mt-2">
+                    This is to certify that
+                    {{ appointment.patient | to_full_name }},
+                    {{ appointment.patient.dob | age }} old,
+                    {{ appointment.patient.sex }}. a resident of
+                    {{ appointment.patient.address }}. came for medical
+                    evaluation.
+                </div>
+
+                <div class="mt-3">
+                    <span class="mr-5 font-bold uppercase">IMPRESSION:</span>
+                    {{ appointment.diagnosis.diagnosis }}
+                </div>
+
+                <div class="mt-8 text-center">
+                    This is certification is issued it may serve
+                    {{ appointment.sex === 'Male' ? 'his' : 'her' }} best.
+                </div>
+            </div>
+
+            <div class="w-1/4 ml-auto">
+                <div class="mt-20 mb-8">Truly yours,</div>
+                <div class="text-left bottom-20">
+                    <div class="font-bold uppercase">
+                        {{ appointment.diagnosis.name_of_health_care_provider }}
+                    </div>
+                    <div class="italice">Municipal Health Officer</div>
+                    <div class="italice">Santa Barbara RHU</div>
+                    <div class="italice">
+                        Lic. #
+                        {{ appointment.diagnosis.licenseNumber ?? 0117881 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

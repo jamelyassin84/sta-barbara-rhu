@@ -8,4 +8,5 @@ export interface Assessment extends NodeBaseModel {
     body_temperature: string
     blood_pressure: string
     chief_complaints: string
+    injuries: string
 }

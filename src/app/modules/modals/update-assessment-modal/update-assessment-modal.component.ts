@@ -50,6 +50,7 @@ export class UpdateAssessmentModalComponent {
         this.form = this._formBuilder.group({
             weight: [assessment.weight],
             height: [assessment.height],
+            injuries: [assessment.injuries],
             body_temperature: [assessment.body_temperature],
             blood_pressure: [assessment.blood_pressure],
             chief_complaints: [assessment.chief_complaints],

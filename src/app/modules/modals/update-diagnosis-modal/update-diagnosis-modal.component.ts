@@ -55,6 +55,7 @@ export class UpdateDiagnosisModalComponent {
             laboratory_findings_or_impression: [
                 diagnosis.laboratory_findings_or_impression,
             ],
+            licenseNumber: [diagnosis.licenseNumber],
             performed_laboratory_test: [diagnosis.performed_laboratory_test],
         })
     }

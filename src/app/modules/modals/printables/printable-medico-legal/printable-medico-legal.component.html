@@ -1,3 +1,127 @@
 <div class="flex items-center justify-center w-full">
-    <bond-paper class="m-auto" size="short"></bond-paper>
+    <bond-paper
+        [template]="template"
+        class="m-auto mt-8"
+        size="short"
+    ></bond-paper>
 </div>
+
+<ng-template #template>
+    <ng-container *ngIf="appointment$ | async as appointment">
+        <div class="relative flex flex-col h-full p-10">
+            <div class="flex items-center mx-auto -translate-x-10">
+                <div>
+                    <img
+                        class="h-[100px] w-[100px]"
+                        src="/assets/app/logo-transparent-bg.png"
+                        alt="RHU logo"
+                    />
+                </div>
+
+                <div class="ml-4 font-bold text-center">
+                    <div>Republic of the Philippines</div>
+                    <div>Province of Iloilo</div>
+                    <div>Municipality of Santa Barabara</div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-2xl italic font-bold text-center">
+                MUNICIPAL HEALTH OFFICE
+            </div>
+
+            <div class="my-8 text-2xl italic font-bold text-center underline">
+                MEDICO LEGAL
+            </div>
+
+            <div class="mb-4 text-left">
+                <span class="font-bold uppercase"
+                    >{{ appointment.patient | to_full_name }},
+                    {{ appointment.patient.dob | age }}</span
+                >
+                old/{{ appointment.patient.sex }}
+                <div>{{ appointment.patient.address }}</div>
+            </div>
+
+            <div class="flex items-center mb-4 text-left">
+                <div class="min-w-[100px]">Nature of Incident</div>
+                {{ appointment.medicoLegal.incident }}
+            </div>
+
+            <div class="flex items-center mb-4 text-left">
+                <div class="min-w-[100px]">Time of Incident</div>
+                {{ appointment.medicoLegal.timeOfIncident | date : 'hh:mm a' }}
+            </div>
+
+            <div class="flex items-center mb-4 text-left">
+                <div class="min-w-[100px]">Date of Incident</div>
+                {{
+                    appointment.medicoLegal.dateOfIncident
+                        | date : 'MMMM dd ,YYYY'
+                }}
+            </div>
+
+            <div class="flex items-center mb-4 text-left">
+                <div class="min-w-[100px]">Place of Incident</div>
+                {{ appointment.medicoLegal.placeOfIncident }}
+            </div>
+
+            <div class="flex items-center mb-4 text-left">
+                <div class="min-w-[100px]">Date of Arrival</div>
+                {{
+                    appointment.medicoLegal.dateOfArrival
+                        | date : 'MMMM dd ,YYYY'
+                }}
+            </div>
+
+            <div class="flex items-center mb-4 text-left">
+                <div class="min-w-[100px]">Time of Arrival</div>
+                {{ appointment.medicoLegal.dateOfArrival | date : 'hh:mm a' }}
+            </div>
+
+            <div class="flex items-center mb-4 text-left">
+                <div class="min-w-[100px]">Time of Arrival</div>
+                {{ appointment.assessment.blood_pressure }}
+            </div>
+
+            <div class="mb-4 text-left">
+                <div class="min-w-[100px]">Injuries Sustained</div>
+                <div
+                    [innerHTML]="
+                        updateFormattedContent(appointment.assessment.injuries)
+                    "
+                ></div>
+            </div>
+
+            <div class="mb-4 text-left">
+                <div class="min-w-[100px]">Medication/Treatment</div>
+                <div
+                    [innerHTML]="
+                        updateFormattedContent(
+                            appointment.diagnosis.medication_or_treatment
+                        )
+                    "
+                ></div>
+            </div>
+
+            <div class="mb-4 text-left">
+                Barring complications not discernible at the time of treatment,
+                patient will need medical attendance of __ days
+            </div>
+
+            <div class="w-1/4 ml-auto">
+                <div class="mt-20 mb-8">Truly yours,</div>
+                <div class="text-left bottom-20">
+                    <div class="font-bold uppercase">
+                        {{ appointment.diagnosis.name_of_health_care_provider }}
+                    </div>
+                    <div class="italice">Municipal Health Officer</div>
+                    <div class="italice">Santa Barbara RHU</div>
+                    <div class="italice">
+                        Lic. #
+                        {{ appointment.diagnosis.licenseNumber ?? 0117881 }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

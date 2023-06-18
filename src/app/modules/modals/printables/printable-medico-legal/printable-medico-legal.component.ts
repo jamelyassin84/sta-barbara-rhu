@@ -9,4 +9,10 @@ import {PrintableMedicoLegal} from './printable-medico-legal.service'
 })
 export class PrintableMedicoLegalComponent {
     constructor(private _printableMedicoLegal: PrintableMedicoLegal) {}
+
+    appointment$ = this._printableMedicoLegal.appointment$
+
+    updateFormattedContent(content: any) {
+        return content.replace(/\n/g, '<br>')
+    }
 }

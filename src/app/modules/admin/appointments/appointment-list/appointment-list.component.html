@@ -98,6 +98,7 @@
 
                                 <button
                                     mat-menu-item
+                                    *ngIf="appointment.assessment"
                                     (click)="updateDiagnosis(appointment)"
                                     class="hover:bg-brand-color hover:text-white"
                                 >

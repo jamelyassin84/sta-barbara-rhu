@@ -7,4 +7,5 @@ export interface Diagnosis extends NodeBaseModel {
     laboratory_findings_or_impression: string
     performed_laboratory_test: string
     patientId: string
+    licenseNumber: string
 }

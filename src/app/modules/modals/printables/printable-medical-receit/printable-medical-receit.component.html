@@ -1,3 +1,84 @@
 <div class="flex items-center justify-center w-full">
-    <bond-paper class="m-auto" size="short"></bond-paper>
+    <bond-paper
+        [template]="template"
+        class="m-auto mt-8"
+        size="short"
+    ></bond-paper>
 </div>
+
+<ng-template #template>
+    <ng-container *ngIf="appointment$ | async as appointment">
+        <div class="relative flex flex-col items-center h-full p-10">
+            <div class="flex items-center -translate-x-10">
+                <div>
+                    <img
+                        class="h-[100px] w-[100px]"
+                        src="/assets/app/logo-transparent-bg.png"
+                        alt="RHU logo"
+                    />
+                </div>
+
+                <div class="ml-4 font-bold text-center">
+                    <div>Republic of the Philippines</div>
+                    <div>Province of Iloilo</div>
+                    <div>Municipality of Santa Barabara</div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-2xl italic font-bold text-center">
+                MUNICIPAL HEALTH OFFICE
+            </div>
+
+            <div class="mt-8 ml-auto text-2xl">
+                Date :
+                <span class="underline">{{
+                    today | date : 'MMMM dd, yyyy'
+                }}</span>
+            </div>
+
+            <div class="grid w-full grid-cols-4 gap-10 m-4 text-2xl">
+                <div class="col-span-3">
+                    Name :
+                    <span class="font-bold underline">{{
+                        appointment.patient | to_full_name
+                    }}</span>
+                </div>
+
+                <div class="col-span-1 font-bold">
+                    Age :
+                    <span class="underline">{{
+                        appointment.patient.dob | age
+                    }}</span>
+                </div>
+            </div>
+
+            <div class="flex flex-col justify-start w-full my-10 text-left">
+                <img
+                    class="mr-auto h-[50px] object-contain max-w-[70px]"
+                    src="../../../../../assets/app/rx.jpeg"
+                    alt=""
+                />
+
+                <div
+                    class="ml-20"
+                    [innerHTML]="
+                        updateFormattedContent(
+                            appointment.diagnosis.medication_or_treatment
+                        )
+                    "
+                ></div>
+            </div>
+
+            <div class="absolute text-center bottom-20">
+                <div class="font-bold uppercase">
+                    {{ appointment.diagnosis.name_of_health_care_provider }}
+                </div>
+                <div class="italice">Municipal Health Officer</div>
+                <div class="italice">Santa Barbara RHU</div>
+                <div class="italice">
+                    Lic. # {{ appointment.diagnosis.licenseNumber ?? 0117881 }}
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>

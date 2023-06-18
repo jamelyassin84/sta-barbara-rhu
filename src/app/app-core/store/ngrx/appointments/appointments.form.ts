@@ -62,6 +62,7 @@ export class AppointmentForm extends FormBuilder {
             weight: [''],
             height: [''],
             body_temperature: [''],
+            injuries: [''],
             blood_pressure: [''],
             chief_complaints: [''],
         })
@@ -72,6 +73,7 @@ export class AppointmentForm extends FormBuilder {
             diagnosis: [''],
             medication_or_treatment: [''],
             name_of_health_care_provider: [''],
+            licenseNumber: [''],
             laboratory_findings_or_impression: [''],
             performed_laboratory_test: [''],
         })
