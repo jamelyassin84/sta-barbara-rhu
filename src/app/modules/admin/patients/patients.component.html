@@ -7,18 +7,6 @@
     ></route-header>
 
     <div class="flex items-center w-full p-3 bg-white">
-        <button
-            (click)="currentRHU = item"
-            [ngClass]="{
-                'bg-black text-white pointer-events-none': currentRHU === item,
-                'text-gray-500 md:hover:bg-gray-50': currentRHU !== item
-            }"
-            class="px-5 py-2 mr-3 active:opacity-25"
-            *ngFor="let item of RHU"
-        >
-            {{ item }}
-        </button>
-
         <div class="ml-auto">
             <mat-form-field class="w-[320px] mr-5">
                 <mat-icon class="mr-3" svgIcon="feather:search"></mat-icon>
@@ -37,5 +25,7 @@
         </div>
     </div>
 
-    <patient-list [patients]="patients$ | async" />
+    <patient-list
+        [patients]="patients$ | async | filter_patients_by_name : keyword"
+    />
 </div>

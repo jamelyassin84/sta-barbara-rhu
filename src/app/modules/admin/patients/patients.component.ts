@@ -18,9 +18,5 @@ export class PatientsComponent {
     @State({selector: StateEnum.PATIENTS, type: 'array'})
     readonly patients$: Observable<Patient[]>
 
-    readonly RHU = Object.values(RHUEnum)
-
-    currentRHU = this.RHU[0]
-
     keyword: string
 }

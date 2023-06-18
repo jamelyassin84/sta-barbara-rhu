@@ -14,7 +14,6 @@ import {StoreAction} from 'app/app-core/store/core/action.enum'
 @Component({
     selector: 'appointments',
     templateUrl: './appointments.component.html',
-    styleUrls: ['./appointments.component.scss'],
     animations: [...dbwAnimations],
 })
 export class AppointmentsComponent {
@@ -30,7 +29,10 @@ export class AppointmentsComponent {
     readonly SERVICES = Object.values(AppointmentTypeEnum)
 
     currentRHU = this.RHU[0]
-    currentService = this.SERVICES[0]
+    currentService = undefined
+    patientName: string = ''
+    startAt: any = ''
+    endAt: any = ''
 
     @State({selector: StateEnum.APPOINTMENTS, type: 'array'})
     readonly appointments$: Observable<Appointment[]>

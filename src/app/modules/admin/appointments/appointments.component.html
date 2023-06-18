@@ -4,7 +4,8 @@
         subtitle="You can see the list of all appointments here"
         icon="feather:calendar"
         class="w-full"
-    ></route-header>
+    />
+
     <div class="flex items-center w-full p-3 bg-white"></div>
 
     <div class="flex items-center w-full p-3 bg-white">
@@ -24,9 +25,12 @@
             class="mb-0 ml-auto translate-y-2 min-w-64"
             appearance="fill"
         >
-            <mat-select placeholder="Type of Service">
-                <mat-option>All</mat-option>
-                <mat-option *ngFor="let item of SERVICES">{{
+            <mat-select
+                [(ngModel)]="currentService"
+                placeholder="Type of Service"
+            >
+                <mat-option [value]="undefined">All</mat-option>
+                <mat-option [value]="item" *ngFor="let item of SERVICES">{{
                     item
                 }}</mat-option>
             </mat-select>
@@ -39,8 +43,12 @@
             appearance="fill"
         >
             <mat-date-range-input [rangePicker]="picker">
-                <input matStartDate placeholder="Start date" />
-                <input matEndDate placeholder="End date" />
+                <input
+                    [(ngModel)]="startAt"
+                    matStartDate
+                    placeholder="Start date"
+                />
+                <input [(ngModel)]="endAt" matEndDate placeholder="End date" />
             </mat-date-range-input>
 
             <mat-datepicker-toggle
@@ -48,6 +56,25 @@
                 [for]="picker"
             ></mat-datepicker-toggle>
             <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <mat-form-field class="mx-3 mb-0 translate-y-2 min-w-64">
+            <mat-icon class="mr-3" svgIcon="feather:search"></mat-icon>
+
+            <input
+                matInput
+                placeholder="Search Patient"
+                [(ngModel)]="patientName"
+            />
+
+            <button
+                matSuffix
+                mat-icon-button
+                *ngIf="patientName"
+                (click)="patientName = ''"
+            >
+                <mat-icon>close</mat-icon>
+            </button>
         </mat-form-field>
 
         <button
@@ -60,5 +87,14 @@
         </button>
     </div>
 
-    <appointment-list [appointments]="appointments$ | async" />
+    <appointment-list
+        [appointments]="
+            appointments$
+                | async
+                | filter_appointment_by_rhu : currentRHU
+                | filter_appointment_by_type : currentService
+                | filter_appointment_by_patient_name : patientName
+                | filter_appointment_by_date_range : startAt : endAt
+        "
+    />
 </div>
