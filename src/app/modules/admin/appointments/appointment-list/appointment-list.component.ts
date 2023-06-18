@@ -3,6 +3,9 @@ import {Store} from '@ngrx/store'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 import {AppState} from 'app/app-core/store/core/app.state'
+import {PrintableMedicalCertificate} from 'app/modules/modals/printables/printable-medical-certificate/printable-medical-certificate.service'
+import {PrintableMedicalReceit} from 'app/modules/modals/printables/printable-medical-receit/printable-medical-receit.service'
+import {PrintableMedicoLegal} from 'app/modules/modals/printables/printable-medico-legal/printable-medico-legal.service'
 import {RescheduleAppointmentModal} from 'app/modules/modals/reschedule-appointment-modal/reschedule-appointment-modal.service'
 import {UpdateAssessmentModal} from 'app/modules/modals/update-assessment-modal/update-assessment-modal.service'
 import {UpdateDiagnosisModal} from 'app/modules/modals/update-diagnosis-modal/update-diagnosis-modal.service'
@@ -10,7 +13,6 @@ import {UpdateDiagnosisModal} from 'app/modules/modals/update-diagnosis-modal/up
 @Component({
     selector: 'appointment-list',
     templateUrl: './appointment-list.component.html',
-    styleUrls: ['./appointment-list.component.scss'],
 })
 export class AppointmentListComponent {
     constructor(
@@ -18,6 +20,10 @@ export class AppointmentListComponent {
         private _updateDiagnosisModal: UpdateDiagnosisModal,
         private _updateAssessmentModal: UpdateAssessmentModal,
         private _rescheduleAppointmentModal: RescheduleAppointmentModal,
+
+        private _printableMedicoLegal: PrintableMedicoLegal,
+        private _printableMedicalReceit: PrintableMedicalReceit,
+        private _printableMedicalCertificate: PrintableMedicalCertificate,
     ) {}
 
     @Input({required: true})
@@ -36,6 +42,21 @@ export class AppointmentListComponent {
     updateDiagnosis(appointment: Appointment) {
         this._updateDiagnosisModal.appointment$.next(appointment)
         this._updateDiagnosisModal.opened$.next(true)
+    }
+
+    viewMedicoLegal(appointment: Appointment) {
+        this._printableMedicoLegal.appointment$.next(appointment)
+        this._printableMedicoLegal.opened$.next(true)
+    }
+
+    viewMedicalReceit(appointment: Appointment) {
+        this._printableMedicalReceit.appointment$.next(appointment)
+        this._printableMedicalReceit.opened$.next(true)
+    }
+
+    viewMedicalCertificate(appointment: Appointment) {
+        this._printableMedicalCertificate.appointment$.next(appointment)
+        this._printableMedicalCertificate.opened$.next(true)
     }
 
     remove(appointment: Appointment) {

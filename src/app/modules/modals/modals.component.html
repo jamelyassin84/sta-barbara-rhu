@@ -51,3 +51,30 @@
     (click)="RHUUserAddModalOpened$.next(false)"
     style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
 />
+
+<printable-medico-legal
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="printableMedicoLegalOpened$ | async"
+    (click)="printableMedicoLegalOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+/>
+
+<printable-medical-receit
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="printableMedicalReceitOpened$ | async"
+    (click)="printableMedicalReceitOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+/>
+
+<printable-medical-certificate
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="printableMedicalCertificateOpened$ | async"
+    (click)="printableMedicalCertificateOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+/>

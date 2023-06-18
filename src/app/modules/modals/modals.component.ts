@@ -6,6 +6,9 @@ import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import {UpdateDiagnosisModal} from './update-diagnosis-modal/update-diagnosis-modal.service'
 import {RescheduleAppointmentModal} from './reschedule-appointment-modal/reschedule-appointment-modal.service'
 import {RHUUserAddModal} from './rhu-user-add-modal/rhu-user-add-modal.service'
+import {PrintableMedicoLegal} from './printables/printable-medico-legal/printable-medico-legal.service'
+import {PrintableMedicalCertificate} from './printables/printable-medical-certificate/printable-medical-certificate.service'
+import {PrintableMedicalReceit} from './printables/printable-medical-receit/printable-medical-receit.service'
 
 @Component({
     selector: 'modals',
@@ -20,6 +23,10 @@ export class ModalsComponent {
         private _updateAssessmentModal: UpdateAssessmentModal,
         private _rescheduleAppointmentModal: RescheduleAppointmentModal,
         private _RHUUserAddModal: RHUUserAddModal,
+
+        private _printableMedicoLegal: PrintableMedicoLegal,
+        private _printableMedicalReceit: PrintableMedicalReceit,
+        private _printableMedicalCertificate: PrintableMedicalCertificate,
     ) {}
 
     addAppointmentModalOpened$ = this._addAppointmentModal.opened$
@@ -28,4 +35,9 @@ export class ModalsComponent {
     updateAssessmentModalOpened$ = this._updateAssessmentModal.opened$
     rescheduleAppointmentModalOpened$ = this._rescheduleAppointmentModal.opened$
     RHUUserAddModalOpened$ = this._RHUUserAddModal.opened$
+
+    printableMedicoLegalOpened$ = this._printableMedicoLegal.opened$
+    printableMedicalReceitOpened$ = this._printableMedicalReceit.opened$
+    printableMedicalCertificateOpened$ =
+        this._printableMedicalCertificate.opened$
 }

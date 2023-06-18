@@ -106,17 +106,35 @@
 
                                 <button
                                     mat-menu-item
+                                    *ngIf="appointment.diagnosis"
+                                    (click)="viewMedicalReceit(appointment)"
                                     class="hover:bg-brand-color hover:text-white"
                                 >
                                     Print Medications
                                 </button>
 
-                                <!-- <button
+                                <button
                                     mat-menu-item
+                                    *ngIf="appointment.diagnosis"
+                                    (click)="
+                                        viewMedicalCertificate(appointment)
+                                    "
                                     class="hover:bg-brand-color hover:text-white"
                                 >
-                                    Print Records
-                                </button> -->
+                                    Print Medical Certificate
+                                </button>
+
+                                <button
+                                    mat-menu-item
+                                    (click)="viewMedicoLegal(appointment)"
+                                    *ngIf="
+                                        appointment.appointment_type ===
+                                        'Medico Legal'
+                                    "
+                                    class="hover:bg-brand-color hover:text-white"
+                                >
+                                    Print Medico Legal
+                                </button>
 
                                 <button
                                     mat-menu-item
