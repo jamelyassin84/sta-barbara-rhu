@@ -4,6 +4,7 @@ import {AppointmentState} from '../ngrx/appointments/appointments.reducer'
 import {AssessmentState} from '../ngrx/assessments/assessments.reducer'
 import {DiagnosisState} from '../ngrx/diagnosis/diagnosis.reducer'
 import {PatientState} from '../ngrx/patients/patients.reducer'
+import {UserState} from '../ngrx/users/users.reducer'
 
 export interface AppState {
     alerts: AlertState
@@ -12,4 +13,5 @@ export interface AppState {
     assessments: AssessmentState
     diagnosis: DiagnosisState
     patients: PatientState
+    users: UserState
 }

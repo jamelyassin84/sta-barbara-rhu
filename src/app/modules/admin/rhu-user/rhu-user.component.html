@@ -1,1 +1,21 @@
-<p>rhu-user works!</p>
+<div class="flex flex-col w-full">
+    <route-header
+        pageTitle="Users"
+        subtitle="You can manage the users of the admin panel here"
+        icon="feather:user"
+        class="w-full"
+    ></route-header>
+
+    <div class="flex items-center bg-white">
+        <button
+            (click)="addUser()"
+            class="flex items-center px-5 py-3 ml-auto mr-5 text-white bg-black rounded-sm"
+        >
+            <mat-icon class="mr-3 text-white" svgIcon="feather:plus"></mat-icon>
+
+            Add User
+        </button>
+    </div>
+
+    <rhu-user-list [users]="users$ | async" />
+</div>

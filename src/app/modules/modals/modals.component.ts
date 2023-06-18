@@ -5,11 +5,11 @@ import {AddAppointmentModal} from './add-appointment-modal/add-appointment-modal
 import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import {UpdateDiagnosisModal} from './update-diagnosis-modal/update-diagnosis-modal.service'
 import {RescheduleAppointmentModal} from './reschedule-appointment-modal/reschedule-appointment-modal.service'
+import {RHUUserAddModal} from './rhu-user-add-modal/rhu-user-add-modal.service'
 
 @Component({
     selector: 'modals',
     templateUrl: './modals.component.html',
-    styleUrls: ['./modals.component.scss'],
     animations: [...dbwAnimations],
 })
 export class ModalsComponent {
@@ -19,6 +19,7 @@ export class ModalsComponent {
         private _updateDiagnosisModal: UpdateDiagnosisModal,
         private _updateAssessmentModal: UpdateAssessmentModal,
         private _rescheduleAppointmentModal: RescheduleAppointmentModal,
+        private _RHUUserAddModal: RHUUserAddModal,
     ) {}
 
     addAppointmentModalOpened$ = this._addAppointmentModal.opened$
@@ -26,4 +27,5 @@ export class ModalsComponent {
     updateDiagnosisModalOpened$ = this._updateDiagnosisModal.opened$
     updateAssessmentModalOpened$ = this._updateAssessmentModal.opened$
     rescheduleAppointmentModalOpened$ = this._rescheduleAppointmentModal.opened$
+    RHUUserAddModalOpened$ = this._RHUUserAddModal.opened$
 }

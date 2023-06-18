@@ -1,1 +1,71 @@
-<p>rhu-user-add-modal works!</p>
+<div
+    stopPropagation
+    *ngIf="opened$ | async"
+    style="min-width: 400px"
+    class="relative z-10 w-full ml-auto bg-white md:w-1/4"
+>
+    <modal-header
+        [modalTitle]="'Add  User'"
+        (onClose)="opened$.next(false)"
+    ></modal-header>
+
+    <form
+        style="height: 90vh"
+        [formGroup]="form"
+        class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
+    >
+        <mat-form-field appearance="fill">
+            <mat-label>Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option [value]="item" *ngFor="let item of TYPES">{{
+                    item
+                }}</mat-option>
+            </mat-select>
+            <mat-icon matSuffix svgIcon="feather:chevron-down" />
+            <mat-error>Type is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" />
+            <mat-error
+                >Email is required and should be a valid email format</mat-error
+            >
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Password</mat-label>
+            <input matInput formControlName="password" />
+            <mat-error>Password is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Confirm (Password)</mat-label>
+            <input matInput formControlName="confirmPassword" />
+            <mat-error
+                >Confirm (Password) required and should match password
+            </mat-error>
+        </mat-form-field>
+
+        <button
+            matRipple
+            primaryButton
+            (click)="save()"
+            type="button"
+            [loader]="loader.createLoader"
+            *ngIf="loader$ | async as loader"
+            matRippleColor="rgba(250, 250, 250,.3)"
+            class="py-4 mt-4 bg-black rounded-full"
+        >
+            <button-title
+                [loader]="loader.createLoader"
+                [buttons]="[
+                    'Add User',
+                    'processing...',
+                    'processing failed',
+                    'Success'
+                ]"
+            />
+        </button>
+    </form>
+</div>

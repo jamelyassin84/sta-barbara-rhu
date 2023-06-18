@@ -5,4 +5,5 @@ export enum StateEnum {
     ASSESSMENTS = 'assessments',
     DIAGNOSIS = 'diagnosis',
     PATIENTS = 'patients',
+    USERS = 'users',
 }

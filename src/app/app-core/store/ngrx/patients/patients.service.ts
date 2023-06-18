@@ -22,6 +22,7 @@ export class PatientService {
         private _storeLoaderService: StoreLoaderService,
     ) {}
 
+    @Loader({state: 'PATIENTS', loading: LoadingTypeEnum.GET})
     get(): Observable<Patient[]> {
         return this._fireStore
             .collection<Patient>(CollectionEnum.PATIENTS)
@@ -29,6 +30,7 @@ export class PatientService {
             .pipe(take(1), distinctUntilChanged())
     }
 
+    @Loader({state: 'PATIENTS', loading: LoadingTypeEnum.FIND_ONE})
     show(id: string): Observable<Patient> {
         return this._fireStore
             .collection<Patient>(CollectionEnum.PATIENTS)

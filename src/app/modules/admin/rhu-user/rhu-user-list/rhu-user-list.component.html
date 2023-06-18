@@ -1,1 +1,50 @@
-<p>rhu-user-list works!</p>
+<div
+    class="flex flex-col flex-auto p-6 px-5 mb-5 overflow-hidden sm:col-span-6 bg-card"
+>
+    <div class="flex flex-col flex-auto h-full mt-5 overflow-x-auto">
+        <table class="overflow-y-visible min-w-240">
+            <thead class="text-right uppercase">
+                <tr>
+                    <th class="text-left text-gray-700">Email</th>
+                    <th class="text-left text-gray-700">Type</th>
+                    <th class="text-left text-gray-700">Created</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr
+                    *ngFor="let user of users; let i = index"
+                    class="border-t border-gray-100 hover:bg-slate-100"
+                >
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.type }}</td>
+                    <td>{{ user.createdAt | date : 'MMMM dd YYYY' }}</td>
+
+                    <td>
+                        <div class="flex justify-center">
+                            <button
+                                mat-icon-button
+                                [matMenuTriggerFor]="userListOption"
+                            >
+                                <mat-icon
+                                    class="text-gray-400 icon-size-5"
+                                    svgIcon="feather:chevron-down"
+                                ></mat-icon>
+                            </button>
+
+                            <mat-menu #userListOption="matMenu">
+                                <button
+                                    mat-menu-item
+                                    (click)="remove(user)"
+                                    class="hover:bg-brand-color hover:text-white"
+                                >
+                                    Remove
+                                </button>
+                            </mat-menu>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

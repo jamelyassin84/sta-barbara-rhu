@@ -42,3 +42,12 @@
     (click)="rescheduleAppointmentModalOpened$.next(false)"
     style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
 />
+
+<rhu-user-add-modal
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="RHUUserAddModalOpened$ | async"
+    (click)="RHUUserAddModalOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+/>

@@ -6,6 +6,7 @@ import {appointmentsReducer} from 'app/app-core/store/ngrx/appointments/appointm
 import {assessmentsReducer} from 'app/app-core/store/ngrx/assessments/assessments.reducer'
 import {diagnosisReducer} from 'app/app-core/store/ngrx/diagnosis/diagnosis.reducer'
 import {patientsReducer} from 'app/app-core/store/ngrx/patients/patients.reducer'
+import {usersReducer} from 'app/app-core/store/ngrx/users/users.reducer'
 
 export const sharedStateModules = [
     StoreModule.forFeature(StateEnum.ALERTS, alertReducer),
@@ -14,4 +15,5 @@ export const sharedStateModules = [
     StoreModule.forFeature(StateEnum.ASSESSMENTS, assessmentsReducer),
     StoreModule.forFeature(StateEnum.DIAGNOSIS, diagnosisReducer),
     StoreModule.forFeature(StateEnum.PATIENTS, patientsReducer),
+    StoreModule.forFeature(StateEnum.USERS, usersReducer),
 ]

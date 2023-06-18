@@ -4,6 +4,7 @@ import * as APPOINTMENTS from 'app/app-core/store/ngrx/appointments/appointments
 import * as ASSESSMENTS from 'app/app-core/store/ngrx/assessments/assessments.actions'
 import * as DIAGNOSIS from 'app/app-core/store/ngrx/diagnosis/diagnosis.actions'
 import * as PATIENTS from 'app/app-core/store/ngrx/patients/patients.actions'
+import * as USERS from 'app/app-core/store/ngrx/users/users.actions'
 
 export const StoreAction = {
     ALERT,
@@ -12,4 +13,5 @@ export const StoreAction = {
     ASSESSMENTS,
     DIAGNOSIS,
     PATIENTS,
+    USERS,
 }
