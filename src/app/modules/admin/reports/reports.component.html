@@ -23,9 +23,12 @@
             class="mb-0 ml-auto translate-y-2 min-w-64"
             appearance="fill"
         >
-            <mat-select placeholder="Type of Service">
-                <mat-option>All</mat-option>
-                <mat-option *ngFor="let item of SERVICES">{{
+            <mat-select
+                [(ngModel)]="currentService"
+                placeholder="Type of Service"
+            >
+                <mat-option [value]="undefined">All</mat-option>
+                <mat-option [value]="item" *ngFor="let item of SERVICES">{{
                     item
                 }}</mat-option>
             </mat-select>
@@ -38,8 +41,12 @@
             appearance="fill"
         >
             <mat-date-range-input [rangePicker]="picker">
-                <input matStartDate placeholder="Diagnosis Start date" />
-                <input matEndDate placeholder="End date" />
+                <input
+                    [(ngModel)]="startAt"
+                    matStartDate
+                    placeholder="Start date"
+                />
+                <input [(ngModel)]="endAt" matEndDate placeholder="End date" />
             </mat-date-range-input>
 
             <mat-datepicker-toggle
@@ -74,5 +81,5 @@
         </button>
     </div>
 
-    <patient-list [patients]="patients$ | async" />
+    <report-list [ageGroups]="ageGroups$ | async" />
 </div>

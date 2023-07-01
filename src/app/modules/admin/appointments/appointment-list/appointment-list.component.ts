@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core'
+import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import {Store} from '@ngrx/store'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
@@ -13,6 +14,7 @@ import {UpdateDiagnosisModal} from 'app/modules/modals/update-diagnosis-modal/up
 @Component({
     selector: 'appointment-list',
     templateUrl: './appointment-list.component.html',
+    animations: [...dbwAnimations],
 })
 export class AppointmentListComponent {
     constructor(

@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core'
+import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
 import {Store} from '@ngrx/store'
 import {Analytics} from 'app/app-core/models/analytics.model'
@@ -12,6 +13,7 @@ import {Observable} from 'rxjs'
     selector: 'dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
+    animations: [...dbwAnimations],
 })
 export class DashboardComponent implements OnInit {
     constructor(private _store: Store<AppState>) {}

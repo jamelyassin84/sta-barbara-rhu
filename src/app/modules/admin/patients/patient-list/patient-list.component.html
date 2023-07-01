@@ -4,29 +4,29 @@
     <div class="flex flex-col flex-auto h-full mt-5 overflow-x-auto">
         <table class="overflow-y-visible min-w-240">
             <thead class="text-right uppercase">
-                <tr>
-                    <th class="text-left text-gray-700">ID</th>
-                    <th class="text-left text-gray-700">Name</th>
-                    <th class="text-left text-gray-700">Phone</th>
-                    <th class="text-left text-gray-700">Email</th>
-                    <th class="text-left text-gray-700">Age</th>
-                    <th class="text-left text-gray-700">Address</th>
+                <tr class="bg-gray-100">
+                    <th class="px-4 text-left text-gray-700">ID</th>
+                    <th class="px-4 text-left text-gray-700">Name</th>
+                    <th class="px-4 text-left text-gray-700">Phone</th>
+                    <th class="px-4 text-left text-gray-700">Email</th>
+                    <th class="px-4 text-left text-gray-700">Age</th>
+                    <th class="px-4 text-left text-gray-700">Address</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody [@listAnimation]="patients.length">
                 <tr
                     *ngFor="let patient of patients; let i = index"
                     class="border-t border-gray-100 hover:bg-slate-100"
                 >
-                    <td>{{ patient.id | uppercase }}</td>
-                    <td>{{ patient | to_full_name }}</td>
-                    <td>{{ patient.phone }}</td>
-                    <td>{{ patient.email }}</td>
-                    <td>{{ patient.dob | age }}</td>
-                    <td>{{ patient.address }}</td>
+                    <td class="px-4">{{ patient.id | uppercase }}</td>
+                    <td class="px-4">{{ patient | to_full_name }}</td>
+                    <td class="px-4">{{ patient.phone }}</td>
+                    <td class="px-4">{{ patient.email }}</td>
+                    <td class="px-4">{{ patient.dob | age }}</td>
+                    <td class="px-4">{{ patient.address }}</td>
 
-                    <td>
+                    <td class="px-4">
                         <div class="flex justify-center">
                             <button mat-icon-button [matMenuTriggerFor]="menu">
                                 <mat-icon

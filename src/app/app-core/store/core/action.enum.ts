@@ -5,6 +5,7 @@ import * as ASSESSMENTS from 'app/app-core/store/ngrx/assessments/assessments.ac
 import * as DIAGNOSIS from 'app/app-core/store/ngrx/diagnosis/diagnosis.actions'
 import * as PATIENTS from 'app/app-core/store/ngrx/patients/patients.actions'
 import * as USERS from 'app/app-core/store/ngrx/users/users.actions'
+import * as AGE_GROUP from 'app/app-core/store/ngrx/age-groups/age-groups.actions'
 
 export const StoreAction = {
     ALERT,
@@ -14,4 +15,5 @@ export const StoreAction = {
     DIAGNOSIS,
     PATIENTS,
     USERS,
+    AGE_GROUP,
 }

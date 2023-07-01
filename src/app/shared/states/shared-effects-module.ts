@@ -1,4 +1,5 @@
 import {EffectsModule} from '@ngrx/effects'
+import {AgeGroupEffects} from 'app/app-core/store/ngrx/age-groups/age-groups.effects'
 import {AnalyticsEffects} from 'app/app-core/store/ngrx/analytics/analytics.effects'
 import {AppointmentEffects} from 'app/app-core/store/ngrx/appointments/appointments.effects'
 import {AssessmentEffects} from 'app/app-core/store/ngrx/assessments/assessments.effects'
@@ -14,5 +15,6 @@ export const sharedEffects = [
         DiagnosisEffects,
         PatientEffects,
         UserEffects,
+        AgeGroupEffects,
     ]),
 ]

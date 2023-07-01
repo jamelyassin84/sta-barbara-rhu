@@ -1,3 +1,4 @@
+import {AgeGroupState} from '../ngrx/age-groups/age-groups.reducer'
 import {AlertState} from '../ngrx/alert/alert.reducer'
 import {AnalyticsState} from '../ngrx/analytics/analytics.reducer'
 import {AppointmentState} from '../ngrx/appointments/appointments.reducer'
@@ -14,4 +15,5 @@ export interface AppState {
     diagnosis: DiagnosisState
     patients: PatientState
     users: UserState
+    ageGroups: AgeGroupState
 }

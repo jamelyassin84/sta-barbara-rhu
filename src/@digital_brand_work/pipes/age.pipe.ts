@@ -5,17 +5,17 @@ import dayjs from 'dayjs'
     name: 'age',
 })
 export class AgePipe implements PipeTransform {
-    transform(value: Date | string): string {
+    transform(value: Date | string): number {
         return age(value)
     }
 }
 
-export function age(value: Date | string): string {
+export function age(value: Date | string): number {
     const today = dayjs()
 
     const birthDate = dayjs(value)
 
     const years = today.diff(birthDate, 'years')
 
-    return `${years} Yrs`
+    return years
 }
