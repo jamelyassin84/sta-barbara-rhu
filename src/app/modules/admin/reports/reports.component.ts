@@ -5,13 +5,12 @@ import * as XLSX from 'xlsx'
 import * as FileSaver from 'file-saver'
 import {AppState} from 'app/app-core/store/core/app.state'
 import {Store} from '@ngrx/store'
-import {Observable, take} from 'rxjs'
+import {Observable, Subject, take, takeUntil} from 'rxjs'
 import {StateEnum} from 'app/app-core/store/core/state.enum'
 import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
 import {AgeGroup} from 'app/app-core/models/age-group.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 import {ReportService} from './reports.service'
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
 import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import dayjs from 'dayjs'
 @Component({
@@ -25,12 +24,14 @@ export class ReportsComponent {
         private _reportService: ReportService,
     ) {
         this._reportService.filter$
-            .pipe(takeUntilDestroyed())
+            .pipe(takeUntil(this.destroyed$))
             .subscribe(() => this.filter())
     }
 
     @State({selector: StateEnum.AGE_GROUP, type: 'array'})
     readonly ageGroups$: Observable<AgeGroup[]>
+
+    readonly destroyed$ = new Subject<void>()
 
     readonly RHU = Object.values(RHUEnum)
     readonly SERVICES = Object.values(AppointmentTypeEnum)
@@ -47,6 +48,11 @@ export class ReportsComponent {
                 StoreAction.APPOINTMENTS.load.request({isToday: false}),
             )
         }, 1500)
+    }
+
+    ngOnDestroy() {
+        this.destroyed$.next()
+        this.destroyed$.complete()
     }
 
     filter(): void {

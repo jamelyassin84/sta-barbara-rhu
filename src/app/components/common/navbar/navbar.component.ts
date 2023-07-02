@@ -1,10 +1,10 @@
 import {Component} from '@angular/core'
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
 import {NavigationEnd, Router} from '@angular/router'
 import {
     NavbarNavigation,
     NAVBAR_NAVIGATION,
 } from 'app/app-core/navigations/navbar.navigation'
+import {Subject, takeUntil} from 'rxjs'
 
 @Component({
     selector: 'app-navbar',
@@ -45,7 +45,7 @@ import {
 })
 export class NavbarComponent {
     constructor(private _router: Router) {
-        this._router.events.pipe(takeUntilDestroyed()).subscribe((e) => {
+        this._router.events.pipe(takeUntil(this.destroyed$)).subscribe((e) => {
             if (e instanceof NavigationEnd) {
                 this.changeCurrentNav()
             }
@@ -53,8 +53,14 @@ export class NavbarComponent {
     }
 
     readonly NAVBAR_NAVIGATION = NAVBAR_NAVIGATION
+    readonly destroyed$ = new Subject<void>()
 
     currentNav: NavbarNavigation = NAVBAR_NAVIGATION[0]
+
+    ngOnDestroy() {
+        this.destroyed$.next()
+        this.destroyed$.complete()
+    }
 
     changeCurrentNav() {
         const url = this._router.url

@@ -1,6 +1,5 @@
 import {Component, Input} from '@angular/core'
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
-import {NavigationEnd, Router} from '@angular/router'
+import {Router} from '@angular/router'
 import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import {Store} from '@ngrx/store'
 import {Appointment} from 'app/app-core/models/appointment.model'
@@ -12,7 +11,6 @@ import {PrintableMedicoLegal} from 'app/modules/modals/printables/printable-medi
 import {RescheduleAppointmentModal} from 'app/modules/modals/reschedule-appointment-modal/reschedule-appointment-modal.service'
 import {UpdateAssessmentModal} from 'app/modules/modals/update-assessment-modal/update-assessment-modal.service'
 import {UpdateDiagnosisModal} from 'app/modules/modals/update-diagnosis-modal/update-diagnosis-modal.service'
-import {map} from 'rxjs'
 
 @Component({
     selector: 'appointment-list',
