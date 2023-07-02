@@ -5,12 +5,9 @@ import {HOME_SLIDERS} from 'app/app-core/constants/home.slider'
 @Component({
     selector: 'landing-home-section1',
     templateUrl: './landing-home-section1.component.html',
-    styleUrls: ['./landing-home-section1.component.scss'],
     animations: [...dbwAnimations],
 })
 export class LandingHomeSection1Component {
-    constructor() {}
-
     readonly HOME_SLIDERS = HOME_SLIDERS
 
     currentSlide: string = HOME_SLIDERS[0]
@@ -50,6 +47,13 @@ export class LandingHomeSection1Component {
         }
 
         this.currentSlide = this.HOME_SLIDERS[nextIndex - 1]
+    }
+
+    scrollToElement() {
+        const targetElement = document.querySelector('#appointment')
+        if (targetElement) {
+            targetElement.scrollIntoView({behavior: 'smooth', block: 'start'})
+        }
     }
 
     trackByFn(index: number, item: any): any {

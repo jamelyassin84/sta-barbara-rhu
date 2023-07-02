@@ -16,7 +16,7 @@ export const load = createActionGroup({
 export const upsert = createActionGroup({
     source: 'Appointment Upsert',
     events: {
-        request: props<{appointmentForm: FormGroup}>(),
+        request: props<{appointmentForm: any}>(),
         onSuccess: props<{appointment: Appointment}>(),
     },
 })

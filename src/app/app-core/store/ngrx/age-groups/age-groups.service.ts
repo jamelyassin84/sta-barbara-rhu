@@ -129,8 +129,6 @@ export class AgeGroupService {
         appointments: Appointment[],
         params: AgeGroupParams,
     ): Appointment[] {
-        console.log(params)
-
         return appointments.filter((appointment) => {
             const appointmentDate = dayjs(appointment.date).toDate()
             const startDate = params.startAt
@@ -168,9 +166,10 @@ export class AgeGroupService {
                 )
             }
 
-            const matchesKeyword = appointment.diagnosis.diagnosis
-                .toLowerCase()
-                .includes(params.keyword.toLowerCase())
+            const matchesKeyword =
+                appointment.diagnosis.diagnosis
+                    .toLowerCase()
+                    .indexOf(params.keyword.toLowerCase()) !== -1
 
             return (
                 isWithinDateRange &&

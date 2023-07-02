@@ -32,11 +32,14 @@
             Santa Barbara RHU 🇵🇭
         </div>
 
-        <div class="font-normal text-yellow-200 tex md:text-3xl text-shadow">
+        <div
+            class="mb-40 font-normal text-yellow-200 tex md:text-3xl text-shadow lg:mb-0"
+        >
             Fastest & Smartest RHU services in the country!
         </div>
 
         <button
+            (click)="scrollToElement()"
             class="px-5 py-2 relative z-[9999] mt-8 md:mt-16 font-bold rounded-md md:px-10 md:py-3 md:text-4xl bg-brand-yellow drop-shadow-2xl text-black"
         >
             Book an Appointment

@@ -19,6 +19,8 @@ import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
 import {StoreLoaders} from '@digital_brand_work/states/store/models/loader.model'
 import {LoadingStateEnum} from '@digital_brand_work/states/store/enums/loading-state.enum'
 import {environment} from 'environments/environment'
+import {StateEnum} from 'app/app-core/store/core/state.enum'
+import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
 
 @Component({
     selector: 'add-appointment-modal',
@@ -36,6 +38,9 @@ export class AddAppointmentModalComponent {
 
     @StoreSelect(appointmentLoaders)
     readonly loader$: Observable<StoreLoaders>
+
+    @State({selector: StateEnum.PATIENTS, type: 'array'})
+    readonly patients$: Observable<Patient[]>
 
     readonly opened$ = this._addAppointmentModal.opened$
 
@@ -77,11 +82,11 @@ export class AddAppointmentModalComponent {
     save() {
         this._store.dispatch(
             StoreAction.APPOINTMENTS.upsert.request({
-                appointmentForm: this.form,
+                appointmentForm: this.form.value,
             }),
         )
 
-        this.sendEmail()
+        // this.sendEmail()
     }
 
     onChangeHandler() {

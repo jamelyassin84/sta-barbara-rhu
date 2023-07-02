@@ -1,1 +1,68 @@
-<p>navbar-responsive works!</p>
+<div
+    @slideInTop
+    class="fixed top-0 z-40 flex items-center justify-center w-full px-[25px] py-5 bg-white"
+>
+    <div
+        class="flex items-center justify-start w-full max-w-screen-xl py-2 mx-auto"
+    >
+        <ul class="flex items-center">
+            <mat-icon
+                (click)="isShowing$.next(true)"
+                class="text-2xl active:opacity-20"
+                svgIcon="heroicons_outline:menu-alt-2"
+            ></mat-icon>
+        </ul>
+
+        <img
+            routerLink="/"
+            src="/assets/app/logo.jpg"
+            class="object-contain ml-auto h-[32px] w-[32px] rounded-full"
+        />
+    </div>
+</div>
+
+<div
+    @fadeOut
+    *ngIf="isShowing$ | async"
+    (click)="isShowing$.next(false)"
+    stopPropagation
+    class="fixed w-[100vw] h-[100vh] bg-black/70"
+    style="z-index: 9999"
+>
+    <div
+        animateCSS
+        stopPropagation
+        [animation]="['animate__slideInLeft']"
+        style="animation-duration: 0.4s"
+        class="bg-white w-[80%] h-full py-10 px-5 text-ng-black/80"
+    >
+        <img
+            routerLink="/"
+            (click)="isShowing$.next(false)"
+            src="/assets/app/logo.jpg"
+            class="object-contain h-[32px] w-[32px] rounded-full"
+        />
+
+        <div class="">
+            <div class="px-4 mt-3 mb-2 border-b border-b-gray-200"></div>
+
+            <ul>
+                <ng-container
+                    *ngFor="let nav of NAVBAR_NAVIGATION; trackBy: trackByFn"
+                >
+                    <li
+                        [routerLink]="nav.link"
+                        (click)="isShowing$.next(false)"
+                        class="flex items-center px-4 py-3 font-medium text-black active:opacity-20"
+                        [ngClass]="{
+                            'bg-brand-green/10 rounded-r-full':
+                                currentNav.title === nav.title
+                        }"
+                    >
+                        {{ nav.title }}
+                    </li>
+                </ng-container>
+            </ul>
+        </div>
+    </div>
+</div>

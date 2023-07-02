@@ -1,11 +1,14 @@
 import {Injectable} from '@angular/core'
 import {Actions, createEffect, ofType} from '@ngrx/effects'
-import {switchMap, map, tap} from 'rxjs/operators'
+import {switchMap, map, tap, catchError} from 'rxjs/operators'
 import {StoreAction} from '../../core/action.enum'
 import {AppointmentService} from './appointments.service'
 import {AddAppointmentModal} from 'app/modules/modals/add-appointment-modal/add-appointment-modal.service'
 import {AlertService} from '@digital_brand_work/services/alert.service'
 import {ReportService} from 'app/modules/admin/reports/reports.service'
+import {Store} from '@ngrx/store'
+import {AppState} from '../../core/app.state'
+import {EMPTY} from 'rxjs'
 
 @Injectable({
     providedIn: 'root',
@@ -13,6 +16,7 @@ import {ReportService} from 'app/modules/admin/reports/reports.service'
 export class AppointmentEffects {
     constructor(
         private _actions$: Actions,
+        private _store: Store<AppState>,
         private _alertService: AlertService,
         private _reportService: ReportService,
         private _appointmentService: AppointmentService,
@@ -43,11 +47,7 @@ export class AppointmentEffects {
                     .updateAppointment(action.appointment)
                     .pipe(
                         tap(() => this.filter()),
-                        map((response) =>
-                            StoreAction.APPOINTMENTS.update.onSuccess({
-                                appointment: response,
-                            }),
-                        ),
+                        map(() => StoreAction.PATIENTS.load.request()),
                     ),
             ),
         ),
@@ -73,24 +73,22 @@ export class AppointmentEffects {
         () =>
             this._actions$.pipe(
                 ofType(StoreAction.APPOINTMENTS.upsert.request),
-                tap((action) =>
-                    this._appointmentService
-                        .upsert(action.appointmentForm)
-                        .pipe(
-                            tap(() => {
-                                this._alertService.addAlert({
-                                    title: 'You have succesffully booked your appointment',
-                                    message:
-                                        'We have send an email to you please check your inbox',
-                                    type: 'success',
-                                })
+                tap((action) => {
+                    this._appointmentService.upsert(action.appointmentForm)
 
-                                this._addAppointmentModal.opened$.next(false)
-                            }),
-                            tap(() => this.filter()),
-                            map(() => StoreAction.PATIENTS.load.request()),
-                        ),
-                ),
+                    this._alertService.addAlert({
+                        title: 'You have successfully booked your appointment',
+                        message:
+                            'We have sent an email to you, please check your inbox',
+                        type: 'success',
+                    })
+
+                    this.filter()
+
+                    this._addAppointmentModal.opened$.next(false)
+
+                    this._store.dispatch(StoreAction.PATIENTS.load.request())
+                }),
             ),
         {dispatch: false},
     )
