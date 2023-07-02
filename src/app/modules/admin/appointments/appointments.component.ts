@@ -10,6 +10,7 @@ import {Observable} from 'rxjs'
 import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
+import dayjs from 'dayjs'
 
 @Component({
     selector: 'appointments',
@@ -31,8 +32,8 @@ export class AppointmentsComponent {
     currentRHU = this.RHU[0]
     currentService = undefined
     patientName: string = ''
-    startAt: any = ''
-    endAt: any = ''
+    startAt: any = dayjs().startOf('month').format('YYYY-MM-DD')
+    endAt: any = dayjs().endOf('month').format('YYYY-MM-DD')
 
     @State({selector: StateEnum.APPOINTMENTS, type: 'array'})
     readonly appointments$: Observable<Appointment[]>

@@ -7,7 +7,12 @@
                 <tr class="bg-gray-100">
                     <th class="px-4 text-left text-gray-700">ID</th>
                     <th class="px-4 text-left text-gray-700">RHU</th>
-                    <th class="px-4 text-left text-gray-700">Patient</th>
+                    <th
+                        *ngIf="!isInPatientDetails"
+                        class="px-4 text-left text-gray-700"
+                    >
+                        Patient
+                    </th>
                     <th class="px-4 text-left text-gray-700">Type</th>
                     <th class="px-4 text-left text-gray-700">Visit</th>
                     <th class="px-4 text-left text-gray-700">When</th>
@@ -27,7 +32,7 @@
                 >
                     <td class="px-4 text-xs">{{ appointment.id }}</td>
                     <td class="px-4">{{ appointment?.rhu }}</td>
-                    <td class="px-4">
+                    <td *ngIf="!isInPatientDetails" class="px-4">
                         {{ appointment?.patient | to_full_name }}
                     </td>
                     <td class="px-4">{{ appointment.appointment_type }}</td>
@@ -84,6 +89,7 @@
 
                                 <button
                                     mat-menu-item
+                                    *ngIf="!isInPatientDetails"
                                     routerLink="/admin/patients/{{
                                         appointment.patientId
                                     }}"

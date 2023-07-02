@@ -129,6 +129,8 @@ export class AgeGroupService {
         appointments: Appointment[],
         params: AgeGroupParams,
     ): Appointment[] {
+        console.log(params)
+
         return appointments.filter((appointment) => {
             const appointmentDate = dayjs(appointment.date).toDate()
             const startDate = params.startAt
@@ -136,52 +138,46 @@ export class AgeGroupService {
                 : null
             const endDate = params.endAt ? dayjs(params.endAt).toDate() : null
 
-            if (startDate && endDate) {
-                const isWithinDateRange =
-                    appointmentDate >= startDate && appointmentDate <= endDate
+            const isWithinDateRange =
+                appointmentDate >= startDate && appointmentDate <= endDate
 
-                if (empty(params.keyword) && !params.appointmentType) {
-                    return isWithinDateRange && appointment.rhu === params.rhu
-                }
+            if (empty(params.keyword) && !params.appointmentType) {
+                return isWithinDateRange && appointment.rhu === params.rhu
+            }
 
-                if (!empty(params.keyword) && !params.appointmentType) {
-                    const {first_name, last_name, middle_name} =
-                        appointment.patient
-                    const fullName = `${first_name} ${last_name} ${middle_name}`
+            if (!empty(params.keyword) && !params.appointmentType) {
+                const {first_name, last_name, middle_name} = appointment.patient
+                const fullName = `${first_name} ${last_name} ${middle_name}`
 
-                    const matchesKeyword = fullName
-                        .toLowerCase()
-                        .includes(params.keyword.toLowerCase())
-
-                    return (
-                        isWithinDateRange &&
-                        matchesKeyword &&
-                        appointment.rhu === params.rhu
-                    )
-                }
-
-                if (empty(params.keyword) && params.appointmentType) {
-                    return (
-                        isWithinDateRange &&
-                        appointment.appointment_type ===
-                            params.appointmentType &&
-                        appointment.rhu === params.rhu
-                    )
-                }
-
-                const matchesKeyword = appointment.diagnosis.diagnosis
+                const matchesKeyword = fullName
                     .toLowerCase()
                     .includes(params.keyword.toLowerCase())
 
                 return (
                     isWithinDateRange &&
                     matchesKeyword &&
+                    appointment.rhu === params.rhu
+                )
+            }
+
+            if (empty(params.keyword) && params.appointmentType) {
+                return (
+                    isWithinDateRange &&
                     appointment.appointment_type === params.appointmentType &&
                     appointment.rhu === params.rhu
                 )
             }
 
-            return true
+            const matchesKeyword = appointment.diagnosis.diagnosis
+                .toLowerCase()
+                .includes(params.keyword.toLowerCase())
+
+            return (
+                isWithinDateRange &&
+                matchesKeyword &&
+                appointment.appointment_type === params.appointmentType &&
+                appointment.rhu === params.rhu
+            )
         })
     }
 }

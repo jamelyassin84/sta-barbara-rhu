@@ -119,7 +119,11 @@ export class AppointmentService {
 
                     const payload = {
                         ...patient,
-                        appointments: patientAppointments,
+                        appointments: patientAppointments.map((a) => {
+                            const newAppointment = {...a}
+                            delete newAppointment.patient
+                            return newAppointment
+                        }),
                     }
 
                     this._fireStore

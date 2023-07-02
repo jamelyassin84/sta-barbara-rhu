@@ -64,8 +64,6 @@ export class UpdateDiagnosisModalComponent {
         this._updateDiagnosisModal.appointment$
             .pipe(take(1))
             .subscribe((appointment) => {
-                console.log(appointment)
-
                 if (appointment) {
                     this._store.dispatch(
                         StoreAction.APPOINTMENTS.update.request({

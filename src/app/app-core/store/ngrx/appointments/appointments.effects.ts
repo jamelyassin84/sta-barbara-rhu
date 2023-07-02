@@ -88,11 +88,7 @@ export class AppointmentEffects {
                                 this._addAppointmentModal.opened$.next(false)
                             }),
                             tap(() => this.filter()),
-                            map((response) =>
-                                StoreAction.PATIENTS.upsert.onSuccess({
-                                    patient: response,
-                                }),
-                            ),
+                            map(() => StoreAction.PATIENTS.load.request()),
                         ),
                 ),
             ),

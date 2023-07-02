@@ -12,9 +12,12 @@ import {AgeGroup} from 'app/app-core/models/age-group.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 import {ReportService} from './reports.service'
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop'
+import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
+import dayjs from 'dayjs'
 @Component({
     selector: 'reports',
     templateUrl: './reports.component.html',
+    animations: [...dbwAnimations],
 })
 export class ReportsComponent {
     constructor(
@@ -35,8 +38,8 @@ export class ReportsComponent {
     currentRHU = this.RHU[0]
     currentService = undefined
     diagnosis: string = ''
-    startAt: any = undefined
-    endAt: any = undefined
+    startAt: any = dayjs().startOf('month').format('YYYY-MM-DD')
+    endAt: any = dayjs().endOf('month').format('YYYY-MM-DD')
 
     ngOnInit() {
         setTimeout(() => {

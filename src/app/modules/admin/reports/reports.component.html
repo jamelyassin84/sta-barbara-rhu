@@ -44,13 +44,12 @@
             <mat-date-range-input [rangePicker]="picker">
                 <input
                     matStartDate
-                    (input)="filter()"
                     [(ngModel)]="startAt"
                     placeholder="Start date"
                 />
                 <input
                     matEndDate
-                    (input)="filter()"
+                    (dateChange)="filter()"
                     [(ngModel)]="endAt"
                     placeholder="End date"
                 />
