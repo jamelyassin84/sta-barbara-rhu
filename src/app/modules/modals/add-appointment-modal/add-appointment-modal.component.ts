@@ -39,9 +39,6 @@ export class AddAppointmentModalComponent {
     @StoreSelect(appointmentLoaders)
     readonly loader$: Observable<StoreLoaders>
 
-    @State({selector: StateEnum.PATIENTS, type: 'array'})
-    readonly patients$: Observable<Patient[]>
-
     readonly opened$ = this._addAppointmentModal.opened$
 
     readonly SEX = Object.values(SexEnum)

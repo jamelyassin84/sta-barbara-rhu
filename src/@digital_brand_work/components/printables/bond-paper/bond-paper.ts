@@ -5,7 +5,7 @@ import {Component, Input} from '@angular/core'
     template: `
         <div
             style="font-family: Inter !important;"
-            class="bg-white drop-shadow-2xl border  w-[21.59cm] h-[27.94cm] scale-[0.74] origin-top overflow-hidden print:w-full print:h-full print:shadow-none print:drop-shadow-none'"
+            class="bg-white   border  w-[21.59cm] h-[27.94cm] scale-[0.74] origin-top overflow-hidden print:w-full print:h-full print:shadow-none  "
         >
             <div [ngTemplateOutlet]="template"></div>
         </div>

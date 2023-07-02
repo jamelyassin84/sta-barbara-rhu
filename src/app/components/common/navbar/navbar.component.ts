@@ -9,12 +9,16 @@ import {Subject, takeUntil} from 'rxjs'
 @Component({
     selector: 'app-navbar',
     template: `<div class="flex items-center justify-center w-full bg-white">
-        <navbar-responsive class="block lg:hidden w-full" />
+        <navbar-responsive
+            class="block lg:hidden w-full"
+            [currentNav]="changeCurrentNav"
+            [NAVBAR_NAVIGATION]="NAVBAR_NAVIGATION"
+        />
 
         <div
             class=" items-center w-full max-w-screen-xl p-3 px-0 hidden lg:flex"
         >
-            <div class="flex items-center">
+            <div class="flex items-center rounded-full overflow-hidden">
                 <img
                     role="button"
                     routerLink="/"

@@ -6,7 +6,6 @@
     class="relative z-10 w-full ml-auto bg-white md:w-1/4"
 >
     <modal-header
-        *ngIf="patients$ | async"
         [modalTitle]="'Book an Appointment'"
         (onClose)="opened$.next(false)"
     ></modal-header>

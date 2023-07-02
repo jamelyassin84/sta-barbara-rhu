@@ -1,4 +1,4 @@
-import {Component} from '@angular/core'
+import {Component, Input} from '@angular/core'
 import {NavigationEnd, Router} from '@angular/router'
 import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import {
@@ -19,16 +19,13 @@ export class NavbarResponsiveComponent {
                 this.changeCurrentNav()
             }
         })
-
-        this.isShowing$.pipe(takeUntil(this.destroyed$)).subscribe((shown) => {
-            document.documentElement.style.overflow = shown ? 'hidden' : 'auto'
-        })
     }
-
-    readonly NAVBAR_NAVIGATION = NAVBAR_NAVIGATION
+    @Input({required: true})
+    readonly NAVBAR_NAVIGATION
 
     readonly destroyed$ = new Subject<void>()
 
+    @Input({required: true})
     currentNav: NavbarNavigation = NAVBAR_NAVIGATION[0]
 
     isShowing$ = new BehaviorSubject<boolean>(false)
