@@ -10,11 +10,11 @@ export interface AgeGroup {
 }
 
 export type Bracket =
-    | 'Below 15'
+    | '0-15'
     | '15-19'
     | '20-24'
     | '25-29'
     | '30-34'
     | '35-39'
     | '40-44'
-    | '45 & Up'
+    | '45-150'

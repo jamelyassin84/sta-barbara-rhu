@@ -5,6 +5,7 @@ import {StoreAction} from '../../core/action.enum'
 import {AppointmentService} from './appointments.service'
 import {AddAppointmentModal} from 'app/modules/modals/add-appointment-modal/add-appointment-modal.service'
 import {AlertService} from '@digital_brand_work/services/alert.service'
+import {ReportService} from 'app/modules/admin/reports/reports.service'
 
 @Injectable({
     providedIn: 'root',
@@ -13,6 +14,7 @@ export class AppointmentEffects {
     constructor(
         private _actions$: Actions,
         private _alertService: AlertService,
+        private _reportService: ReportService,
         private _appointmentService: AppointmentService,
         private _addAppointmentModal: AddAppointmentModal,
     ) {}
@@ -22,6 +24,7 @@ export class AppointmentEffects {
             ofType(StoreAction.APPOINTMENTS.load.request),
             switchMap((action) =>
                 this._appointmentService.get(action.isToday).pipe(
+                    tap(() => this.filter()),
                     map((response) =>
                         StoreAction.APPOINTMENTS.load.onSuccess({
                             appointments: response,
@@ -39,6 +42,7 @@ export class AppointmentEffects {
                 this._appointmentService
                     .updateAppointment(action.appointment)
                     .pipe(
+                        tap(() => this.filter()),
                         map((response) =>
                             StoreAction.APPOINTMENTS.update.onSuccess({
                                 appointment: response,
@@ -54,6 +58,7 @@ export class AppointmentEffects {
             ofType(StoreAction.APPOINTMENTS.remove.request),
             switchMap((action) =>
                 this._appointmentService.remove(action.appointment).pipe(
+                    tap(() => this.filter()),
                     map((response) =>
                         StoreAction.APPOINTMENTS.remove.onSuccess({
                             id: response,
@@ -82,6 +87,7 @@ export class AppointmentEffects {
 
                                 this._addAppointmentModal.opened$.next(false)
                             }),
+                            tap(() => this.filter()),
                             map((response) =>
                                 StoreAction.PATIENTS.upsert.onSuccess({
                                     patient: response,
@@ -92,4 +98,8 @@ export class AppointmentEffects {
             ),
         {dispatch: false},
     )
+
+    private filter() {
+        this._reportService.filter$.next(true)
+    }
 }

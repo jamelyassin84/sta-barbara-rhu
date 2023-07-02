@@ -15,6 +15,7 @@ import {AgeGroupEnum} from 'app/app-core/enums/age-group.enum'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {age} from '@digital_brand_work/pipes/age.pipe'
 import {SexEnum} from 'app/app-core/enums/sex.enum'
+import {empty} from '@digital_brand_work/pipes/is-empty.pipe'
 
 @Injectable({providedIn: 'root'})
 export class AgeGroupService {
@@ -37,80 +38,91 @@ export class AgeGroupService {
                 )
 
                 const ageGroups: AgeGroup[] = Object.values(AgeGroupEnum).map(
-                    (bracket) => ({
-                        id: uuid.v4(),
-                        males: 0,
-                        females: 0,
-                        diagnosedMale: 0,
-                        diagnosedFemale: 0,
-                        totalPatients: 0,
-                        totalDiagnosed: 0,
-                        bracket: bracket,
-                    }),
+                    this.getInitialAgeGroup,
                 )
 
-                filteredAppointments.forEach((appointment) => {
-                    const patientAge = age(appointment.patient.dob) // Assuming you have a function to calculate patient age
+                filteredAppointments.forEach((appointment) =>
+                    this.handleAppointmentFilter(appointment, ageGroups),
+                )
 
-                    let ageGroup: AgeGroup | undefined
-
-                    // ... switch cases to assign ageGroup ...
-
-                    if (ageGroup) {
-                        ageGroup.totalPatients++
-                        if (appointment.patient.sex === SexEnum.MALE) {
-                            ageGroup.males++
-                        } else if (appointment.patient.sex === SexEnum.FEMALE) {
-                            ageGroup.females++
-                        }
-
-                        if (appointment.diagnosis) {
-                            ageGroup.totalDiagnosed++
-                            if (appointment.patient.sex === SexEnum.MALE) {
-                                ageGroup.diagnosedMale++
-                            } else if (
-                                appointment.patient.sex === SexEnum.FEMALE
-                            ) {
-                                ageGroup.diagnosedFemale++
-                            }
-                        }
-                    }
-                })
-
-                const totals: AgeGroup = {
-                    id: uuid.v4(),
-                    males: ageGroups.reduce(
-                        (sum, group) => sum + group.males,
-                        0,
-                    ),
-                    females: ageGroups.reduce(
-                        (sum, group) => sum + group.females,
-                        0,
-                    ),
-                    diagnosedMale: ageGroups.reduce(
-                        (sum, group) => sum + group.diagnosedMale,
-                        0,
-                    ),
-                    diagnosedFemale: ageGroups.reduce(
-                        (sum, group) => sum + group.diagnosedFemale,
-                        0,
-                    ),
-                    totalPatients: ageGroups.reduce(
-                        (sum, group) => sum + group.totalPatients,
-                        0,
-                    ),
-                    totalDiagnosed: ageGroups.reduce(
-                        (sum, group) => sum + group.totalDiagnosed,
-                        0,
-                    ),
-                    bracket: 'Total' as any,
-                }
+                const totals: AgeGroup = this.getTotalAgeGroups(ageGroups)
 
                 ageGroups.push(totals)
 
                 return ageGroups
             }),
         )
+    }
+
+    private handleAppointmentFilter(
+        appointment: Appointment,
+        ageGroups: AgeGroup[],
+    ): void {
+        const patientAge = age(appointment.patient.dob)
+        let index = ageGroups.findIndex((ageGroup) =>
+            this.findAgeGroup(ageGroup, patientAge),
+        )
+
+        if (index >= 0) {
+            ageGroups[index].totalPatients++
+            if (appointment.patient.sex === SexEnum.MALE) {
+                ageGroups[index].males++
+            } else if (appointment.patient.sex === SexEnum.FEMALE) {
+                ageGroups[index].females++
+            }
+
+            if (appointment.diagnosis) {
+                ageGroups[index].totalDiagnosed++
+                if (appointment.patient.sex === SexEnum.MALE) {
+                    ageGroups[index].diagnosedMale++
+                } else if (appointment.patient.sex === SexEnum.FEMALE) {
+                    ageGroups[index].diagnosedFemale++
+                }
+            }
+        }
+    }
+
+    private getInitialAgeGroup(bracket: AgeGroupEnum): AgeGroup {
+        return {
+            id: uuid.v4(),
+            males: 0,
+            females: 0,
+            diagnosedMale: 0,
+            diagnosedFemale: 0,
+            totalPatients: 0,
+            totalDiagnosed: 0,
+            bracket: bracket,
+        }
+    }
+
+    private getTotalAgeGroups(ageGroups: AgeGroup[]): AgeGroup {
+        return {
+            id: uuid.v4(),
+            males: ageGroups.reduce((acc, group) => acc + group.males, 0),
+            females: ageGroups.reduce((acc, group) => acc + group.females, 0),
+            diagnosedMale: ageGroups.reduce(
+                (acc, group) => acc + group.diagnosedMale,
+                0,
+            ),
+            diagnosedFemale: ageGroups.reduce(
+                (acc, group) => acc + group.diagnosedFemale,
+                0,
+            ),
+            totalPatients: ageGroups.reduce(
+                (acc, group) => acc + group.totalPatients,
+                0,
+            ),
+            totalDiagnosed: ageGroups.reduce(
+                (acc, group) => acc + group.totalDiagnosed,
+                0,
+            ),
+            bracket: 'Total' as any,
+        }
+    }
+
+    private findAgeGroup(ageGroup: AgeGroup, patientAge: number): boolean {
+        const [minAge, maxAge] = ageGroup.bracket.split('-').map(Number)
+        return patientAge >= minAge && patientAge <= maxAge
     }
 
     private getFilteredAppointments(
@@ -128,11 +140,11 @@ export class AgeGroupService {
                 const isWithinDateRange =
                     appointmentDate >= startDate && appointmentDate <= endDate
 
-                if (!params.keyword && !params.appointmentType) {
-                    return isWithinDateRange
+                if (empty(params.keyword) && !params.appointmentType) {
+                    return isWithinDateRange && appointment.rhu === params.rhu
                 }
 
-                if (params.keyword && !params.appointmentType) {
+                if (!empty(params.keyword) && !params.appointmentType) {
                     const {first_name, last_name, middle_name} =
                         appointment.patient
                     const fullName = `${first_name} ${last_name} ${middle_name}`
@@ -141,13 +153,19 @@ export class AgeGroupService {
                         .toLowerCase()
                         .includes(params.keyword.toLowerCase())
 
-                    return isWithinDateRange && matchesKeyword
-                }
-
-                if (!params.keyword && params.appointmentType) {
                     return (
                         isWithinDateRange &&
-                        appointment.appointment_type === params.appointmentType
+                        matchesKeyword &&
+                        appointment.rhu === params.rhu
+                    )
+                }
+
+                if (empty(params.keyword) && params.appointmentType) {
+                    return (
+                        isWithinDateRange &&
+                        appointment.appointment_type ===
+                            params.appointmentType &&
+                        appointment.rhu === params.rhu
                     )
                 }
 
@@ -158,7 +176,8 @@ export class AgeGroupService {
                 return (
                     isWithinDateRange &&
                     matchesKeyword &&
-                    appointment.appointment_type === params.appointmentType
+                    appointment.appointment_type === params.appointmentType &&
+                    appointment.rhu === params.rhu
                 )
             }
 
