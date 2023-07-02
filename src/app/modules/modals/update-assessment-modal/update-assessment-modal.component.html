@@ -6,7 +6,8 @@
     class="relative z-10 w-full ml-auto bg-white md:w-1/4"
 >
     <modal-header
-        [modalTitle]="'John`s Assessment'"
+        *ngIf="appointment"
+        modalTitle="Assessment of {{ appointment.patient | to_full_name }}"
         (onClose)="opened$.next(false)"
     >
     </modal-header>

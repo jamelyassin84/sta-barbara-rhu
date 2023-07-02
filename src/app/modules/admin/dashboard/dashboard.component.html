@@ -62,5 +62,9 @@
         </div>
     </div>
 
-    <appointment-list [appointments]="appointments$ | async" />
+    <appointment-list
+        [ready]="ready"
+        *ngIf="patients$ | async"
+        [appointments]="appointments$ | async"
+    />
 </div>

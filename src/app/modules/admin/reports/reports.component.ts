@@ -41,12 +41,14 @@ export class ReportsComponent {
     diagnosis: string = ''
     startAt: any = dayjs().startOf('month').format('YYYY-MM-DD')
     endAt: any = dayjs().endOf('month').format('YYYY-MM-DD')
+    ready: boolean = false
 
     ngOnInit() {
         setTimeout(() => {
             this._store.dispatch(
                 StoreAction.APPOINTMENTS.load.request({isToday: false}),
             )
+            this.ready = true
         }, 1500)
     }
 

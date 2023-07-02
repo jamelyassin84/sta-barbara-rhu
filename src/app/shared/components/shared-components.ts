@@ -1,3 +1,4 @@
+import {AppSpinnerComponent} from 'app/components/app-spinner/app-spinner.component'
 import {CommonSidebarComponent} from 'app/components/common/common-sidebar/common-sidebar.component'
 import {FooterComponent} from 'app/components/common/footer/footer.component'
 import {NavbarResponsiveComponent} from 'app/components/common/navbar-responsive/navbar-responsive.component'
@@ -20,4 +21,5 @@ export const sharedComponents = [
 
     AppointmentListComponent,
     PatientListComponent,
+    AppSpinnerComponent,
 ]

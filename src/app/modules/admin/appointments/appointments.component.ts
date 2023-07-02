@@ -11,6 +11,7 @@ import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 import dayjs from 'dayjs'
+import {Patient} from 'app/app-core/models/patient.model'
 
 @Component({
     selector: 'appointments',
@@ -23,6 +24,12 @@ export class AppointmentsComponent {
         private _addAppointmentModal: AddAppointmentModal,
     ) {}
 
+    @State({selector: StateEnum.PATIENTS, type: 'array'})
+    readonly patients$: Observable<Patient[]>
+
+    @State({selector: StateEnum.APPOINTMENTS, type: 'array'})
+    readonly appointments$: Observable<Appointment[]>
+
     readonly addAppointmentModalOpened$ = this._addAppointmentModal.opened$
 
     readonly RHU = Object.values(RHUEnum)
@@ -34,15 +41,15 @@ export class AppointmentsComponent {
     patientName: string = ''
     startAt: any = dayjs().startOf('month').format('YYYY-MM-DD')
     endAt: any = dayjs().endOf('month').format('YYYY-MM-DD')
-
-    @State({selector: StateEnum.APPOINTMENTS, type: 'array'})
-    readonly appointments$: Observable<Appointment[]>
+    ready: boolean = false
 
     ngOnInit() {
         setTimeout(() => {
             this._store.dispatch(
                 StoreAction.APPOINTMENTS.load.request({isToday: false}),
             )
+
+            this.ready = true
         }, 1500)
     }
 }
