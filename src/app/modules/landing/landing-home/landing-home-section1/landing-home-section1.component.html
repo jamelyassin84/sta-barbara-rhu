@@ -18,12 +18,12 @@
             (click)="currentSlide = image"
             [ngClass]="{'opacity-50': currentSlide !== image}"
             *ngFor="let image of HOME_SLIDERS; hOME_SLIDERS"
-            class="h-[5px] rounded-full bg-white w-[40px] active:opacity-20 mx-1 drop-shadow-lg"
+            class="h-[5px] rounded-full bg-white w-[40px] active:opacity-20 mx-1"
         ></div>
     </div>
 
     <div
-        class="relative flex flex-col items-center justify-center w-full text-center text-white z-1 -translate-y-[10vh] drop-shadow-2xl"
+        class="relative flex flex-col items-center justify-center w-full text-center text-white z-1 -translate-y-[10vh]"
     >
         <div class="text-3xl font-medium md:text-8xl text-shadow">
             Welcome to
@@ -32,12 +32,15 @@
             Santa Barbara RHU 🇵🇭
         </div>
 
-        <div class="font-normal text-yellow-200 tex md:text-3xl text-shadow">
+        <div
+            class="mb-40 font-normal text-yellow-200 tex md:text-3xl text-shadow lg:mb-0"
+        >
             Fastest & Smartest RHU services in the country!
         </div>
 
         <button
-            class="px-5 py-2 relative z-[9999] mt-8 md:mt-16 font-bold rounded-md md:px-10 md:py-3 md:text-4xl bg-brand-yellow drop-shadow-2xl text-black"
+            (click)="scrollToElement()"
+            class="px-5 py-2 relative z-[9999] mt-8 md:mt-16 font-bold rounded-md md:px-10 md:py-3 md:text-4xl bg-brand-yellow text-black"
         >
             Book an Appointment
         </button>
@@ -46,7 +49,7 @@
             <button
                 (click)="slide('left')"
                 mat-icon-button
-                class="bg-white drop-shadow-xl active:opacity-20"
+                class="bg-white active:opacity-20"
             >
                 <mat-icon
                     class="text-black"
@@ -57,7 +60,7 @@
             <button
                 (click)="slide('right')"
                 mat-icon-button
-                class="ml-auto bg-white drop-shadow-xl active:opacity-20"
+                class="ml-auto bg-white active:opacity-20"
             >
                 <mat-icon
                     class="text-black"

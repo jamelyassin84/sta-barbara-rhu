@@ -14,6 +14,7 @@ import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
 import {appointmentLoaders} from 'app/app-core/store/ngrx/appointments/appointments.selectors'
 import {StoreLoaders} from '@digital_brand_work/states/store/models/loader.model'
 import {FormBuilder} from '@angular/forms'
+import {Appointment} from 'app/app-core/models/appointment.model'
 
 @Component({
     selector: 'update-assessment-modal',
@@ -36,10 +37,14 @@ export class UpdateAssessmentModalComponent {
 
     form = this._appointmentForm.assessment()
 
+    appointment: Appointment
+
     ngOnInit(): void {
         this._updateAssessmentModal.appointment$
             .pipe(take(1))
             .subscribe((appointment) => {
+                this.appointment = appointment
+
                 if (appointment && !empty(appointment.assessment)) {
                     this.populateAssessment(appointment.assessment)
                 }

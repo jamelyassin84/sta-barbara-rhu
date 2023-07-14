@@ -1,67 +1,73 @@
-<div
-    class="flex flex-col flex-auto p-6 px-5 mb-5 overflow-hidden sm:col-span-6 bg-card"
->
-    <div class="flex flex-col flex-auto h-full mt-5 overflow-x-auto">
-        <table class="overflow-y-visible min-w-240">
-            <thead class="text-right uppercase">
-                <tr>
-                    <th class="text-left text-gray-700">ID</th>
-                    <th class="text-left text-gray-700">Name</th>
-                    <th class="text-left text-gray-700">Phone</th>
-                    <th class="text-left text-gray-700">Email</th>
-                    <th class="text-left text-gray-700">Age</th>
-                    <th class="text-left text-gray-700">Address</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr
-                    *ngFor="let patient of patients; let i = index"
-                    class="border-t border-gray-100 hover:bg-slate-100"
-                >
-                    <td>{{ patient.id | uppercase }}</td>
-                    <td>{{ patient | to_full_name }}</td>
-                    <td>{{ patient.phone }}</td>
-                    <td>{{ patient.email }}</td>
-                    <td>{{ patient.dob | age }}</td>
-                    <td>{{ patient.address }}</td>
-
-                    <td>
-                        <div class="flex justify-center">
-                            <button mat-icon-button [matMenuTriggerFor]="menu">
-                                <mat-icon
-                                    class="text-gray-400 icon-size-5"
-                                    svgIcon="feather:chevron-down"
-                                ></mat-icon>
-                            </button>
-
-                            <mat-menu #menu="matMenu">
-                                <button
-                                    mat-menu-item
-                                    routerLink="/admin/patients/sdxsdsa"
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    View Patient
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Print Medical Certificate
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Remove
-                                </button>
-                            </mat-menu>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<ng-container *ngIf="(loader$ | async)?.getLoader as loader">
+    <div
+        *ngIf="loader !== 'idle'"
+        class="flex items-center justify-center w-full p-10 bg-white"
+    >
+        <app-spinner />
     </div>
-</div>
+
+    <div
+        *ngIf="loader === 'idle'"
+        class="flex flex-col flex-auto p-6 px-5 mb-5 overflow-hidden sm:col-span-6 bg-card"
+    >
+        <div class="flex flex-col flex-auto h-full mt-5 overflow-x-auto">
+            <table class="overflow-y-visible min-w-240">
+                <thead class="text-right uppercase">
+                    <tr class="bg-gray-100">
+                        <th class="px-4 text-left text-gray-700">ID</th>
+                        <th class="px-4 text-left text-gray-700">Name</th>
+                        <th class="px-4 text-left text-gray-700">Phone</th>
+                        <th class="px-4 text-left text-gray-700">Email</th>
+                        <th class="px-4 text-left text-gray-700">Age</th>
+                        <th class="px-4 text-left text-gray-700">Address</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody [@listAnimation]="patients.length">
+                    <tr
+                        *ngFor="let patient of patients; let i = index"
+                        class="border-t border-gray-100 hover:bg-slate-100"
+                    >
+                        <td class="px-4">{{ patient.id | uppercase }}</td>
+                        <td class="px-4">{{ patient | to_full_name }}</td>
+                        <td class="px-4">{{ patient.phone }}</td>
+                        <td class="px-4">{{ patient.email }}</td>
+                        <td class="px-4">{{ patient.dob | age }}</td>
+                        <td class="px-4">{{ patient.address }}</td>
+
+                        <td class="px-4">
+                            <div class="flex justify-center">
+                                <button
+                                    mat-icon-button
+                                    [matMenuTriggerFor]="menu"
+                                >
+                                    <mat-icon
+                                        class="text-gray-400 icon-size-5"
+                                        svgIcon="feather:chevron-down"
+                                    ></mat-icon>
+                                </button>
+
+                                <mat-menu #menu="matMenu">
+                                    <button
+                                        mat-menu-item
+                                        routerLink="/admin/patients/sdxsdsa"
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        View Patient
+                                    </button>
+
+                                    <button
+                                        mat-menu-item
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        Print Medical Certificate
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-container>

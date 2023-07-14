@@ -15,4 +15,8 @@ export class LandingHomeSection2Component {
         this._addAppointmentModal.appointmentType$.next(service)
         this._addAppointmentModal.opened$.next(true)
     }
+
+    trackByFn(index: number, item: any): any {
+        return item.id || index
+    }
 }

@@ -8,7 +8,10 @@
 
     <div class="flex items-center w-full p-3 bg-white"></div>
 
-    <div class="flex items-center w-full p-3 bg-white">
+    <div
+        *ngIf="patients$ | async"
+        class="flex items-center w-full p-3 bg-white"
+    >
         <button
             (click)="currentRHU = item"
             [ngClass]="{
@@ -88,6 +91,7 @@
     </div>
 
     <appointment-list
+        [ready]="ready"
         [appointments]="
             appointments$
                 | async

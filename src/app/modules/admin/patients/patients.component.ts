@@ -10,7 +10,6 @@ import {Observable} from 'rxjs'
 @Component({
     selector: 'patients',
     templateUrl: './patients.component.html',
-    styleUrls: ['./patients.component.scss'],
 })
 export class PatientsComponent {
     constructor(private _store: Store<AppState>) {}

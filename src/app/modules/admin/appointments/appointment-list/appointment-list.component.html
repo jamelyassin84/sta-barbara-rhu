@@ -1,161 +1,181 @@
-<div
-    class="flex flex-col flex-auto p-6 px-5 mb-5 overflow-hidden sm:col-span-6 bg-card"
->
-    <div class="flex flex-col flex-auto h-full mt-5 overflow-x-auto">
-        <table class="overflow-y-visible min-w-360">
-            <thead class="text-right uppercase">
-                <tr>
-                    <th class="text-left text-gray-700">ID</th>
-                    <th class="text-left text-gray-700">RHU</th>
-                    <th
-                        *ngIf="!isInPatientDetails"
-                        class="text-left text-gray-700"
-                    >
-                        Patient
-                    </th>
-                    <th class="text-left text-gray-700">Appointment Type</th>
-                    <th class="text-left text-gray-700">Nature of Visit</th>
-                    <th class="text-left text-gray-700">When</th>
-                    <th class="text-left text-gray-700">Symptoms</th>
-                    <th class="text-left text-gray-700">Diagnosis</th>
-                    <th class="text-left text-gray-700">
-                        Medication/Treatment
-                    </th>
-                    <th class="text-left text-gray-700">Provider</th>
-                    <th class="text-left text-gray-700">Findings/Impression</th>
-                    <th class="text-left text-gray-700">Laboratory Test</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr
-                    *ngFor="let appointment of appointments; let i = index"
-                    class="border-t border-gray-100 hover:bg-slate-100"
-                >
-                    <td class="text-xs">{{ appointment.id }}</td>
-                    <td>{{ appointment?.rhu }}</td>
-                    <td *ngIf="!isInPatientDetails">
-                        {{ appointment?.patient | to_full_name }}
-                    </td>
-                    <td>{{ appointment.appointment_type }}</td>
-                    <td>{{ appointment.appointment_nature }}</td>
-                    <td>{{ appointment.date | date : 'MM/dd/YY' }}</td>
-                    <td>{{ appointment.symptoms }}</td>
-                    <td>{{ appointment?.diagnosis?.diagnosis ?? 'N/A' }}</td>
-                    <td>
-                        {{
-                            appointment?.diagnosis?.medication_or_treatment ??
-                                'N/A'
-                        }}
-                    </td>
-                    <td>
-                        {{
-                            appointment?.diagnosis
-                                ?.name_of_health_care_provider ?? 'N/A'
-                        }}
-                    </td>
-                    <td>
-                        {{
-                            appointment?.diagnosis
-                                ?.laboratory_findings_or_impression ?? 'N/A'
-                        }}
-                    </td>
-                    <td>
-                        {{
-                            appointment?.diagnosis?.performed_laboratory_test ??
-                                'N/A'
-                        }}
-                    </td>
-
-                    <td>
-                        <div class="flex justify-center">
-                            <button mat-icon-button [matMenuTriggerFor]="menu">
-                                <mat-icon
-                                    class="text-gray-400 icon-size-5"
-                                    svgIcon="feather:chevron-down"
-                                ></mat-icon>
-                            </button>
-
-                            <mat-menu #menu="matMenu">
-                                <button
-                                    mat-menu-item
-                                    (click)="reschedule(appointment)"
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Reschedule
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    routerLink="/admin/patients/{{
-                                        appointment.patientId
-                                    }}"
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    View Patient
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    (click)="updateAssessment(appointment)"
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Assessment
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    *ngIf="appointment.assessment"
-                                    (click)="updateDiagnosis(appointment)"
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Diagnosis
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    *ngIf="appointment.diagnosis"
-                                    (click)="viewMedicalReceit(appointment)"
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Print Medications
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    *ngIf="appointment.diagnosis"
-                                    (click)="
-                                        viewMedicalCertificate(appointment)
-                                    "
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Print Medical Certificate
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    (click)="viewMedicoLegal(appointment)"
-                                    *ngIf="
-                                        appointment.appointment_type ===
-                                        'Medico Legal'
-                                    "
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Print Medico Legal
-                                </button>
-
-                                <button
-                                    mat-menu-item
-                                    (click)="remove(appointment)"
-                                    class="hover:bg-brand-color hover:text-white"
-                                >
-                                    Remove
-                                </button>
-                            </mat-menu>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+<ng-container *ngIf="(loader$ | async)?.getLoader as loader">
+    <div
+        *ngIf="loader !== 'idle' || !ready"
+        class="flex items-center justify-center w-full p-10 bg-white"
+    >
+        <app-spinner />
     </div>
-</div>
+
+    <div
+        class="flex flex-col flex-auto p-6 px-5 mb-5 overflow-hidden sm:col-span-6 bg-card"
+    >
+        <div
+            *ngIf="loader === 'idle' && ready"
+            class="flex flex-col flex-auto h-full mt-5 overflow-x-auto"
+        >
+            <table class="overflow-y-visible min-w-280">
+                <thead class="text-right">
+                    <tr class="bg-gray-100">
+                        <th class="px-4 text-left text-gray-700">ID</th>
+                        <th class="px-4 text-left text-gray-700">RHU</th>
+                        <th
+                            *ngIf="!isInPatientDetails"
+                            class="px-4 text-left text-gray-700"
+                        >
+                            Patient
+                        </th>
+                        <th class="px-4 text-left text-gray-700">Type</th>
+                        <th class="px-4 text-left text-gray-700">Visit</th>
+                        <th class="px-4 text-left text-gray-700">When</th>
+                        <th class="px-4 text-left text-gray-700">Symptoms</th>
+                        <th class="px-4 text-left text-gray-700">Diagnosis</th>
+                        <th class="px-4 text-left text-gray-700">Medication</th>
+                        <th class="px-4 text-left text-gray-700">Provider</th>
+                        <th class="px-4 text-left text-gray-700">Findings</th>
+                        <th class="px-4 text-left text-gray-700">Test</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody [@listAnimation]="appointments.length">
+                    <tr
+                        *ngFor="let appointment of appointments; let i = index"
+                        class="border-t border-gray-100 hover:bg-slate-100"
+                    >
+                        <td class="px-4 text-xs">{{ appointment.id }}</td>
+                        <td class="px-4">{{ appointment?.rhu }}</td>
+                        <td *ngIf="!isInPatientDetails" class="px-4">
+                            {{ appointment?.patient | to_full_name }}
+                        </td>
+                        <td class="px-4">{{ appointment.appointment_type }}</td>
+                        <td class="px-4">
+                            {{ appointment.appointment_nature }}
+                        </td>
+                        <td class="px-4">
+                            {{ appointment.date | date : 'MM/dd/YY' }}
+                        </td>
+                        <td class="px-4">{{ appointment.symptoms }}</td>
+                        <td class="px-4">
+                            {{ appointment?.diagnosis?.diagnosis ?? 'N/A' }}
+                        </td>
+                        <td class="px-4">
+                            {{
+                                appointment?.diagnosis
+                                    ?.medication_or_treatment ?? 'N/A'
+                            }}
+                        </td>
+                        <td class="px-4">
+                            {{
+                                appointment?.diagnosis
+                                    ?.name_of_health_care_provider ?? 'N/A'
+                            }}
+                        </td>
+                        <td class="px-4">
+                            {{
+                                appointment?.diagnosis
+                                    ?.laboratory_findings_or_impression ?? 'N/A'
+                            }}
+                        </td>
+                        <td class="px-4">
+                            {{
+                                appointment?.diagnosis
+                                    ?.performed_laboratory_test ?? 'N/A'
+                            }}
+                        </td>
+
+                        <td>
+                            <div class="flex justify-center">
+                                <button
+                                    mat-icon-button
+                                    [matMenuTriggerFor]="menu"
+                                >
+                                    <mat-icon
+                                        class="text-gray-400 icon-size-5"
+                                        svgIcon="feather:chevron-down"
+                                    ></mat-icon>
+                                </button>
+
+                                <mat-menu #menu="matMenu">
+                                    <button
+                                        mat-menu-item
+                                        (click)="reschedule(appointment)"
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        Reschedule
+                                    </button>
+
+                                    <button
+                                        mat-menu-item
+                                        *ngIf="!isInPatientDetails"
+                                        routerLink="/admin/patients/{{
+                                            appointment.patientId
+                                        }}"
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        View Patient
+                                    </button>
+
+                                    <button
+                                        mat-menu-item
+                                        (click)="updateAssessment(appointment)"
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        Assessment
+                                    </button>
+
+                                    <button
+                                        mat-menu-item
+                                        *ngIf="appointment.assessment"
+                                        (click)="updateDiagnosis(appointment)"
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        Diagnosis
+                                    </button>
+
+                                    <button
+                                        mat-menu-item
+                                        *ngIf="appointment.diagnosis"
+                                        (click)="viewMedicalReceit(appointment)"
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        Print Medications
+                                    </button>
+
+                                    <button
+                                        mat-menu-item
+                                        *ngIf="appointment.diagnosis"
+                                        (click)="
+                                            viewMedicalCertificate(appointment)
+                                        "
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        Print Medical Certificate
+                                    </button>
+
+                                    <button
+                                        mat-menu-item
+                                        (click)="viewMedicoLegal(appointment)"
+                                        *ngIf="
+                                            appointment.appointment_type ===
+                                            'Medico Legal'
+                                        "
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        Print Medico Legal
+                                    </button>
+
+                                    <button
+                                        mat-menu-item
+                                        (click)="remove(appointment)"
+                                        class="hover:bg-brand-color hover:text-white"
+                                    >
+                                        Remove
+                                    </button>
+                                </mat-menu>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</ng-container>

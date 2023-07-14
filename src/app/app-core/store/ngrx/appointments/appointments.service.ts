@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core'
 import {Store} from '@ngrx/store'
-import {Observable, map, of, switchMap, take} from 'rxjs'
+import {Observable, map, of, switchMap, take, tap} from 'rxjs'
 import {AppState} from '../../core/app.state'
 import {Patient} from 'app/app-core/models/patient.model'
 import {StoreAction} from '../../core/action.enum'
@@ -18,6 +18,7 @@ import * as uuid from 'uuid'
 import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
 import {StateEnum} from '../../core/state.enum'
 import {cloneDeep} from 'lodash'
+import {unfreeze} from '@digital_brand_work/helpers/helpers'
 
 @Injectable({providedIn: 'root'})
 export class AppointmentService {
@@ -28,7 +29,7 @@ export class AppointmentService {
     ) {}
 
     @State({selector: StateEnum.PATIENTS, type: 'array'})
-    patients$: Observable<Patient[]>
+    readonly patients$: Observable<Patient[]>
 
     @Loader({state: 'APPOINTMENTS', loading: LoadingTypeEnum.GET})
     get(isToday: boolean = false): Observable<Appointment[]> {
@@ -71,27 +72,24 @@ export class AppointmentService {
     }
 
     @Loader({state: 'APPOINTMENTS', loading: LoadingTypeEnum.CREATE})
-    upsert(form: FormGroup): Observable<Patient> {
-        return this.patients$.pipe(
-            take(1),
-            switchMap((patients) => {
-                if (patients.length === 0) {
-                    return this.add(form)
-                }
+    upsert(form: any) {
+        return this.patients$.pipe(take(1)).subscribe((patients) => {
+            if (patients.length === 0) {
+                return this.add(form)
+            }
 
-                const patient = patients.find(
-                    (p) =>
-                        p.email.toLocaleLowerCase() ===
-                        form.value.patient.email.toLocaleLowerCase(),
-                )
+            const patient = patients.find(
+                (p) =>
+                    p.email.toLocaleLowerCase() ===
+                    form.patient.email.toLocaleLowerCase(),
+            )
 
-                if (!patient) {
-                    return this.add(form)
-                }
+            if (!patient) {
+                return this.add(form)
+            }
 
-                return this.update(form, patient)
-            }),
-        )
+            return this.update(form, unfreeze(patient))
+        })
     }
 
     @Loader({state: 'APPOINTMENTS', loading: LoadingTypeEnum.UPDATE})
@@ -119,7 +117,11 @@ export class AppointmentService {
 
                     const payload = {
                         ...patient,
-                        appointments: patientAppointments,
+                        appointments: patientAppointments.map((a) => {
+                            const newAppointment = {...a}
+                            delete newAppointment.patient
+                            return newAppointment
+                        }),
                     }
 
                     this._fireStore
@@ -169,23 +171,23 @@ export class AppointmentService {
         )
     }
 
-    private add(form: FormGroup): Observable<Patient> {
+    private add(form: any): Observable<Patient> {
         const patientId = `P-${uuid.v4()}`
 
         const patient: Patient = {
             id: patientId,
-            ...form.value.patient,
-            dob: dayjs(form.value.dob).toJSON(),
+            ...form.patient,
+            dob: dayjs(form.dob).toJSON(),
             appointments: [
                 {
                     id: `A-${uuid.v4()}`,
-                    ...form.value.appointment,
+                    ...form.appointment,
                     patientId: patientId,
                     ...timeStamps(),
                     diagnosis: null,
                     assessment: null,
-                    date: dayjs(form.value.date).toJSON(),
-                    symptoms: form.value.appointment.symptoms,
+                    date: dayjs(form.date).toJSON(),
+                    symptoms: form.appointment.symptoms,
                 },
             ],
         } as any
@@ -193,7 +195,7 @@ export class AppointmentService {
         let payload = {...patient} as any
 
         if (
-            form.value.appointment.appointment_type ===
+            form.appointment.appointment_type ===
             AppointmentTypeEnum.MEDICO_LEGAL
         ) {
             payload['medicoLegal'] = this.getMedicoLegal(form)
@@ -209,16 +211,16 @@ export class AppointmentService {
         return of(payload)
     }
 
-    private update(form: FormGroup, patient: Patient): Observable<Patient> {
+    private update(form: any, patient: Patient): Observable<Patient> {
         const appointment = {
             id: `A-${uuid.v4()}`,
-            ...form.value.appointment,
+            ...form.appointment,
             ...timeStamps(),
             patientId: patient.id,
             diagnosis: null,
             assessment: null,
-            date: dayjs(form.value.date).toJSON(),
-            symptoms: form.value.appointment.symptoms,
+            date: dayjs(form.date).toJSON(),
+            symptoms: form.appointment.symptoms,
         }
 
         const payload = cloneDeep(patient)
@@ -226,13 +228,13 @@ export class AppointmentService {
         payload.appointments.push(appointment)
 
         if (
-            form.value.appointment.appointment_type ===
+            form.appointment.appointment_type ===
             AppointmentTypeEnum.MEDICO_LEGAL
         ) {
             payload['medicoLegal'] = this.getMedicoLegal(form)
         }
 
-        delete payload.diagnosis
+        payload.diagnosis = null
 
         this._fireStore
             .collection(CollectionEnum.PATIENTS)
@@ -242,16 +244,12 @@ export class AppointmentService {
         return of(payload)
     }
 
-    private getMedicoLegal(form: FormGroup) {
+    private getMedicoLegal(form: any) {
         return {
-            ...form.value.medicoLegal,
+            ...form.medicoLegal,
             id: `ML-${uuid.v4()}`,
-            timeOfIncident: dayjs(
-                form.value.medicoLegal.timeOfIncident,
-            ).toJSON(),
-            dateOfIncident: dayjs(
-                form.value.medicoLegal.dateOfIncident,
-            ).toJSON(),
+            timeOfIncident: dayjs(form.medicoLegal.timeOfIncident).toJSON(),
+            dateOfIncident: dayjs(form.medicoLegal.dateOfIncident).toJSON(),
         }
     }
 }

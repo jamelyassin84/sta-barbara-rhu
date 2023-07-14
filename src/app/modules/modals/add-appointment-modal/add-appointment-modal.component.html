@@ -200,9 +200,9 @@
 
         <button
             matRipple
+            type="button"
             primaryButton
             (click)="save()"
-            type="button"
             [loader]="loader.createLoader"
             *ngIf="loader$ | async as loader"
             matRippleColor="rgba(250, 250, 250,.3)"

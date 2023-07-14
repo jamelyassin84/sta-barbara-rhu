@@ -8,7 +8,7 @@
 
     <div class="flex items-center w-full p-3 bg-white">
         <button
-            (click)="currentRHU = item"
+            (click)="currentRHU = item; filter()"
             [ngClass]="{
                 'bg-black text-white pointer-events-none': currentRHU === item,
                 'text-gray-500 md:hover:bg-gray-50': currentRHU !== item
@@ -23,9 +23,13 @@
             class="mb-0 ml-auto translate-y-2 min-w-64"
             appearance="fill"
         >
-            <mat-select placeholder="Type of Service">
-                <mat-option>All</mat-option>
-                <mat-option *ngFor="let item of SERVICES">{{
+            <mat-select
+                [(ngModel)]="currentService"
+                placeholder="Type of Service"
+                (selectionChange)="filter()"
+            >
+                <mat-option [value]="undefined">All</mat-option>
+                <mat-option [value]="item" *ngFor="let item of SERVICES">{{
                     item
                 }}</mat-option>
             </mat-select>
@@ -38,8 +42,17 @@
             appearance="fill"
         >
             <mat-date-range-input [rangePicker]="picker">
-                <input matStartDate placeholder="Diagnosis Start date" />
-                <input matEndDate placeholder="End date" />
+                <input
+                    matStartDate
+                    [(ngModel)]="startAt"
+                    placeholder="Start date"
+                />
+                <input
+                    matEndDate
+                    (dateChange)="filter()"
+                    [(ngModel)]="endAt"
+                    placeholder="End date"
+                />
             </mat-date-range-input>
 
             <mat-datepicker-toggle
@@ -52,7 +65,12 @@
         <mat-form-field class="mx-3 mb-0 mr-6 translate-y-2 min-w-64">
             <mat-icon class="mr-3" svgIcon="feather:search"></mat-icon>
 
-            <input matInput placeholder="Diagnosis" [(ngModel)]="diagnosis" />
+            <input
+                (input)="filter()"
+                matInput
+                placeholder="Diagnosis"
+                [(ngModel)]="diagnosis"
+            />
 
             <button
                 matSuffix
@@ -74,5 +92,5 @@
         </button>
     </div>
 
-    <patient-list [patients]="patients$ | async" />
+    <report-list [ready]="ready" [ageGroups]="ageGroups$ | async" />
 </div>

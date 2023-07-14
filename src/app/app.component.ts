@@ -20,6 +20,8 @@ export class AppComponent {
             .subscribe(
                 () => (this.isInHome = this._router.url.includes('home')),
             )
+
+        this._store.dispatch(StoreAction.PATIENTS.load.request())
     }
 
     @State({selector: StateEnum.ALERTS, type: 'array'})
@@ -28,10 +30,6 @@ export class AppComponent {
     readonly destroyed$ = new Subject()
 
     isInHome: boolean = true
-
-    ngOnInit(): void {
-        this._store.dispatch(StoreAction.PATIENTS.load.request())
-    }
 
     ngOnDestroy(): void {
         this.destroyed$.complete()

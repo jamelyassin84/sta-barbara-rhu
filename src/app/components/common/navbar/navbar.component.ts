@@ -8,8 +8,44 @@ import {Subject, takeUntil} from 'rxjs'
 
 @Component({
     selector: 'app-navbar',
-    templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss'],
+    template: `<div class="flex items-center justify-center w-full bg-white">
+        <navbar-responsive
+            class="block lg:hidden w-full"
+            [currentNav]="changeCurrentNav"
+            [NAVBAR_NAVIGATION]="NAVBAR_NAVIGATION"
+        />
+
+        <div
+            class=" items-center w-full max-w-screen-xl p-3 px-0 hidden lg:flex"
+        >
+            <div class="flex items-center rounded-full overflow-hidden">
+                <img
+                    role="button"
+                    routerLink="/"
+                    class="object-contain h-[50px] mx-2 rounded-full"
+                    src="/assets/app/logo.jpg"
+                    alt=""
+                />
+            </div>
+
+            <ul class="flex items-center ml-auto">
+                <li
+                    [ngClass]="{
+                        'pointer-events-none text-white bg-brand-green':
+                            currentNav === nav,
+                        'hover:bg-black/40 hover:text-white': currentNav !== nav
+                    }"
+                    (click)="currentNav = nav"
+                    role="button"
+                    [routerLink]="nav.link"
+                    class="px-5 py-2 mx-2 rounded-md font-extralight"
+                    *ngFor="let nav of NAVBAR_NAVIGATION; trackBy: trackByFn"
+                >
+                    {{ nav.title }}
+                </li>
+            </ul>
+        </div>
+    </div> `,
 })
 export class NavbarComponent {
     constructor(private _router: Router) {
@@ -21,10 +57,14 @@ export class NavbarComponent {
     }
 
     readonly NAVBAR_NAVIGATION = NAVBAR_NAVIGATION
-
-    destroyed$ = new Subject()
+    readonly destroyed$ = new Subject<void>()
 
     currentNav: NavbarNavigation = NAVBAR_NAVIGATION[0]
+
+    ngOnDestroy() {
+        this.destroyed$.next()
+        this.destroyed$.complete()
+    }
 
     changeCurrentNav() {
         const url = this._router.url
@@ -40,10 +80,6 @@ export class NavbarComponent {
         if (url.includes('/contact-us')) {
             this.currentNav = NAVBAR_NAVIGATION[2]
         }
-    }
-
-    ngOnDestroy(): void {
-        this.destroyed$.complete()
     }
 
     trackByFn(index: number, item: any): any {
