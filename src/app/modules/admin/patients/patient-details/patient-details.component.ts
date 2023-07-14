@@ -11,7 +11,6 @@ import {Observable, take} from 'rxjs'
 @Component({
     selector: 'patient-details',
     templateUrl: './patient-details.component.html',
-    styleUrls: ['./patient-details.component.scss'],
 })
 export class PatientDetailsComponent {
     constructor(

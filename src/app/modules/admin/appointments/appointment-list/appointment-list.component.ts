@@ -29,6 +29,9 @@ export class AppointmentListComponent {
     @Input({required: true})
     appointments: Appointment[]
 
+    @Input()
+    isInPatientDetails: boolean = false
+
     reschedule(appointment: Appointment) {
         this._rescheduleAppointmentModal.appointment$.next(appointment)
         this._rescheduleAppointmentModal.opened$.next(true)

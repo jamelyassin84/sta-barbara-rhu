@@ -12,6 +12,20 @@ export class PrintableMedicoLegalComponent {
 
     appointment$ = this._printableMedicoLegal.appointment$
 
+    licenseNumber: string = 'N/A'
+
+    ngOnInit(): void {
+        this.addLicenseNumber()
+    }
+
+    addLicenseNumber() {
+        const license = prompt('Please enter your license number')
+
+        if (license) {
+            this.licenseNumber = license
+        }
+    }
+
     updateFormattedContent(content: any) {
         return content.replace(/\n/g, '<br>')
     }

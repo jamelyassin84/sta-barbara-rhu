@@ -13,7 +13,21 @@ export class PrintableMedicalCertificateComponent {
         private _printableMedicalCertificate: PrintableMedicalCertificate,
     ) {}
 
+    licenseNumber: string = 'N/A'
+
     appointment$ = this._printableMedicalCertificate.appointment$
 
     today = dayjs()
+
+    ngOnInit(): void {
+        this.addLicenseNumber()
+    }
+
+    addLicenseNumber() {
+        const license = prompt('Please enter your license number')
+
+        if (license) {
+            this.licenseNumber = license
+        }
+    }
 }

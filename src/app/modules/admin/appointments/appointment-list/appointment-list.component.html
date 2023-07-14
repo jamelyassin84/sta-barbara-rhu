@@ -7,7 +7,12 @@
                 <tr>
                     <th class="text-left text-gray-700">ID</th>
                     <th class="text-left text-gray-700">RHU</th>
-                    <th class="text-left text-gray-700">Patient</th>
+                    <th
+                        *ngIf="!isInPatientDetails"
+                        class="text-left text-gray-700"
+                    >
+                        Patient
+                    </th>
                     <th class="text-left text-gray-700">Appointment Type</th>
                     <th class="text-left text-gray-700">Nature of Visit</th>
                     <th class="text-left text-gray-700">When</th>
@@ -29,7 +34,9 @@
                 >
                     <td class="text-xs">{{ appointment.id }}</td>
                     <td>{{ appointment?.rhu }}</td>
-                    <td>{{ appointment?.patient | to_full_name }}</td>
+                    <td *ngIf="!isInPatientDetails">
+                        {{ appointment?.patient | to_full_name }}
+                    </td>
                     <td>{{ appointment.appointment_type }}</td>
                     <td>{{ appointment.appointment_nature }}</td>
                     <td>{{ appointment.date | date : 'MM/dd/YY' }}</td>
