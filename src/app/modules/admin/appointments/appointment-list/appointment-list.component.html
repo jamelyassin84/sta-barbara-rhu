@@ -11,7 +11,7 @@
     >
         <div
             *ngIf="loader === 'idle' && ready"
-            class="flex flex-col flex-auto h-full mt-5 overflow-x-auto"
+            class="flex flex-col flex-auto h-full mt-5 overflow-x-auto overflow-y-hidden"
         >
             <table class="overflow-y-visible min-w-280">
                 <thead class="text-right">
@@ -38,7 +38,11 @@
                 </thead>
                 <tbody [@listAnimation]="appointments.length">
                     <tr
-                        *ngFor="let appointment of appointments; let i = index"
+                        *ngFor="
+                            let appointment of appointments
+                                | sort_appointment_by_patient_name;
+                            let i = index
+                        "
                         class="border-t border-gray-100 hover:bg-slate-100"
                     >
                         <td class="px-4 text-xs">{{ appointment.id }}</td>

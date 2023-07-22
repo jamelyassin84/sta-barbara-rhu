@@ -65,6 +65,6 @@
     <appointment-list
         [ready]="ready"
         *ngIf="patients$ | async"
-        [appointments]="appointments$ | async"
+        [appointments]="appointments$ | async | filter_by_appointments_today"
     />
 </div>

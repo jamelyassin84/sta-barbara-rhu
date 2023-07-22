@@ -11,9 +11,9 @@
     ></modal-header>
 
     <form
-        style="height: 90vh"
+        style="height: 100vh"
         [formGroup]="form"
-        class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
+        class="flex flex-col p-5 pb-20 overflow-x-hidden overflow-y-auto bg-white"
     >
         <ng-container formGroupName="appointment" class="w-full">
             <mat-form-field appearance="fill">
@@ -82,15 +82,15 @@
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
-                    <mat-label>First Name</mat-label>
-                    <input matInput formControlName="first_name" />
-                    <mat-error>First name is required</mat-error>
-                </mat-form-field>
-
-                <mat-form-field appearance="fill">
                     <mat-label>Last Name</mat-label>
                     <input matInput formControlName="last_name" />
                     <mat-error>Last name is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="fill">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="first_name" />
+                    <mat-error>First name is required</mat-error>
                 </mat-form-field>
 
                 <mat-form-field appearance="fill">
@@ -206,7 +206,7 @@
             [loader]="loader.createLoader"
             *ngIf="loader$ | async as loader"
             matRippleColor="rgba(250, 250, 250,.3)"
-            class="py-4 mt-4 bg-black rounded-full"
+            class="py-4 mt-4 bg-black rounded-full h-[54px]"
         >
             <button-title
                 [loader]="loader.createLoader"
@@ -218,9 +218,5 @@
                 ]"
             />
         </button>
-
-        <br />
-        <br />
-        <br />
     </form>
 </div>

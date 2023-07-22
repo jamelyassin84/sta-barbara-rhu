@@ -25,7 +25,10 @@
                 </thead>
                 <tbody [@listAnimation]="patients.length">
                     <tr
-                        *ngFor="let patient of patients; let i = index"
+                        *ngFor="
+                            let patient of patients | sort_patient_by_name;
+                            let i = index
+                        "
                         class="border-t border-gray-100 hover:bg-slate-100"
                     >
                         <td class="px-4">{{ patient.id | uppercase }}</td>
