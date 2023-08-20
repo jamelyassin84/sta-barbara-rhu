@@ -7,5 +7,7 @@ import {BehaviorSubject} from 'rxjs'
 @Injectable({providedIn: 'root'})
 export class AddAppointmentModal extends Modal {
     appointmentType$ = new BehaviorSubject<AppointmentTypeEnum>(undefined)
+    RHUWasPrefilled$ = new BehaviorSubject<boolean>(false)
+    appointmentWasPrefilled$ = new BehaviorSubject<boolean>(false)
     rhu$ = new BehaviorSubject<RHUEnum>(undefined)
 }

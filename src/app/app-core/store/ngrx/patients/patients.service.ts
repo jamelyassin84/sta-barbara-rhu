@@ -7,17 +7,11 @@ import {LoadingTypeEnum} from '@digital_brand_work/states/store/enums/loading-ty
 import {StoreLoaderService} from '@digital_brand_work/services/store-loader.service'
 import {AppState} from '../../core/app.state'
 import {Store} from '@ngrx/store'
-import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
-import {patientsBaseSelectors} from './patients.selectors'
 import {CollectionEnum} from 'app/app-core/enums/collection.enum'
-import {StateEnum} from '../../core/state.enum'
-import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
-import {StoreAction} from '../../core/action.enum'
 
 @Injectable({providedIn: 'root'})
 export class PatientService {
     constructor(
-        private _store: Store<AppState>,
         private _fireStore: AngularFirestore,
         private _storeLoaderService: StoreLoaderService,
     ) {}

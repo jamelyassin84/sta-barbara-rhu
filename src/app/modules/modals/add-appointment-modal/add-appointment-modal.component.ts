@@ -41,12 +41,17 @@ export class AddAppointmentModalComponent {
 
     readonly opened$ = this._addAppointmentModal.opened$
 
+    readonly RHUWasPrefilled$ = this._addAppointmentModal.RHUWasPrefilled$
+    readonly appointmentWasPrefilled$ =
+        this._addAppointmentModal.appointmentWasPrefilled$
+
     readonly SEX = Object.values(SexEnum)
     readonly APPOINTMENT_NATURES = Object.values(AppointmentNatureEnum)
     readonly APPOINTMENT_TYPES = Object.values(AppointmentTypeEnum)
     readonly RHU = Object.values(RHUEnum)
 
     showPersonalDetails: boolean = true
+
     form = this._appointmentForm.get()
 
     ngOnInit(): void {
@@ -68,8 +73,11 @@ export class AddAppointmentModalComponent {
     }
 
     ngOnDestroy(): void {
-        this._addAppointmentModal.appointmentType$.next(undefined)
+        this._addAppointmentModal.RHUWasPrefilled$.next(false)
+        this._addAppointmentModal.appointmentWasPrefilled$.next(false)
+
         this._addAppointmentModal.rhu$.next(undefined)
+        this._addAppointmentModal.appointmentType$.next(undefined)
     }
 
     checkIfGeneral(): void {}

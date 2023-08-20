@@ -304,6 +304,19 @@ const config = {
         // Other third party and/or custom plugins
         require('@tailwindcss/typography')({modifiers: ['sm', 'lg']}),
         require('@tailwindcss/line-clamp'),
+        {
+            postcssPlugin: 'grouped',
+            Once(root, {result}) {
+                return postcss([
+                    require('postcss-import'),
+                    require('postcss-mixins'),
+                    require('postcss-simple-vars'),
+                ]).process(root, result.opts)
+            },
+        },
+        require('tailwindcss'),
+        require('postcss-nested'),
+        require('autoprefixer'),
     ],
 }
 

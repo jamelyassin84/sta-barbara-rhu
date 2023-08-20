@@ -13,6 +13,7 @@ export class LandingHomeSection2Component {
 
     bookAppointment(service: AppointmentTypeEnum) {
         this._addAppointmentModal.appointmentType$.next(service)
+        this._addAppointmentModal.appointmentWasPrefilled$.next(true)
         this._addAppointmentModal.opened$.next(true)
     }
 

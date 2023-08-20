@@ -10,6 +10,7 @@ export class AppointmentForm extends FormBuilder {
     get() {
         return this.group({
             appointment: this.group({
+                status: [false],
                 date: ['', Validators.required],
                 rhu: [RHUEnum.RHU_1, Validators.required],
                 patientId: ['', Validators.required],

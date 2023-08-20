@@ -16,7 +16,12 @@
         class="flex flex-col p-5 pb-20 overflow-x-hidden overflow-y-auto bg-white"
     >
         <ng-container formGroupName="appointment" class="w-full">
-            <mat-form-field appearance="fill">
+            <mat-form-field
+                appearance="fill"
+                [ngClass]="{
+                    'pointer-events-none': RHUWasPrefilled$ | async
+                }"
+            >
                 <mat-label>Select Rural Health Unit</mat-label>
                 <mat-select formControlName="rhu">
                     <mat-option [value]="item" *ngFor="let item of RHU">{{
@@ -27,7 +32,13 @@
                 <mat-error>RHU is required</mat-error>
             </mat-form-field>
 
-            <mat-form-field appearance="fill">
+            <mat-form-field
+                appearance="fill"
+                [ngClass]="{
+                    'pointer-events-none opacity-70':
+                        appointmentWasPrefilled$ | async
+                }"
+            >
                 <mat-label>Select Appointment Type</mat-label>
                 <mat-select formControlName="appointment_type">
                     <mat-option

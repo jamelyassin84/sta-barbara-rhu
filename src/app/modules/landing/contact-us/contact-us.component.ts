@@ -14,6 +14,7 @@ export class ContactUsComponent {
         this._addAppointmentModal.rhu$.next(
             rhu === 'RHU 1' ? RHUEnum.RHU_1 : RHUEnum.RHU_2,
         )
+        this._addAppointmentModal.RHUWasPrefilled$.next(true)
         this._addAppointmentModal.opened$.next(true)
     }
 }

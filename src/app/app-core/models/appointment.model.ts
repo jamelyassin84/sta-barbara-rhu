@@ -5,6 +5,7 @@ import {RHUEnum} from '../enums/rhu.enum'
 import {Diagnosis} from './diagnosis.model'
 import {Patient} from './patient.model'
 import {Assessment} from './assessment.model'
+import {AppointmentStatusEnum} from '../enums/appointment-status.enum'
 
 export interface Appointment extends NodeBaseModel {
     date: string
@@ -15,4 +16,5 @@ export interface Appointment extends NodeBaseModel {
     appointment_type: AppointmentTypeEnum
     appointment_nature: AppointmentNatureEnum
     assessment: Assessment
+    status: AppointmentStatusEnum
 }

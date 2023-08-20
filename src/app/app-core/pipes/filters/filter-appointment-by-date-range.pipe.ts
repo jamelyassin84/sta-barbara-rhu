@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core'
 import {empty} from '@digital_brand_work/pipes/is-empty.pipe'
 import {Appointment} from 'app/app-core/models/appointment.model'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 
 @Pipe({name: 'filter_appointment_by_date_range'})
 export class FilterAppointmentByDateRangePipe implements PipeTransform {
