@@ -8,7 +8,7 @@ import {Subject, takeUntil} from 'rxjs'
 
 @Component({
     selector: 'app-navbar',
-    template: `<div class="flex items-center justify-center w-full bg-white">
+    template: `<div class="flex items-center justify-center w-full bg-black">
         <navbar-responsive
             class="block lg:hidden w-full"
             [currentNav]="changeCurrentNav"
@@ -31,14 +31,15 @@ import {Subject, takeUntil} from 'rxjs'
             <ul class="flex items-center ml-auto">
                 <li
                     [ngClass]="{
-                        'pointer-events-none text-white bg-brand-green':
+                        'pointer-events-none text-white bg-brand-yellow shadow-xl shadow-brand-yellow/50':
                             currentNav === nav,
-                        'hover:bg-black/40 hover:text-white': currentNav !== nav
+                        'hover:bg-brand-yellow/40   text-white':
+                            currentNav !== nav
                     }"
                     (click)="currentNav = nav"
                     role="button"
                     [routerLink]="nav.link"
-                    class="px-5 py-2 mx-2 rounded-md font-extralight"
+                    class="px-5 py-2 mx-2 rounded-md font-extralight "
                     *ngFor="let nav of NAVBAR_NAVIGATION; trackBy: trackByFn"
                 >
                     {{ nav.title }}
