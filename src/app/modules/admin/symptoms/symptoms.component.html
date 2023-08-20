@@ -6,5 +6,41 @@
         class="w-full"
     ></route-header>
 
-    <symptoms-list />
+    <div class="flex items-center w-full p-3 bg-white">
+        <mat-form-field
+            class="mx-3 mb-0 ml-auto translate-y-2 min-w-64"
+            appearance="fill"
+        >
+            <mat-date-range-input [rangePicker]="picker">
+                <input
+                    matStartDate
+                    [(ngModel)]="startAt"
+                    placeholder="Start date"
+                />
+                <input
+                    matEndDate
+                    (dateChange)="filter()"
+                    [(ngModel)]="endAt"
+                    placeholder="End date"
+                />
+            </mat-date-range-input>
+
+            <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+        </mat-form-field>
+
+        <button
+            (click)="generateExcel()"
+            class="flex items-center px-5 py-3 text-white bg-black rounded-sm"
+        >
+            <mat-icon class="mr-3 text-white" svgIcon="feather:plus"></mat-icon>
+
+            Generate Report
+        </button>
+    </div>
+
+    <symptoms-list [ready]="ready" [symptoms]="symptoms$ | async" />
 </div>

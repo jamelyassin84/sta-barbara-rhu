@@ -6,6 +6,7 @@ import {AssessmentState} from '../ngrx/assessments/assessments.reducer'
 import {DiagnosisState} from '../ngrx/diagnosis/diagnosis.reducer'
 import {PatientState} from '../ngrx/patients/patients.reducer'
 import {SymptomsCategoryState} from '../ngrx/symptoms-category/symptoms-category.reducer'
+import {SymptomsState} from '../ngrx/symptoms/symptoms.reducer'
 import {UserState} from '../ngrx/users/users.reducer'
 
 export interface AppState {
@@ -18,4 +19,5 @@ export interface AppState {
     users: UserState
     ageGroups: AgeGroupState
     symptomsCategories: SymptomsCategoryState
+    symptoms: SymptomsState
 }

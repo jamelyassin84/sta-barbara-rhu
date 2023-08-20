@@ -8,4 +8,5 @@ export enum StateEnum {
     USERS = 'users',
     AGE_GROUP = 'ageGroups',
     SYMPTOMS_CATEGORIES = 'symptomsCategories',
+    SYMPTOMS = 'symptoms',
 }
