@@ -78,3 +78,12 @@
     (click)="printableMedicalCertificateOpened$.next(false)"
     style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
 />
+
+<add-symptom-category
+    @fadeOut
+    stopPropagation
+    class="fixed flex w-screen h-screen"
+    *ngIf="addSymptomCategoryModalOpened$ | async"
+    (click)="addSymptomCategoryModalOpened$.next(false)"
+    style="z-index: 999; background: rgba(0, 0, 0, 0.7)"
+/>

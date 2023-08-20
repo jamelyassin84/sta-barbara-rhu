@@ -9,6 +9,7 @@ import {RHUUserAddModal} from './rhu-user-add-modal/rhu-user-add-modal.service'
 import {PrintableMedicoLegal} from './printables/printable-medico-legal/printable-medico-legal.service'
 import {PrintableMedicalCertificate} from './printables/printable-medical-certificate/printable-medical-certificate.service'
 import {PrintableMedicalReceit} from './printables/printable-medical-receit/printable-medical-receit.service'
+import {AddSymptomCategoryModal} from './add-symptom-category/add-symptom-category.service'
 
 @Component({
     selector: 'modals',
@@ -27,6 +28,8 @@ export class ModalsComponent {
         private _printableMedicoLegal: PrintableMedicoLegal,
         private _printableMedicalReceit: PrintableMedicalReceit,
         private _printableMedicalCertificate: PrintableMedicalCertificate,
+
+        private _addSymptomCategoryModal: AddSymptomCategoryModal,
     ) {}
 
     addAppointmentModalOpened$ = this._addAppointmentModal.opened$
@@ -40,4 +43,6 @@ export class ModalsComponent {
     printableMedicalReceitOpened$ = this._printableMedicalReceit.opened$
     printableMedicalCertificateOpened$ =
         this._printableMedicalCertificate.opened$
+
+    addSymptomCategoryModalOpened$ = this._addSymptomCategoryModal.opened$
 }

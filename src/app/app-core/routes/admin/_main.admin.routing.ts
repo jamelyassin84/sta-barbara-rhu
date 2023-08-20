@@ -49,6 +49,22 @@ export const MAIN_ADMIN_ROUTING: Route[] = [
                         (module) => module.RhuUserModule,
                     ),
             },
+
+            {
+                path: 'symptoms',
+                loadChildren: () =>
+                    import('app/modules/admin/symptoms/symptoms.module').then(
+                        (module) => module.SymptomsModule,
+                    ),
+            },
+
+            {
+                path: 'symptoms-category',
+                loadChildren: () =>
+                    import(
+                        'app/modules/admin/symptoms-category/symptoms-category.module'
+                    ).then((module) => module.SymptomsCategoryModule),
+            },
         ],
     },
 ]

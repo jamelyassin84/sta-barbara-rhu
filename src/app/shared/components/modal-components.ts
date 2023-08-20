@@ -1,5 +1,6 @@
 import {ModalHeaderComponent} from 'app/components/modal-header/modal-header.component'
 import {AddAppointmentModalComponent} from 'app/modules/modals/add-appointment-modal/add-appointment-modal.component'
+import {AddSymptomCategoryComponent} from 'app/modules/modals/add-symptom-category/add-symptom-category.component'
 import {ModalsComponent} from 'app/modules/modals/modals.component'
 import {PrintableMedicalCertificateComponent} from 'app/modules/modals/printables/printable-medical-certificate/printable-medical-certificate.component'
 import {PrintableMedicalReceitComponent} from 'app/modules/modals/printables/printable-medical-receit/printable-medical-receit.component'
@@ -23,4 +24,6 @@ export const modalComponents = [
     PrintableMedicalCertificateComponent,
     PrintableMedicalReceitComponent,
     PrintableMedicoLegalComponent,
+
+    AddSymptomCategoryComponent,
 ]

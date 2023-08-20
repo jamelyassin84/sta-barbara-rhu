@@ -38,7 +38,7 @@ export const ADMIN_NAVIGATION: FuseNavigationItem[] = [
         title: 'Symptoms',
         type: 'basic',
         icon: 'feather:alert-triangle',
-        link: '/admin/reports',
+        link: '/admin/symptoms',
     },
 
     {
@@ -46,7 +46,7 @@ export const ADMIN_NAVIGATION: FuseNavigationItem[] = [
         title: 'Symptoms Category',
         type: 'basic',
         icon: 'feather:git-pull-request',
-        link: '/admin/reports',
+        link: '/admin/symptoms-category',
     },
 
     {
