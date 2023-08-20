@@ -17,4 +17,5 @@ export interface Appointment extends NodeBaseModel {
     appointment_nature: AppointmentNatureEnum
     assessment: Assessment
     status: AppointmentStatusEnum
+    symptoms: string
 }

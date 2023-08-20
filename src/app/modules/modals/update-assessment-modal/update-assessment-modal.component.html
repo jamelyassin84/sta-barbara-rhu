@@ -18,6 +18,20 @@
         class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
     >
         <mat-form-field appearance="fill">
+            <mat-label>Symptoms Category</mat-label>
+
+            <mat-select formControlName="symptomsCategory">
+                <mat-option
+                    [value]="item"
+                    *ngFor="let item of symptomsCategories$ | async"
+                    >{{ item.name }}</mat-option
+                >
+            </mat-select>
+            <mat-icon matSuffix svgIcon="feather:chevron-down" />
+            <mat-error>Symptoms Category is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
             <mat-label>Weight</mat-label>
             <input formControlName="weight" matInput />
         </mat-form-field>

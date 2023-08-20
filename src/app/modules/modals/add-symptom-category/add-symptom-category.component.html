@@ -1,1 +1,44 @@
-<p>add-symptom-category works!</p>
+<div
+    stopPropagation
+    @zoomIn
+    *ngIf="opened$ | async"
+    style="min-width: 400px"
+    class="relative z-10 m-auto bg-white"
+>
+    <modal-header
+        [modalTitle]="'Add  User'"
+        (onClose)="opened$.next(false)"
+    ></modal-header>
+
+    <form
+        [formGroup]="form"
+        class="flex flex-col p-5 overflow-x-hidden overflow-y-auto bg-white"
+    >
+        <mat-form-field appearance="fill">
+            <mat-label>Category</mat-label>
+            <input matInput formControlName="name" />
+            <mat-error>Category is required</mat-error>
+        </mat-form-field>
+
+        <button
+            matRipple
+            primaryButton
+            (click)="save()"
+            type="button"
+            [loader]="loader.createLoader"
+            *ngIf="loader$ | async as loader"
+            matRippleColor="rgba(250, 250, 250,.3)"
+            class="py-4 mt-4 bg-black rounded-full"
+        >
+            <button-title
+                [loader]="loader.createLoader"
+                [buttons]="[
+                    'Add Symptoms Category',
+                    'processing...',
+                    'processing failed',
+                    'Success'
+                ]"
+            />
+        </button>
+    </form>
+</div>

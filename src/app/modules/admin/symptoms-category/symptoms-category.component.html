@@ -4,7 +4,20 @@
         subtitle="You can manage the symptoms category that will be displayed when users book an appointment"
         icon="feather:git-pull-request"
         class="w-full"
-    ></route-header>
+    />
 
-    <symptoms-category-list />
+    <div class="flex items-center bg-white">
+        <button
+            (click)="addSymptoms()"
+            class="flex items-center px-5 py-3 ml-auto mr-5 text-white bg-black rounded-sm"
+        >
+            <mat-icon class="mr-3 text-white" svgIcon="feather:plus"></mat-icon>
+
+            Add Symptoms
+        </button>
+    </div>
+
+    <symptoms-category-list
+        [symptomsCategories]="symptomsCategories$ | async"
+    />
 </div>

@@ -15,6 +15,9 @@ import {appointmentLoaders} from 'app/app-core/store/ngrx/appointments/appointme
 import {StoreLoaders} from '@digital_brand_work/states/store/models/loader.model'
 import {FormBuilder} from '@angular/forms'
 import {Appointment} from 'app/app-core/models/appointment.model'
+import {State} from '@digital_brand_work/decorators/ngrx-state.decorator'
+import {StateEnum} from 'app/app-core/store/core/state.enum'
+import {SymptomsCategory} from 'app/app-core/models/symptoms-category.model'
 
 @Component({
     selector: 'update-assessment-modal',
@@ -33,6 +36,9 @@ export class UpdateAssessmentModalComponent {
     @StoreSelect(appointmentLoaders)
     readonly loader$: Observable<StoreLoaders>
 
+    @State({selector: StateEnum.SYMPTOMS_CATEGORIES, type: 'array'})
+    symptomsCategories$: Observable<SymptomsCategory[]>
+
     readonly opened$ = this._updateAssessmentModal.opened$
 
     form = this._appointmentForm.assessment()
@@ -49,6 +55,8 @@ export class UpdateAssessmentModalComponent {
                     this.populateAssessment(appointment.assessment)
                 }
             })
+
+        this._store.dispatch(StoreAction.SYMPTOMS_CATEGORIES.load.request())
     }
 
     populateAssessment(assessment: Assessment) {
@@ -56,10 +64,11 @@ export class UpdateAssessmentModalComponent {
             weight: [assessment.weight],
             height: [assessment.height],
             injuries: [assessment.injuries],
-            body_temperature: [assessment.body_temperature],
             blood_pressure: [assessment.blood_pressure],
+            symptomsCategory: [assessment.symptomsCategory],
+            body_temperature: [assessment.body_temperature],
             chief_complaints: [assessment.chief_complaints],
-        })
+        }) as any
     }
 
     save() {

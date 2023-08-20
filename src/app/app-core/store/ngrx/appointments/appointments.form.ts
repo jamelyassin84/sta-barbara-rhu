@@ -60,6 +60,7 @@ export class AppointmentForm extends FormBuilder {
 
     assessment() {
         return this.group({
+            symptomsCategory: [''],
             weight: [''],
             height: [''],
             body_temperature: [''],
