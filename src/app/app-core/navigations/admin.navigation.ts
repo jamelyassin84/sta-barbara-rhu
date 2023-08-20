@@ -34,6 +34,22 @@ export const ADMIN_NAVIGATION: FuseNavigationItem[] = [
     },
 
     {
+        id: '3',
+        title: 'Symptoms',
+        type: 'basic',
+        icon: 'feather:alert-triangle',
+        link: '/admin/reports',
+    },
+
+    {
+        id: '3',
+        title: 'Symptoms Category',
+        type: 'basic',
+        icon: 'feather:git-pull-request',
+        link: '/admin/reports',
+    },
+
+    {
         id: '4',
         title: 'Users',
         type: 'basic',

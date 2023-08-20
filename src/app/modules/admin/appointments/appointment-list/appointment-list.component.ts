@@ -4,6 +4,7 @@ import {dbwAnimations} from '@digital_brand_work/animations/animation.api'
 import {StoreLoaders} from '@digital_brand_work/states/store/models/loader.model'
 import {StoreSelect} from '@fuse/decorators/ngrx-selector.decorator'
 import {Store} from '@ngrx/store'
+import {AppointmentStatusEnum} from 'app/app-core/enums/appointment-status.enum'
 import {Appointment} from 'app/app-core/models/appointment.model'
 import {StoreAction} from 'app/app-core/store/core/action.enum'
 import {AppState} from 'app/app-core/store/core/app.state'
@@ -76,6 +77,26 @@ export class AppointmentListComponent {
     viewMedicalCertificate(appointment: Appointment) {
         this._printableMedicalCertificate.appointment$.next(appointment)
         this._printableMedicalCertificate.opened$.next(true)
+    }
+
+    toggleStatus(appointment: Appointment) {
+        const appointmentStatus =
+            appointment.status === AppointmentStatusEnum.CONFIRMED
+                ? AppointmentStatusEnum.PENDING
+                : AppointmentStatusEnum.CONFIRMED
+
+        this._store.dispatch(
+            StoreAction.APPOINTMENTS.update.request({
+                appointment: {
+                    ...appointment,
+                    status: appointmentStatus,
+                },
+            }),
+        )
+
+        setTimeout(() => {
+            location.reload()
+        }, 1500)
     }
 
     remove(appointment: Appointment) {
